@@ -100,5 +100,7 @@ Steps for setting up:
    -npm run db:seed
 
 6. Start the server
+
    - Commands:
+
    - npm run start:dev
