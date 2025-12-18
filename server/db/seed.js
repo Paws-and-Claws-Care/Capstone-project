@@ -1,7 +1,28 @@
 import { createProduct } from "./queries/product.js";
+import { createUser } from "./queries/users.js";
 
 export default async function seed() {
-  //TODO
+  // CREATE USER SEED
+
+  const [alyssa, katelyn, teranae] = await Promise.all([
+    createUser({
+      username: "alyssa",
+      email: "alyssaradlauer@gmail.com",
+      password: "cheezitsAREgood",
+    }),
+    createUser({
+      username: "katelyn",
+      email: "katelynconrad424@email.com",
+      password: "Ladybug218496!",
+    }),
+    createUser({
+      username: "teranae",
+      email: "naethevettech@gmail.com",
+      password: "Capstone2025",
+    }),
+  ]);
+
+  //CREATE PRODUCT SEED
   const products = await Promise.all([
     createProduct({
       name: "Pro Plan Dog Food - Chicken and Rice",

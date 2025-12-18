@@ -1,0 +1,18 @@
+import db from "../client.js";
+import bcrypt from "bcrypt";
+
+export async function createUser(user) {
+  if (!user.username.trim() || !user.email.trim() || !user.password.trim()) {
+    throw Error("must have username, email, and password");
+  }
+  user.password = await bcrypt.hash(user.password, 5);
+  const SQL = `
+        INSERT INTO users(username, email, password) VALUES ($1, $2, $3) RETURNING *;
+    `;
+  const response = await db.query(SQL, [
+    user.username,
+    user.email,
+    user.password,
+  ]);
+  return response.rows[0];
+}
