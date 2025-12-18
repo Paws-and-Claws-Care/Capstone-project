@@ -28,7 +28,7 @@ export async function createProduct({
 
 export async function getAllProducts() {
   const SQL = `
-  SELEECT *
+  SELECT *
   FROM products
   ORDER BY id
   `;

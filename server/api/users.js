@@ -1,8 +1,14 @@
 import express from "express";
-const app = express.Router();
+import { createUser, getUserById } from "../db/queries/users.js";
+const router = express.Router();
+import bcrypt from "bcrypt";
 
-app.get("/", async (req, res, next) => {
-  res.send("inside of GET /api/users route!");
+router.get("/:id", async (req, res, next) => {
+  const user = await getUserById(req.params.id);
+  if (!user) {
+    return res.status(404).send("User not found.");
+  }
+  res.send(user);
 });
 
-export default app;
+export default router;

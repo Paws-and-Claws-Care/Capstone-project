@@ -1,9 +1,11 @@
 import express from "express";
-import usersRouter from "./users.js";
-const app = express.Router();
+import productsRouter from "./products.js";
+// import usersRouter from "./users.js";
+
+const router = express.Router();
 
 //define api routes here
 
-app.use("/users", usersRouter);
+router.use("/products", productsRouter);
 
-export default app;
+export default router;

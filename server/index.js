@@ -1,5 +1,7 @@
 import client from "./db/client.js";
 import express from "express";
+import apiRouter from "./api/index.js";
+
 const app = express();
 //body parsing middleware
 app.use(express.json());
@@ -20,8 +22,8 @@ app.use(
 );
 
 //use api routes
-import apiRouter from "./api/index.js";
-app.use("./api", apiRouter);
+
+app.use("/api", apiRouter);
 
 //custom error handling route
 app.use((err, req, res, next) => {

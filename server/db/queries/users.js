@@ -16,3 +16,13 @@ export async function createUser(user) {
   ]);
   return response.rows[0];
 }
+
+export async function getUserById(id) {
+  const SQL = `
+    SELECT id, username
+    FROM users
+    WHERE id = $1
+    `;
+  const response = await db.query(SQL, [id]);
+  return response.rows[0];
+}
