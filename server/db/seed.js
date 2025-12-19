@@ -20,6 +20,11 @@ export default async function seed() {
       email: "naethevettech@gmail.com",
       password: "Capstone2025",
     }),
+    createUser({
+      username: "shikha",
+      email: "mailto:shikhadevi101@gmail.com",
+      password: "Avir",
+    }),
   ]);
 
   //CREATE PRODUCT SEED
