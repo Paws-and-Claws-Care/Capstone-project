@@ -13,7 +13,7 @@ router.get("/", async (req, res, next) => {
   res.send(users);
 });
 
-router.get("/:username", async (req, res, next) => {
+router.get("/username/:username", async (req, res, next) => {
   const user = await getUserByUsername(req.params.username);
   if (!user) {
     return res.status(404).send("User not found.");

@@ -26,6 +26,7 @@ CREATE TABLE products(
 
 CREATE TABLE orders(
     id SERIAL PRIMARY KEY,
+    date DATE NOT NULL,
     user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     is_cart BOOLEAN NOT NULL DEFAULT true
 );
@@ -35,6 +36,6 @@ CREATE TABLE order_items(
     order_id INTEGER NOT NULL REFERENCES orders(id) ON DELETE CASCADE,
     product_id INTEGER NOT NULL REFERENCES products(id) ON DELETE CASCADE,
     quantity INTEGER NOT NULL,
-    price_at_purchase INTEGER NOT NULL,
+    price INTEGER NOT NULL,
     UNIQUE (order_id, product_id)
 )

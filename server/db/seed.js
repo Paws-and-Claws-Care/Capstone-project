@@ -4,7 +4,7 @@ import { createUser } from "./queries/users.js";
 export default async function seed() {
   // CREATE USER SEED
 
-  const [alyssa, katelyn, teranae] = await Promise.all([
+  const [alyssa, katelyn, teranae, shikha] = await Promise.all([
     createUser({
       username: "alyssa",
       email: "alyssaradlauer@gmail.com",
@@ -124,6 +124,41 @@ export default async function seed() {
       category: "supplements",
       pet_type: "cat",
       image_url: "image",
+      quantity: 1,
+    }),
+  ]);
+
+  //CREATE ORDER SEED
+
+  const order1 = await createOrder({
+    user_id: alyssa.id,
+    date: "2025-12-15",
+    note: "Alyssa's first order",
+  });
+  await Promise.all([
+    addProductToOrder({
+      order_id: order1.id,
+      product_id: products[0].id,
+      quantity: 1,
+    }),
+    addProductToOrder({
+      order_id: order1.id,
+      product_id: products[2].id,
+      quantity: 1,
+    }),
+    addProductToOrder({
+      order_id: order1.id,
+      product_id: products[3].id,
+      quantity: 2,
+    }),
+    addProductToOrder({
+      order_id: order1.id,
+      product_id: products[5].id,
+      quantity: 1,
+    }),
+    addProductToOrder({
+      order_id: order1.id,
+      product_id: products[8].id,
       quantity: 1,
     }),
   ]);
