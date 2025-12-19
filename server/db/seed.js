@@ -1,5 +1,7 @@
 import { createProduct } from "./queries/product.js";
 import { createUser } from "./queries/users.js";
+import { createOrder } from "./queries/orders.js";
+import { addProductToOrder } from "./queries/order_items.js";
 
 export default async function seed() {
   // CREATE USER SEED
@@ -140,26 +142,31 @@ export default async function seed() {
       order_id: order1.id,
       product_id: products[0].id,
       quantity: 1,
+      price: 70,
     }),
     addProductToOrder({
       order_id: order1.id,
       product_id: products[2].id,
       quantity: 1,
+      price: 70,
     }),
     addProductToOrder({
       order_id: order1.id,
       product_id: products[3].id,
       quantity: 2,
+      price: 70,
     }),
     addProductToOrder({
       order_id: order1.id,
       product_id: products[5].id,
       quantity: 1,
+      price: 70,
     }),
     addProductToOrder({
       order_id: order1.id,
       product_id: products[8].id,
       quantity: 1,
+      price: 70,
     }),
   ]);
 }
