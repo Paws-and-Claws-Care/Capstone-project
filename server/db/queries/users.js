@@ -17,12 +17,33 @@ export async function createUser(user) {
   return response.rows[0];
 }
 
+export async function getAllUsers() {
+  const SQL = `
+    SELECT id, username, email
+    FROM users
+    `;
+  const response = await db.query(SQL);
+  return response.rows;
+}
+
 export async function getUserById(id) {
   const SQL = `
-    SELECT id, username
+    SELECT id, username, email
     FROM users
     WHERE id = $1
     `;
   const response = await db.query(SQL, [id]);
+  return response.rows[0];
+}
+
+export async function getUserByUsername(username) {
+  const SQL = `
+    SELECT *
+    FROM users
+    WHERE username = $1
+  `;
+
+  const response = await db.query(SQL, [username]);
+
   return response.rows[0];
 }
