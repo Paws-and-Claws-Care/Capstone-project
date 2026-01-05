@@ -1,13 +1,12 @@
 import db from "../db/client.js";
 import express from "express";
 const router = express.Router();
-export default router;
 import bcrypt from "bcrypt";
 
 import getUserFromToken from "../middleware/getUserFromToken.js";
 import requireUser from "../middleware/requireUser.js";
 
-import { createToken } from "../utils/jwt";
+import { createToken } from "../utils/jwt.js";
 import { createUser } from "../db/queries/users.js";
 
 export async function authenticate(credentials) {
@@ -38,6 +37,9 @@ export async function authenticate(credentials) {
 
 router.post("/login", async (req, res, next) => {
   try {
+    if (!req.body?.username || !req.body?.password) {
+      return res.status(400).send({ error: "username and password required" });
+    }
     const token = await authenticate(req.body);
     res.send({ token });
   } catch (err) {
@@ -58,3 +60,5 @@ router.post("/register", async (req, res, next) => {
     next(err);
   }
 });
+
+export default router;
