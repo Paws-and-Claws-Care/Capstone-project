@@ -38,7 +38,7 @@ export default async function seed() {
       price: 65,
       category: "Supplies",
       pet_type: "dog",
-      image_url: "image", //"https://image.chewy.com/catalog/general/images/moe/068a853c-d054-7bee-8000-3ad522d7ee54._AC_SL496_V1_.jpg",
+      image_url: "https://image.chewy.com/catalog/general/images/moe/068a853c-d054-7bee-8000-3ad522d7ee54._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
      createProduct({
@@ -47,7 +47,7 @@ export default async function seed() {
       price: 65,
       category: "Supplies",
       pet_type: "dog",
-      image_url: "image", //"https://image.chewy.com/catalog/general/images/moe/0691e23d-7a19-7c9e-8000-8d6b91c1022b._AC_SL496_V1_.jpg",
+      image_url: "https://image.chewy.com/catalog/general/images/moe/0691e23d-7a19-7c9e-8000-8d6b91c1022b._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
      createProduct({
@@ -56,7 +56,7 @@ export default async function seed() {
       price: 65,
       category: "Supplies",
       pet_type: "dog",
-      image_url: "image", //"hhttps://image.chewy.com/catalog/general/images/moe/068b0b1b-8549-7655-8000-54f4e4acda58._AC_SL496_V1_.jpg",
+      image_url: "https://image.chewy.com/catalog/general/images/moe/068b0b1b-8549-7655-8000-54f4e4acda58._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
      createProduct({
@@ -65,7 +65,7 @@ export default async function seed() {
       price: 65,
       category: "Supplies",
       pet_type: "dog",
-      image_url: "image", //"https://image.chewy.com/catalog/general/images/moe/069271f8-a668-7c02-8000-ab91cff4f261._AC_SL496_V1_.jpg",
+      image_url: "https://image.chewy.com/catalog/general/images/moe/069271f8-a668-7c02-8000-ab91cff4f261._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
     createProduct({
@@ -74,7 +74,7 @@ export default async function seed() {
       price: 65,
       category: "Supplies",
       pet_type: "dog",
-      image_url: "image", //"https://image.chewy.com/catalog/general/images/friends-forever-luna-donut-faux-fur-cozy-cave-covered-dog-bed-with-hooded-blanket-grey/img-287216._AC_SL496_V1_.jpg",
+      image_url: "https://image.chewy.com/catalog/general/images/friends-forever-luna-donut-faux-fur-cozy-cave-covered-dog-bed-with-hooded-blanket-grey/img-287216._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
      createProduct({
@@ -83,7 +83,7 @@ export default async function seed() {
       price: 65,
       category: "Supplies",
       pet_type: "dog",
-      image_url: "image", //"https://image.chewy.com/catalog/general/images/multipet-lamb-chop-bolster-cat-dog-bed-with-removable-cover/img-734328._AC_SL496_V1_.jpg",
+      image_url: "https://image.chewy.com/catalog/general/images/multipet-lamb-chop-bolster-cat-dog-bed-with-removable-cover/img-734328._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
      createProduct({
@@ -92,7 +92,7 @@ export default async function seed() {
       price: 65,
       category: "Supplies",
       pet_type: "dog",
-      image_url: "image", //"https://image.chewy.com/catalog/general/images/moe/068a853c-d054-7bee-8000-3ad522d7ee54._AC_SL496_V1_.jpg",
+      image_url: "https://image.chewy.com/catalog/general/images/moe/068a853c-d054-7bee-8000-3ad522d7ee54._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
 
@@ -104,7 +104,7 @@ export default async function seed() {
       price: 45,
       category: "Supplies",
       pet_type: "dog",
-      image_url: "image", //"https://image.chewy.com/catalog/general/images/frisco-stainless-steel-bowl-medium-4-cup-2-count/img-504070._AC_SL496_V1_.jpg",
+      image_url: "https://image.chewy.com/catalog/general/images/frisco-stainless-steel-bowl-medium-4-cup-2-count/img-504070._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
     createProduct({
@@ -113,7 +113,7 @@ export default async function seed() {
       price: 45,
       category: "Supplies",
       pet_type: "dog",
-      image_url: "image", //"https://image.chewy.com/catalog/general/images/moe/0692f3f7-83b8-7a92-8000-83f77e8d93e3._AC_SL496_V1_.jpg",
+      image_url: "https://image.chewy.com/catalog/general/images/moe/0692f3f7-83b8-7a92-8000-83f77e8d93e3._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
     createProduct({
@@ -122,7 +122,7 @@ export default async function seed() {
       price: 45,
       category: "Supplies",
       pet_type: "dog",
-      image_url: "image", //"https://image.chewy.com/catalog/general/images/moe/068308fd-e797-7110-8000-288b07a3b90b._AC_SL496_V1_.jpg",
+      image_url: "https://image.chewy.com/catalog/general/images/moe/068308fd-e797-7110-8000-288b07a3b90b._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
     createProduct({
@@ -131,7 +131,7 @@ export default async function seed() {
       price: 45,
       category: "Supplies",
       pet_type: "dog",
-      image_url: "image", //"https://image.chewy.com/catalog/general/images/moe/06893761-b9e9-78b8-8000-1c83646171e9._AC_SL496_V1_.jpg",
+      image_url: "https://image.chewy.com/catalog/general/images/moe/06893761-b9e9-78b8-8000-1c83646171e9._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
     createProduct({
@@ -140,7 +140,7 @@ export default async function seed() {
       price: 45,
       category: "Supplies",
       pet_type: "dog",
-      image_url: "image",//"https://image.chewy.com/catalog/general/images/petlibro-air-automatic-cat-feeder-with-battery-powered-dog-cat-food-dispenser-black-2-litter/img-311124._AC_SL496_V1_.jpg",
+      image_url: "https://image.chewy.com/catalog/general/images/petlibro-air-automatic-cat-feeder-with-battery-powered-dog-cat-food-dispenser-black-2-litter/img-311124._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
      createProduct({
@@ -149,7 +149,7 @@ export default async function seed() {
       price: 45,
       category: "Supplies",
       pet_type: "dog",
-      image_url: "image", //"https://image.chewy.com/catalog/general/images/moe/06940689-7a05-73cb-8000-4afe41ffb7d2._AC_SL496_V1_.jpg",
+      image_url: "https://image.chewy.com/catalog/general/images/moe/06940689-7a05-73cb-8000-4afe41ffb7d2._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
 
@@ -160,7 +160,7 @@ export default async function seed() {
       price: 54,
       category: "Supplies",
       pet_type: "dog",
-      image_url: "image", //"https://image.chewy.com/catalog/general/images/pawfurevers-waterproof-odorless-dog-collar-pink-teal-small/img-368930._AC_SL496_V1_.jpg",
+      image_url: "https://image.chewy.com/catalog/general/images/pawfurevers-waterproof-odorless-dog-collar-pink-teal-small/img-368930._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
  createProduct({
@@ -169,7 +169,7 @@ export default async function seed() {
       price: 54,
       category: "Supplies",
       pet_type: "dog",
-      image_url: "image", //"https://image.chewy.com/catalog/general/images/moe/0691639c-5122-7c2b-8000-2ba354eb4e07._AC_SL496_V1_.jpg",
+      image_url: "https://image.chewy.com/catalog/general/images/moe/0691639c-5122-7c2b-8000-2ba354eb4e07._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
  createProduct({
@@ -178,7 +178,7 @@ export default async function seed() {
       price: 54,
       category: "Supplies",
       pet_type: "dog",
-      image_url: "image", //"https://image.chewy.com/catalog/general/images/pawtitas-recycled-reflective-dog-leash-teal-large/img-519138._AC_SL496_V1_.jpg",
+      image_url: "https://image.chewy.com/catalog/general/images/pawtitas-recycled-reflective-dog-leash-teal-large/img-519138._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
  createProduct({
@@ -187,7 +187,7 @@ export default async function seed() {
       price: 54,
       category: "Supplies",
       pet_type: "dog",
-      image_url: "image",//"https://image.chewy.com/catalog/general/images/pawfurever-dog-breed-stainless-steel-personalized-dog-id-tag-husky-gold/img-277747._AC_SL496_V1_.jpg",
+      image_url: "https://image.chewy.com/catalog/general/images/pawfurever-dog-breed-stainless-steel-personalized-dog-id-tag-husky-gold/img-277747._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
  createProduct({
@@ -196,7 +196,7 @@ export default async function seed() {
       price: 54,
       category: "Supplies",
       pet_type: "dog",
-      image_url: "image", //"https://image.chewy.com/catalog/general/images/halti-reflective-padded-no-pull-dog-headcollar-cobalt-blue-size-3/img-710880._AC_SL496_V1_.jpg",
+      image_url: "https://image.chewy.com/catalog/general/images/halti-reflective-padded-no-pull-dog-headcollar-cobalt-blue-size-3/img-710880._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
  createProduct({
@@ -205,7 +205,7 @@ export default async function seed() {
       price: 54,
       category: "Supplies",
       pet_type: "dog",
-      image_url: "image",//"https://image.chewy.com/catalog/general/images/industrial-puppy-reflective-service-dog-harness-leash-red-x-large-30-to-39in-chest/img-217969._AC_SL496_V1_.jpg",
+      image_url: "https://image.chewy.com/catalog/general/images/industrial-puppy-reflective-service-dog-harness-leash-red-x-large-30-to-39in-chest/img-217969._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
     createProduct({
@@ -214,7 +214,7 @@ export default async function seed() {
       price: 54,
       category: "Supplies",
       pet_type: "dog",
-      image_url: "image",//"https://image.chewy.com/catalog/general/images/bousnic-smart-bark-collar-waterproof-automatic-bark-control-dog-training-collar-black/img-473696._AC_SL496_V1_.jpg",
+      image_url: "https://image.chewy.com/catalog/general/images/bousnic-smart-bark-collar-waterproof-automatic-bark-control-dog-training-collar-black/img-473696._AC_SL496_V1_.jpg",
     }),
     createProduct({
       name: "Tie Outs",
@@ -222,7 +222,7 @@ export default async function seed() {
       price: 54,
       category: "Supplies",
       pet_type: "dog",
-      image_url: "image",//"https://image.chewy.com/catalog/general/images/frisco-easy-grip-stake-with-tie-out-cable-large-30ft/img-471138._AC_SL496_V1_.jpg",
+      image_url: "https://image.chewy.com/catalog/general/images/frisco-easy-grip-stake-with-tie-out-cable-large-30ft/img-471138._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
     createProduct({
@@ -231,7 +231,7 @@ export default async function seed() {
       price: 54,
       category: "Supplies",
       pet_type: "dog",
-      image_url: "image",//"https://image.chewy.com/catalog/general/images/bronzedog-soft-padded-nylon-dog-muzzle-mint-green-medium/img-691155._AC_SL496_V1_.jpg",
+      image_url: "https://image.chewy.com/catalog/general/images/bronzedog-soft-padded-nylon-dog-muzzle-mint-green-medium/img-691155._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
 
@@ -244,7 +244,7 @@ export default async function seed() {
       price: 30,
       category: "Supplies",
       pet_type: "dog",
-      image_url: "image",//"https://image.chewy.com/catalog/general/images/petmate-two-door-top-load-dog-cat-kennel-tan-24-inches-up-to-15lbs/img-198035._AC_SL496_V1_.jpg",
+      image_url: "https://image.chewy.com/catalog/general/images/petmate-two-door-top-load-dog-cat-kennel-tan-24-inches-up-to-15lbs/img-198035._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
       createProduct({
@@ -254,7 +254,7 @@ export default async function seed() {
       price: 30,
       category: "Supplies",
       pet_type: "dog",
-      image_url: "image",//"https://image.chewy.com/catalog/general/images/moe/06929b3d-55bb-74b2-8000-e24528f6f053._AC_SL496_V1_.jpg",
+      image_url: "https://image.chewy.com/catalog/general/images/moe/06929b3d-55bb-74b2-8000-e24528f6f053._AC_SL496_V1_.jpg",
     }),
     createProduct({
       name: "Dog Houses",
@@ -263,7 +263,7 @@ export default async function seed() {
       price: 30,
       category: "Supplies",
       pet_type: "dog",
-      image_url: "image",//"https://image.chewy.com/catalog/general/images/frisco-plastic-outdoor-dog-house-with-elevated-platform-x-large/img-503515._AC_SL496_V1_.jpg",
+      image_url: "https://image.chewy.com/catalog/general/images/frisco-plastic-outdoor-dog-house-with-elevated-platform-x-large/img-503515._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
  createProduct({
@@ -273,7 +273,7 @@ export default async function seed() {
       price: 30,
       category: "Supplies",
       pet_type: "dog",
-      image_url: "image",//"https://image.chewy.com/catalog/general/images/petsafe-cozyup-foldable-cat-dog-stairs-grey-large/img-437940._AC_SL496_V1_.jpg",
+      image_url: "https://image.chewy.com/catalog/general/images/petsafe-cozyup-foldable-cat-dog-stairs-grey-large/img-437940._AC_SL496_V1_.jpg",
     }),
     
     createProduct({
@@ -283,7 +283,7 @@ export default async function seed() {
       price: 30,
       category: "Supplies",
       pet_type: "dog",
-      image_url: "image",//"https://image.chewy.com/catalog/general/images/carlson-pet-products-heritage-home-indoor-wooden-cat-dog-ramp-rustic-white/img-762601._AC_SL496_V1_.jpg",
+      image_url: "https://image.chewy.com/catalog/general/images/carlson-pet-products-heritage-home-indoor-wooden-cat-dog-ramp-rustic-white/img-762601._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
     createProduct({
@@ -293,7 +293,7 @@ export default async function seed() {
       price: 30,
       category: "Supplies",
       pet_type: "dog",
-      image_url: "image",//"https://image.chewy.com/catalog/general/images/frisco-swirl-dog-crate-mat-gray-42/img-566295._AC_SL496_V1_.jpg",
+      image_url: "https://image.chewy.com/catalog/general/images/frisco-swirl-dog-crate-mat-gray-42/img-566295._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
     createProduct({
@@ -303,7 +303,7 @@ export default async function seed() {
       price: 30,
       category: "Supplies",
       pet_type: "dog",
-      image_url: "image",//"https://image.chewy.com/catalog/general/images/hoistspark-gps-wireless-fence-system-dog-tracker-black-medium/img-626684._AC_SL496_V1_.jpg",
+      image_url: "https://image.chewy.com/catalog/general/images/hoistspark-gps-wireless-fence-system-dog-tracker-black-medium/img-626684._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
     createProduct({
@@ -313,7 +313,7 @@ export default async function seed() {
       price: 30,
       category: "Supplies",
       pet_type: "dog",
-      image_url: "image",//"https://image.chewy.com/catalog/general/images/trixie-2-way-pet-door-with-lockable-panel-for-dogs-mediumlarge/img-250059._AC_SL496_V1_.jpg",
+      image_url: "https://image.chewy.com/catalog/general/images/trixie-2-way-pet-door-with-lockable-panel-for-dogs-mediumlarge/img-250059._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
 
@@ -326,7 +326,7 @@ export default async function seed() {
       price: 32,
       category: "Supplies",
       pet_type: "dog",
-      image_url: "image",//"https://image.chewy.com/catalog/general/images/clifford-the-big-red-snuggle-buddy-14in-plush-dog-toy-red/img-198419._AC_SL496_V1_.jpg",
+      image_url: "https://image.chewy.com/catalog/general/images/clifford-the-big-red-snuggle-buddy-14in-plush-dog-toy-red/img-198419._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
       createProduct({
@@ -336,7 +336,7 @@ export default async function seed() {
       price: 32,
       category: "Supplies",
       pet_type: "dog",
-      image_url: "image",//"https://image.chewy.com/catalog/general/images/frisco-beef-flavored-twist-bone-nylon-chew-dog-toy-for-heavy-chewers-medium/img-359372._AC_SL496_V1_.jpg
+      image_url: "https://image.chewy.com/catalog/general/images/frisco-beef-flavored-twist-bone-nylon-chew-dog-toy-for-heavy-chewers-medium/img-359372._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
       createProduct({
@@ -346,7 +346,7 @@ export default async function seed() {
       price: 32,
       category: "Supplies",
       pet_type: "dog",
-      image_url: "image",//"https://image.chewy.com/catalog/general/images/sungrow-interactive-outdoor-play-soccer-ball-dog-fetch-toy-with-straps/img-203790._AC_SL496_V1_.jpg
+      image_url: "https://image.chewy.com/catalog/general/images/sungrow-interactive-outdoor-play-soccer-ball-dog-fetch-toy-with-straps/img-203790._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
       createProduct({
@@ -356,7 +356,7 @@ export default async function seed() {
       price: 32,
       category: "Supplies",
       pet_type: "dog",
-      image_url: "image",//"https://image.chewy.com/catalog/general/images/moe/068bf322-7623-7f5c-8000-fc523a720a0e._AC_SL496_V1_.jpg",
+      image_url: "https://image.chewy.com/catalog/general/images/moe/068bf322-7623-7f5c-8000-fc523a720a0e._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
       createProduct({
@@ -366,7 +366,7 @@ export default async function seed() {
       price: 32,
       category: "Supplies",
       pet_type: "dog",
-      image_url: "image",//"https://image.chewy.com/catalog/general/images/moe/068bf322-7623-7f5c-8000-fc523a720a0e._AC_SL496_V1_.jpg",
+      image_url: "https://image.chewy.com/catalog/general/images/moe/068bf322-7623-7f5c-8000-fc523a720a0e._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
       createProduct({
@@ -376,7 +376,7 @@ export default async function seed() {
       price: 32,
       category: "Supplies",
       pet_type: "dog",
-      image_url: "image",//"https://image.chewy.com/catalog/general/images/frisco-fetch-colorful-ball-knot-rope-dog-toy-smallmedium/img-441237._AC_SL496_V1_.jpg",
+      image_url: "https://image.chewy.com/catalog/general/images/frisco-fetch-colorful-ball-knot-rope-dog-toy-smallmedium/img-441237._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
       createProduct({
@@ -386,7 +386,7 @@ export default async function seed() {
       price: 32,
       category: "Supplies",
       pet_type: "dog",
-      image_url: "image",//"https://image.chewy.com/catalog/general/images/moe/068d3c69-e22b-7b22-8000-8df60cf5c874._AC_SL496_V1_.jpg",
+      image_url: "https://image.chewy.com/catalog/general/images/moe/068d3c69-e22b-7b22-8000-8df60cf5c874._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
       createProduct({
@@ -396,7 +396,7 @@ export default async function seed() {
       price: 32,
       category: "Supplies",
       pet_type: "dog",
-      image_url: "image",//"https://image.chewy.com/catalog/general/images/benebone-bacon-flavor-tough-puppy-chew-toy-2-count/img-623246._AC_SL496_V1_.jpg",
+      image_url: "https://image.chewy.com/catalog/general/images/benebone-bacon-flavor-tough-puppy-chew-toy-2-count/img-623246._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
       createProduct({
@@ -406,7 +406,7 @@ export default async function seed() {
       price: 32,
       category: "Supplies",
       pet_type: "dog",
-      image_url: "image",//"https://image.chewy.com/catalog/general/images/rocket-rex-small-medium-breeds-puppy-chew-toy-variety-pack-6-count/img-741509._AC_SL496_V1_.jpg",
+      image_url: "https://image.chewy.com/catalog/general/images/rocket-rex-small-medium-breeds-puppy-chew-toy-variety-pack-6-count/img-741509._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
 
@@ -419,7 +419,7 @@ export default async function seed() {
       price: 65,
       category: "Supplies",
       pet_type: "cat",
-      image_url: "image",//"https://image.chewy.com/catalog/general/images/best-friends-by-sheri-meow-hut-covered-cat-dog-bed-grey-standard/img-134161._AC_SL496_V1_.jpg",
+      image_url: "https://image.chewy.com/catalog/general/images/best-friends-by-sheri-meow-hut-covered-cat-dog-bed-grey-standard/img-134161._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
      createProduct({
@@ -428,7 +428,7 @@ export default async function seed() {
       price: 65,
       category: "Supplies",
       pet_type: "cat",
-      image_url: "image",//https://image.chewy.com/catalog/general/images/moe/068d6acf-e334-7b4a-8000-f3377211967d._AC_SL496_V1_.jpg
+      image_url: "https://image.chewy.com/catalog/general/images/moe/068d6acf-e334-7b4a-8000-f3377211967d._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
      createProduct({
@@ -437,7 +437,7 @@ export default async function seed() {
       price: 65,
       category: "Supplies",
       pet_type: "cat",
-      image_url: "image",//https://image.chewy.com/catalog/general/images/moe/068eea17-ea04-79d7-8000-c2560c87f1a4._AC_SL496_V1_.jpg
+      image_url: "https://image.chewy.com/catalog/general/images/moe/068eea17-ea04-79d7-8000-c2560c87f1a4._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
      createProduct({
@@ -446,7 +446,7 @@ export default async function seed() {
       price: 65,
       category: "Supplies",
       pet_type: "cat",
-      image_url: "image",//https://image.chewy.com/catalog/general/images/moe/068d6acf-e334-7b4a-8000-f3377211967d._AC_SL496_V1_.jpg
+      image_url: "https://image.chewy.com/catalog/general/images/moe/068d6acf-e334-7b4a-8000-f3377211967d._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
     createProduct({
@@ -455,7 +455,7 @@ export default async function seed() {
       price: 65,
       category: "Supplies",
       pet_type: "cat",
-      image_url: "image",//https://image.chewy.com/catalog/general/images/pawspik-indoor-electric-heated-cat-small-dog-bed-sherpa-lined-charcoal-ivory-small/img-724548._AC_SL496_V1_.jpg
+      image_url: "https://image.chewy.com/catalog/general/images/pawspik-indoor-electric-heated-cat-small-dog-bed-sherpa-lined-charcoal-ivory-small/img-724548._AC_SL496_V1_.jpg",
       quantity: 1,
     }),createProduct({
       name: "Fun & Trendy Beds",
@@ -463,7 +463,7 @@ export default async function seed() {
       price: 65,
       category: "Supplies",
       pet_type: "dog",
-      image_url: "image",//https://image.chewy.com/catalog/general/images/armarkat-pumpkin-shape-cat-bed/img-370039._AC_SL496_V1_.jpg
+      image_url: "https://image.chewy.com/catalog/general/images/armarkat-pumpkin-shape-cat-bed/img-370039._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
 
@@ -476,7 +476,7 @@ export default async function seed() {
       price: 16,
       category: "Supplies",
       pet_type: "cat",
-      image_url: "image",//https://image.chewy.com/catalog/general/images/iconic-pet-anti-ant-stainless-steel-non-skid-dog-cat-bowl-2-count-2-cup/img-472832._AC_SL496_V1_.jpg
+      image_url: "https://image.chewy.com/catalog/general/images/iconic-pet-anti-ant-stainless-steel-non-skid-dog-cat-bowl-2-count-2-cup/img-472832._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
      createProduct({
@@ -486,7 +486,7 @@ export default async function seed() {
       price: 16,
       category: "Supplies",
       pet_type: "cat",
-      image_url: "image",//https://image.chewy.com/catalog/general/images/moe/068d5996-e28d-7650-8000-159fbad90d1f._AC_SL496_V1_.jpg
+      image_url: "https://image.chewy.com/catalog/general/images/moe/068d5996-e28d-7650-8000-159fbad90d1f._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
      createProduct({
@@ -496,7 +496,7 @@ export default async function seed() {
       price: 16,
       category: "Supplies",
       pet_type: "cat",
-      image_url: "image",//https://image.chewy.com/catalog/general/images/moe/068d2f90-60f4-7705-8000-bd8edab28161._AC_SL496_V1_.jpg
+      image_url: "https://image.chewy.com/catalog/general/images/moe/068d2f90-60f4-7705-8000-bd8edab28161._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
  createProduct({
@@ -506,7 +506,7 @@ export default async function seed() {
       price: 16,
       category: "Supplies",
       pet_type: "cat",
-      image_url: "image",//https://image.chewy.com/catalog/general/images/moe/0685ab8e-ddd1-7690-8000-2e5be2a7f47e._AC_SL496_V1_.jpg
+      image_url: "https://image.chewy.com/catalog/general/images/moe/0685ab8e-ddd1-7690-8000-2e5be2a7f47e._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
      createProduct({
@@ -516,7 +516,7 @@ export default async function seed() {
       price: 16,
       category: "Supplies",
       pet_type: "cat",
-      image_url: "image",//https://image.chewy.com/catalog/general/images/moe/06819e5a-0604-7578-8000-e1476993be24._AC_SL496_V1_.jpg
+      image_url: "https://image.chewy.com/catalog/general/images/moe/06819e5a-0604-7578-8000-e1476993be24._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
 
@@ -528,7 +528,7 @@ export default async function seed() {
       price: 45,
       category: "Supplies",
       pet_type: "cat",
-      image_url: "image",//"https://image.chewy.com/catalog/general/images/moe/069257f2-1045-79a9-8000-bc35321666c0._AC_SL496_V1_.jpg",
+      image_url: "https://image.chewy.com/catalog/general/images/moe/069257f2-1045-79a9-8000-bc35321666c0._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
 createProduct({
@@ -538,7 +538,7 @@ createProduct({
       price: 45,
       category: "Supplies",
       pet_type: "cat",
-      image_url: "image",//"https://image.chewy.com/catalog/general/images/tavo-pets-crispin-protection-system-dog-cat-kennel-merle-large/img-164726._AC_SL496_V1_.jpg",
+      image_url: "https://image.chewy.com/catalog/general/images/tavo-pets-crispin-protection-system-dog-cat-kennel-merle-large/img-164726._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
      createProduct({
@@ -548,7 +548,7 @@ createProduct({
       price: 45,
       category: "Supplies",
       pet_type: "cat",
-      image_url: "image",//"https://image.chewy.com/catalog/general/images/frisco-travel-safety-dog-cat-carrier-medium/img-494510._AC_SL496_V1_.jpg",
+      image_url: "https://image.chewy.com/catalog/general/images/frisco-travel-safety-dog-cat-carrier-medium/img-494510._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
 createProduct({
@@ -558,7 +558,7 @@ createProduct({
       price: 45,
       category: "Supplies",
       pet_type: "cat",
-      image_url: "image",//"https://image.chewy.com/catalog/general/images/moe/067f7bd9-ed11-7e47-8000-40f6b5b03fae._AC_SL496_V1_.jpg",
+      image_url: "https://image.chewy.com/catalog/general/images/moe/067f7bd9-ed11-7e47-8000-40f6b5b03fae._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
     createProduct({
@@ -568,7 +568,7 @@ createProduct({
       price: 45,
       category: "Supplies",
       pet_type: "cat",
-      image_url: "image",//"https://image.chewy.com/catalog/general/images/frisco-travel-collapsible-silicone-dog-cat-bowl-gray-small-1-5-cup/img-595950._AC_SL496_V1_.jpg",
+      image_url: "https://image.chewy.com/catalog/general/images/frisco-travel-collapsible-silicone-dog-cat-bowl-gray-small-1-5-cup/img-595950._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
 
@@ -581,7 +581,7 @@ createProduct({
       price: 42,
       category: "Supplies",
       pet_type: "cat",
-      image_url: "image",//"https://image.chewy.com/catalog/general/images/safe-cat-snag-proof-polyester-breakaway-cat-collar-with-bell-purple/img-239514._AC_SL496_V1_.jpg
+      image_url: "https://image.chewy.com/catalog/general/images/safe-cat-snag-proof-polyester-breakaway-cat-collar-with-bell-purple/img-239514._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
 createProduct({
@@ -591,7 +591,7 @@ createProduct({
       price: 42,
       category: "Supplies",
       pet_type: "cat",
-      image_url: "image",//"https://image.chewy.com/catalog/general/images/travel-cat-the-true-adventurer-reflective-cat-kitten-harness-leash-red-small/img-504398._AC_SL496_V1_.jpg",
+      image_url: "https://image.chewy.com/catalog/general/images/travel-cat-the-true-adventurer-reflective-cat-kitten-harness-leash-red-small/img-504398._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
     createProduct({
@@ -601,7 +601,7 @@ createProduct({
       price: 42,
       category: "Supplies",
       pet_type: "cat",
-      image_url: "image",//"https://image.chewy.com/catalog/general/images/petsafe-come-with-me-kitty-nylon-cat-harness-bungee-leash-lilacdeep-purple-medium-10-5-to-14in-chest/img-194342._AC_SL496_V1_.jpg",
+      image_url: "https://image.chewy.com/catalog/general/images/petsafe-come-with-me-kitty-nylon-cat-harness-bungee-leash-lilacdeep-purple-medium-10-5-to-14in-chest/img-194342._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
     createProduct({
@@ -611,7 +611,7 @@ createProduct({
       price: 42,
       category: "Supplies",
       pet_type: "cat",
-      image_url: "image",//"https://image.chewy.com/catalog/general/images/gotags-personalized-stainless-steel-with-enamel-paw-design-bone-shaped-pet-id-tag-sage-regular/img-577750._AC_SL496_V1_.jpg",
+      image_url: "https://image.chewy.com/catalog/general/images/gotags-personalized-stainless-steel-with-enamel-paw-design-bone-shaped-pet-id-tag-sage-regular/img-577750._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
 
@@ -624,7 +624,7 @@ createProduct({
       price: 35,
       category: "Supplies",
       pet_type: "cat",
-      image_url: "image",//"https://image.chewy.com/catalog/general/images/moe/0685144d-0e45-7ba8-8000-5411ea16439c._AC_SL496_V1_.jpg",
+      image_url: "https://image.chewy.com/catalog/general/images/moe/0685144d-0e45-7ba8-8000-5411ea16439c._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
     createProduct({
@@ -634,7 +634,7 @@ createProduct({
       price: 42,
       category: "Supplies",
       pet_type: "cat",
-      image_url: "image",//"https://image.chewy.com/catalog/general/images/pet-fit-for-life-2-feathers-1-coon-tail-wand-cat-toy/img-601715._AC_SL496_V1_.jpg",
+      image_url: "https://image.chewy.com/catalog/general/images/pet-fit-for-life-2-feathers-1-coon-tail-wand-cat-toy/img-601715._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
     createProduct({
@@ -644,7 +644,7 @@ createProduct({
       price: 42,
       category: "Supplies",
       pet_type: "cat",
-      image_url: "image",//"https://image.chewy.com/catalog/general/images/earthtone-solutions-felted-wool-cat-ball-toy-6-count/img-152411._AC_SL496_V1_.jpg",
+      image_url: "https://image.chewy.com/catalog/general/images/earthtone-solutions-felted-wool-cat-ball-toy-6-count/img-152411._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
     createProduct({
@@ -654,7 +654,7 @@ createProduct({
       price: 42,
       category: "Supplies",
       pet_type: "cat",
-      image_url: "image",//"https://image.chewy.com/catalog/general/images/moe/06883cd5-c011-79a8-8000-5d8cbec7fb0c._AC_SL496_V1_.jpg",
+      image_url: "https://image.chewy.com/catalog/general/images/moe/06883cd5-c011-79a8-8000-5d8cbec7fb0c._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
     createProduct({
@@ -664,7 +664,7 @@ createProduct({
       price: 42,
       category: "Supplies",
       pet_type: "cat",
-      image_url: "image",//"https://image.chewy.com/catalog/general/images/moe/06883cd7-3509-78d7-8000-8c949cc42886._AC_SL496_V1_.jpg",
+      image_url: "https://image.chewy.com/catalog/general/images/moe/06883cd7-3509-78d7-8000-8c949cc42886._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
     createProduct({
@@ -674,7 +674,7 @@ createProduct({
       price: 42,
       category: "Supplies",
       pet_type: "cat",
-      image_url: "image",//"https://image.chewy.com/catalog/general/images/necoichi-premium-comfort-cat-scratcher-wall-oakbrown-regular/img-627413._AC_SL496_V1_.jpg",
+      image_url: "https://image.chewy.com/catalog/general/images/necoichi-premium-comfort-cat-scratcher-wall-oakbrown-regular/img-627413._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
   ]);
