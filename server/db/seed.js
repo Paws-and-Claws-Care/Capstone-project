@@ -445,7 +445,6 @@ export default async function seed() {
         "https://assets.petco.com/petco/image/upload/c_pad,dpr_1.0,f_auto,q_auto,h_636,w_636/c_pad,h_636,w_636/l_price-drop,fl_relative,w_0.12,g_north_west,e_sharpen/3880496-center-1",
       quantity: 1,
     }),
-    //38 products here
     createProduct({
       name: "Hill's Science Diet Adult Sensitive Stomach & Skin Small & Mini Chicken Recipe Dry Dog Food",
       description:
@@ -577,54 +576,6 @@ export default async function seed() {
       pet_type: "dog",
       image_url:
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQo2UON_Uoif0ZolDWut3HJhAUv3r43oaVtbQ&s",
-      quantity: 1,
-    }),
-    //50 products
-
-    // DOG TREATS
-    createProduct({
-      name: "Busy Bone Jerky Wraps Chew Treats",
-      description: "Made with real beefhide and wrapped in real chicken jerky",
-      price: 15,
-      category: "treats",
-      pet_type: "dog",
-      image_url: "image",
-      quantity: 1,
-    }),
-
-    //CAT TREATS
-    createProduct({
-      name: "Friskies Party Mix Beachside Crunch",
-      description:
-        "Ocean whitefish, shrimp, crab, and tuna - under 2 calories per treat",
-      price: 16,
-      category: "treats",
-      pet_type: "cat",
-      image_url: "image",
-      quantity: 1,
-    }),
-
-    //DOG SUPPLEMENTS
-    createProduct({
-      name: "Purina Pro Plan Veterinary Supplements FortiFlora Canine Health Supplement",
-      description:
-        "Number 1 veterinarian-recommended dog probiotic brand to support digestive health",
-      price: 45,
-      category: "supplements",
-      pet_type: "dog",
-      image_url: "image",
-      quantity: 1,
-    }),
-
-    //CAT SUPPLEMENTS
-    createProduct({
-      name: "Pro Plan Veterinary Supplements Hydra Care Feline Hydration Supplement ",
-      description:
-        "The supplement promotes hydration and increases total fluid intake ",
-      price: 42,
-      category: "supplements",
-      pet_type: "cat",
-      image_url: "image",
       quantity: 1,
     }),
 
@@ -999,9 +950,6 @@ export default async function seed() {
         "https://i5.walmartimages.com/seo/Blue-Buffalo-Tastefuls-Dry-Food-Adult-Indoor-Cat-Chicken-and-Brown-Rice-5-lb-Bag_333ad2b5-1ec8-457f-995f-eaa2394d1257.eaac6d25b73f06a49c405d5aca302781.jpeg?odnHeight=768&odnWidth=768&odnBg=FFFFFF",
       quantity: 1,
     }),
-
-    //34 so far
-
     createProduct({
       name: "Cats in the Kitchen Originals Chicken Frick 'A Zee Chicken Recipe Au Jus Wet Cat Food",
       description:
@@ -1068,10 +1016,10 @@ export default async function seed() {
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJmFrAtHyCqbkP3kv958XOGzeuitHZ50gnMA&s",
       quantity: 1,
     }),
-    //40 created
 
     //SHIKHA PRODUCTS
 
+    //Dog Beds
     createProduct({
       name: "Orthopedic Dog Beds",
       description:
@@ -1079,7 +1027,8 @@ export default async function seed() {
       price: 65,
       category: "Supplies",
       pet_type: "dog",
-      image_url: "image", //"https://image.chewy.com/catalog/general/images/moe/068a853c-d054-7bee-8000-3ad522d7ee54._AC_SL496_V1_.jpg",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/068a853c-d054-7bee-8000-3ad522d7ee54._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
     createProduct({
@@ -1089,7 +1038,8 @@ export default async function seed() {
       price: 65,
       category: "Supplies",
       pet_type: "dog",
-      image_url: "image", //"https://image.chewy.com/catalog/general/images/moe/0691e23d-7a19-7c9e-8000-8d6b91c1022b._AC_SL496_V1_.jpg",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/0691e23d-7a19-7c9e-8000-8d6b91c1022b._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
     createProduct({
@@ -1099,7 +1049,8 @@ export default async function seed() {
       price: 65,
       category: "Supplies",
       pet_type: "dog",
-      image_url: "image", //"https://image.chewy.com/catalog/general/images/moe/068b0b1b-8549-7655-8000-54f4e4acda58._AC_SL496_V1_.jpg",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/068b0b1b-8549-7655-8000-54f4e4acda58._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
     createProduct({
@@ -1109,7 +1060,8 @@ export default async function seed() {
       price: 65,
       category: "Supplies",
       pet_type: "dog",
-      image_url: "image", //"https://image.chewy.com/catalog/general/images/moe/069271f8-a668-7c02-8000-ab91cff4f261._AC_SL496_V1_.jpg",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/069271f8-a668-7c02-8000-ab91cff4f261._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
     createProduct({
@@ -1119,7 +1071,30 @@ export default async function seed() {
       price: 65,
       category: "Supplies",
       pet_type: "dog",
-      image_url: "image", //"https://image.chewy.com/catalog/general/images/friends-forever-luna-donut-faux-fur-cozy-cave-covered-dog-bed-with-hooded-blanket-grey/img-287216._AC_SL496_V1_.jpg",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/friends-forever-luna-donut-faux-fur-cozy-cave-covered-dog-bed-with-hooded-blanket-grey/img-287216._AC_SL496_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Fun & Trendy",
+      description:
+        "Stylish, playful beds that add personality while keeping dogs cozy.",
+      price: 65,
+      category: "Supplies",
+      pet_type: "dog",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/multipet-lamb-chop-bolster-cat-dog-bed-with-removable-cover/img-734328._AC_SL496_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Sofa Beds",
+      description:
+        "Sofa-style beds that offer plush comfort and a cozy place to lounge.",
+      price: 65,
+      category: "Supplies",
+      pet_type: "dog",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/068a853c-d054-7bee-8000-3ad522d7ee54._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
 
@@ -1131,7 +1106,8 @@ export default async function seed() {
       price: 45,
       category: "Supplies",
       pet_type: "dog",
-      image_url: "image", //"https://image.chewy.com/catalog/general/images/frisco-stainless-steel-bowl-medium-4-cup-2-count/img-504070._AC_SL496_V1_.jpg",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/frisco-stainless-steel-bowl-medium-4-cup-2-count/img-504070._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
     createProduct({
@@ -1141,7 +1117,8 @@ export default async function seed() {
       price: 45,
       category: "Supplies",
       pet_type: "dog",
-      image_url: "image", //"https://image.chewy.com/catalog/general/images/moe/0692f3f7-83b8-7a92-8000-83f77e8d93e3._AC_SL496_V1_.jpg",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/0692f3f7-83b8-7a92-8000-83f77e8d93e3._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
     createProduct({
@@ -1151,7 +1128,8 @@ export default async function seed() {
       price: 45,
       category: "Supplies",
       pet_type: "dog",
-      image_url: "image", //"https://image.chewy.com/catalog/general/images/moe/068308fd-e797-7110-8000-288b07a3b90b._AC_SL496_V1_.jpg",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/068308fd-e797-7110-8000-288b07a3b90b._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
     createProduct({
@@ -1161,7 +1139,8 @@ export default async function seed() {
       price: 45,
       category: "Supplies",
       pet_type: "dog",
-      image_url: "image", //"https://image.chewy.com/catalog/general/images/moe/06893761-b9e9-78b8-8000-1c83646171e9._AC_SL496_V1_.jpg",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/06893761-b9e9-78b8-8000-1c83646171e9._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
     createProduct({
@@ -1171,7 +1150,19 @@ export default async function seed() {
       price: 45,
       category: "Supplies",
       pet_type: "dog",
-      image_url: "image", //"https://image.chewy.com/catalog/general/images/petlibro-air-automatic-cat-feeder-with-battery-powered-dog-cat-food-dispenser-black-2-litter/img-311124._AC_SL496_V1_.jpg",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/petlibro-air-automatic-cat-feeder-with-battery-powered-dog-cat-food-dispenser-black-2-litter/img-311124._AC_SL496_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Travel Bowls",
+      description:
+        "Portable, collapsible bowls for on-the-go hydration and feeding.",
+      price: 45,
+      category: "Supplies",
+      pet_type: "dog",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/06940689-7a05-73cb-8000-4afe41ffb7d2._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
 
@@ -1183,7 +1174,8 @@ export default async function seed() {
       price: 54,
       category: "Supplies",
       pet_type: "dog",
-      image_url: "image", //https://image.chewy.com/catalog/general/images/pawfurevers-waterproof-odorless-dog-collar-pink-teal-small/img-368930._AC_SL496_V1_.jpg
+      image_url:
+        "https://image.chewy.com/catalog/general/images/pawfurevers-waterproof-odorless-dog-collar-pink-teal-small/img-368930._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
     createProduct({
@@ -1193,7 +1185,8 @@ export default async function seed() {
       price: 54,
       category: "Supplies",
       pet_type: "dog",
-      image_url: "image", //https://image.chewy.com/catalog/general/images/moe/0691639c-5122-7c2b-8000-2ba354eb4e07._AC_SL496_V1_.jpg
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/0691639c-5122-7c2b-8000-2ba354eb4e07._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
     createProduct({
@@ -1203,7 +1196,8 @@ export default async function seed() {
       price: 54,
       category: "Supplies",
       pet_type: "dog",
-      image_url: "image", //https://image.chewy.com/catalog/general/images/pawtitas-recycled-reflective-dog-leash-teal-large/img-519138._AC_SL496_V1_.jpg
+      image_url:
+        "https://image.chewy.com/catalog/general/images/pawtitas-recycled-reflective-dog-leash-teal-large/img-519138._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
     createProduct({
@@ -1213,7 +1207,8 @@ export default async function seed() {
       price: 54,
       category: "Supplies",
       pet_type: "dog",
-      image_url: "image", //https://image.chewy.com/catalog/general/images/pawfurever-dog-breed-stainless-steel-personalized-dog-id-tag-husky-gold/img-277747._AC_SL496_V1_.jpg
+      image_url:
+        "https://image.chewy.com/catalog/general/images/pawfurever-dog-breed-stainless-steel-personalized-dog-id-tag-husky-gold/img-277747._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
     createProduct({
@@ -1223,7 +1218,8 @@ export default async function seed() {
       price: 54,
       category: "Supplies",
       pet_type: "dog",
-      image_url: "image", //https://image.chewy.com/catalog/general/images/halti-reflective-padded-no-pull-dog-headcollar-cobalt-blue-size-3/img-710880._AC_SL496_V1_.jpg
+      image_url:
+        "https://image.chewy.com/catalog/general/images/halti-reflective-padded-no-pull-dog-headcollar-cobalt-blue-size-3/img-710880._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
     createProduct({
@@ -1233,7 +1229,40 @@ export default async function seed() {
       price: 54,
       category: "Supplies",
       pet_type: "dog",
-      image_url: "image", //https://image.chewy.com/catalog/general/images/industrial-puppy-reflective-service-dog-harness-leash-red-x-large-30-to-39in-chest/img-217969._AC_SL496_V1_.jpg
+      image_url:
+        "https://image.chewy.com/catalog/general/images/industrial-puppy-reflective-service-dog-harness-leash-red-x-large-30-to-39in-chest/img-217969._AC_SL496_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Smart Collars & Training",
+      description:
+        "Smart collars and training tools designed to support safety, tracking, and positive behavior.",
+      price: 54,
+      category: "Supplies",
+      pet_type: "dog",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/bousnic-smart-bark-collar-waterproof-automatic-bark-control-dog-training-collar-black/img-473696._AC_SL496_V1_.jpg",
+    }),
+    createProduct({
+      name: "Tie Outs",
+      description:
+        "Secure tie-outs that give dogs freedom while keeping them safely contained.",
+      price: 54,
+      category: "Supplies",
+      pet_type: "dog",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/frisco-easy-grip-stake-with-tie-out-cable-large-30ft/img-471138._AC_SL496_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Muzzles",
+      description:
+        "Comfortable, secure muzzles for safe handling and controlled outings.",
+      price: 54,
+      category: "Supplies",
+      pet_type: "dog",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/bronzedog-soft-padded-nylon-dog-muzzle-mint-green-medium/img-691155._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
 
@@ -1246,8 +1275,19 @@ export default async function seed() {
       price: 30,
       category: "Supplies",
       pet_type: "dog",
-      image_url: "image", //https://image.chewy.com/catalog/general/images/petmate-two-door-top-load-dog-cat-kennel-tan-24-inches-up-to-15lbs/img-198035._AC_SL496_V1_.jpg
+      image_url:
+        "https://image.chewy.com/catalog/general/images/petmate-two-door-top-load-dog-cat-kennel-tan-24-inches-up-to-15lbs/img-198035._AC_SL496_V1_.jpg",
       quantity: 1,
+    }),
+    createProduct({
+      name: "Pens & Accessories",
+      description:
+        "Flexible, secure solutions for safe play, training, and everyday containment.",
+      price: 30,
+      category: "Supplies",
+      pet_type: "dog",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/06929b3d-55bb-74b2-8000-e24528f6f053._AC_SL496_V1_.jpg",
     }),
     createProduct({
       name: "Dog Houses",
@@ -1256,9 +1296,21 @@ export default async function seed() {
       price: 30,
       category: "Supplies",
       pet_type: "dog",
-      image_url: "image", //https://image.chewy.com/catalog/general/images/frisco-plastic-outdoor-dog-house-with-elevated-platform-x-large/img-503515._AC_SL496_V1_.jpg
+      image_url:
+        "https://image.chewy.com/catalog/general/images/frisco-plastic-outdoor-dog-house-with-elevated-platform-x-large/img-503515._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
+    createProduct({
+      name: "Stair & Steps",
+      description:
+        "Safe, supportive steps that help dogs reach higher places with ease.",
+      price: 30,
+      category: "Supplies",
+      pet_type: "dog",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/petsafe-cozyup-foldable-cat-dog-stairs-grey-large/img-437940._AC_SL496_V1_.jpg",
+    }),
+
     createProduct({
       name: "Ramp & Gates",
       description:
@@ -1266,7 +1318,8 @@ export default async function seed() {
       price: 30,
       category: "Supplies",
       pet_type: "dog",
-      image_url: "image", //https://image.chewy.com/catalog/general/images/carlson-pet-products-heritage-home-indoor-wooden-cat-dog-ramp-rustic-white/img-762601._AC_SL496_V1_.jpg
+      image_url:
+        "https://image.chewy.com/catalog/general/images/carlson-pet-products-heritage-home-indoor-wooden-cat-dog-ramp-rustic-white/img-762601._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
     createProduct({
@@ -1276,7 +1329,8 @@ export default async function seed() {
       price: 30,
       category: "Supplies",
       pet_type: "dog",
-      image_url: "image", //https://image.chewy.com/catalog/general/images/frisco-swirl-dog-crate-mat-gray-42/img-566295._AC_SL496_V1_.jpg
+      image_url:
+        "https://image.chewy.com/catalog/general/images/frisco-swirl-dog-crate-mat-gray-42/img-566295._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
     createProduct({
@@ -1286,7 +1340,19 @@ export default async function seed() {
       price: 30,
       category: "Supplies",
       pet_type: "dog",
-      image_url: "image", //https://image.chewy.com/catalog/general/images/hoistspark-gps-wireless-fence-system-dog-tracker-black-medium/img-626684._AC_SL496_V1_.jpg
+      image_url:
+        "https://image.chewy.com/catalog/general/images/hoistspark-gps-wireless-fence-system-dog-tracker-black-medium/img-626684._AC_SL496_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Doors & Accessories",
+      description:
+        "Reliable solutions for secure access and containment, indoors or outdoors.",
+      price: 30,
+      category: "Supplies",
+      pet_type: "dog",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/trixie-2-way-pet-door-with-lockable-panel-for-dogs-mediumlarge/img-250059._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
 
@@ -1298,7 +1364,8 @@ export default async function seed() {
       price: 32,
       category: "Supplies",
       pet_type: "dog",
-      image_url: "image", //https://image.chewy.com/catalog/general/images/clifford-the-big-red-snuggle-buddy-14in-plush-dog-toy-red/img-198419._AC_SL496_V1_.jpg
+      image_url:
+        "https://image.chewy.com/catalog/general/images/clifford-the-big-red-snuggle-buddy-14in-plush-dog-toy-red/img-198419._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
     createProduct({
@@ -1308,7 +1375,8 @@ export default async function seed() {
       price: 32,
       category: "Supplies",
       pet_type: "dog",
-      image_url: "image", //https://image.chewy.com/catalog/general/images/frisco-beef-flavored-twist-bone-nylon-chew-dog-toy-for-heavy-chewers-medium/img-359372._AC_SL496_V1_.jpg
+      image_url:
+        "https://image.chewy.com/catalog/general/images/frisco-beef-flavored-twist-bone-nylon-chew-dog-toy-for-heavy-chewers-medium/img-359372._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
     createProduct({
@@ -1318,7 +1386,8 @@ export default async function seed() {
       price: 32,
       category: "Supplies",
       pet_type: "dog",
-      image_url: "image", //https://image.chewy.com/catalog/general/images/sungrow-interactive-outdoor-play-soccer-ball-dog-fetch-toy-with-straps/img-203790._AC_SL496_V1_.jpg
+      image_url:
+        "https://image.chewy.com/catalog/general/images/sungrow-interactive-outdoor-play-soccer-ball-dog-fetch-toy-with-straps/img-203790._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
     createProduct({
@@ -1328,19 +1397,84 @@ export default async function seed() {
       price: 32,
       category: "Supplies",
       pet_type: "dog",
-      image_url: "image", //https://image.chewy.com/catalog/general/images/moe/068bf322-7623-7f5c-8000-fc523a720a0e._AC_SL496_V1_.jpg
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/068bf322-7623-7f5c-8000-fc523a720a0e._AC_SL496_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Puzzle Toys",
+      description:
+        "Mental stimulation and problem-solving fun to challenge curious dogs.",
+      price: 32,
+      category: "Supplies",
+      pet_type: "dog",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/068bf322-7623-7f5c-8000-fc523a720a0e._AC_SL496_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Rope & Tug Toys",
+      description:
+        "Durable toys designed for interactive play and tugging fun.",
+      price: 32,
+      category: "Supplies",
+      pet_type: "dog",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/frisco-fetch-colorful-ball-knot-rope-dog-toy-smallmedium/img-441237._AC_SL496_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Treat Dispensing Toys",
+      description:
+        "Interactive toys that reward play while keeping dogs engaged.",
+      price: 32,
+      category: "Supplies",
+      pet_type: "dog",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/068d3c69-e22b-7b22-8000-8df60cf5c874._AC_SL496_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Puppy Toys",
+      description: "Gentle, durable toys designed for teething and early play.",
+      price: 32,
+      category: "Supplies",
+      pet_type: "dog",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/benebone-bacon-flavor-tough-puppy-chew-toy-2-count/img-623246._AC_SL496_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Variety Packs",
+      description: "A mix of toys for chewing, fetching, and endless fun.",
+      price: 32,
+      category: "Supplies",
+      pet_type: "dog",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/rocket-rex-small-medium-breeds-puppy-chew-toy-variety-pack-6-count/img-741509._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
 
     // Cat Beds
-
+    createProduct({
+      name: "Covered Beds",
+      description:
+        "Cozy, enclosed beds that give cats a warm and secure place to rest.",
+      price: 65,
+      category: "Supplies",
+      pet_type: "cat",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/best-friends-by-sheri-meow-hut-covered-cat-dog-bed-grey-standard/img-134161._AC_SL496_V1_.jpg",
+      quantity: 1,
+    }),
     createProduct({
       name: "Bolster Beds",
       description: "Cozy beds with raised edges for head and neck support.",
       price: 65,
       category: "Supplies",
       pet_type: "cat",
-      image_url: "image", //https://image.chewy.com/catalog/general/images/moe/068d6acf-e334-7b4a-8000-f3377211967d._AC_SL496_V1_.jpg
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/068d6acf-e334-7b4a-8000-f3377211967d._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
     createProduct({
@@ -1350,7 +1484,8 @@ export default async function seed() {
       price: 65,
       category: "Supplies",
       pet_type: "cat",
-      image_url: "image", //https://image.chewy.com/catalog/general/images/moe/068eea17-ea04-79d7-8000-c2560c87f1a4._AC_SL496_V1_.jpg
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/068eea17-ea04-79d7-8000-c2560c87f1a4._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
     createProduct({
@@ -1360,7 +1495,8 @@ export default async function seed() {
       price: 65,
       category: "Supplies",
       pet_type: "cat",
-      image_url: "image", //https://image.chewy.com/catalog/general/images/moe/068d6acf-e334-7b4a-8000-f3377211967d._AC_SL496_V1_.jpg
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/068d6acf-e334-7b4a-8000-f3377211967d._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
     createProduct({
@@ -1369,7 +1505,8 @@ export default async function seed() {
       price: 65,
       category: "Supplies",
       pet_type: "cat",
-      image_url: "image", //https://image.chewy.com/catalog/general/images/pawspik-indoor-electric-heated-cat-small-dog-bed-sherpa-lined-charcoal-ivory-small/img-724548._AC_SL496_V1_.jpg
+      image_url:
+        "https://image.chewy.com/catalog/general/images/pawspik-indoor-electric-heated-cat-small-dog-bed-sherpa-lined-charcoal-ivory-small/img-724548._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
     createProduct({
@@ -1379,7 +1516,8 @@ export default async function seed() {
       price: 65,
       category: "Supplies",
       pet_type: "dog",
-      image_url: "image", //https://image.chewy.com/catalog/general/images/armarkat-pumpkin-shape-cat-bed/img-370039._AC_SL496_V1_.jpg
+      image_url:
+        "https://image.chewy.com/catalog/general/images/armarkat-pumpkin-shape-cat-bed/img-370039._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
 
@@ -1391,7 +1529,8 @@ export default async function seed() {
       price: 16,
       category: "Supplies",
       pet_type: "cat",
-      image_url: "image", //https://image.chewy.com/catalog/general/images/iconic-pet-anti-ant-stainless-steel-non-skid-dog-cat-bowl-2-count-2-cup/img-472832._AC_SL496_V1_.jpg
+      image_url:
+        "https://image.chewy.com/catalog/general/images/iconic-pet-anti-ant-stainless-steel-non-skid-dog-cat-bowl-2-count-2-cup/img-472832._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
     createProduct({
@@ -1400,7 +1539,8 @@ export default async function seed() {
       price: 16,
       category: "Supplies",
       pet_type: "cat",
-      image_url: "image", //https://image.chewy.com/catalog/general/images/moe/068d5996-e28d-7650-8000-159fbad90d1f._AC_SL496_V1_.jpg
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/068d5996-e28d-7650-8000-159fbad90d1f._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
     createProduct({
@@ -1410,7 +1550,8 @@ export default async function seed() {
       price: 16,
       category: "Supplies",
       pet_type: "cat",
-      image_url: "image", //https://image.chewy.com/catalog/general/images/moe/068d2f90-60f4-7705-8000-bd8edab28161._AC_SL496_V1_.jpg
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/068d2f90-60f4-7705-8000-bd8edab28161._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
     createProduct({
@@ -1419,7 +1560,8 @@ export default async function seed() {
       price: 16,
       category: "Supplies",
       pet_type: "cat",
-      image_url: "image", //https://image.chewy.com/catalog/general/images/moe/0685ab8e-ddd1-7690-8000-2e5be2a7f47e._AC_SL496_V1_.jpg
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/0685ab8e-ddd1-7690-8000-2e5be2a7f47e._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
     createProduct({
@@ -1429,7 +1571,8 @@ export default async function seed() {
       price: 16,
       category: "Supplies",
       pet_type: "cat",
-      image_url: "image", //https://image.chewy.com/catalog/general/images/moe/06819e5a-0604-7578-8000-e1476993be24._AC_SL496_V1_.jpg
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/06819e5a-0604-7578-8000-e1476993be24._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
 
@@ -1440,7 +1583,8 @@ export default async function seed() {
       price: 45,
       category: "Supplies",
       pet_type: "cat",
-      image_url: "image", //https://image.chewy.com/catalog/general/images/moe/069257f2-1045-79a9-8000-bc35321666c0._AC_SL496_V1_.jpg
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/069257f2-1045-79a9-8000-bc35321666c0._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
     createProduct({
@@ -1449,7 +1593,19 @@ export default async function seed() {
       price: 45,
       category: "Supplies",
       pet_type: "cat",
-      image_url: "image", //https://image.chewy.com/catalog/general/images/tavo-pets-crispin-protection-system-dog-cat-kennel-merle-large/img-164726._AC_SL496_V1_.jpg
+      image_url:
+        "https://image.chewy.com/catalog/general/images/tavo-pets-crispin-protection-system-dog-cat-kennel-merle-large/img-164726._AC_SL496_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Car Accessories",
+      description:
+        "Essential travel gear that keeps cats safe and comfortable on the road.",
+      price: 45,
+      category: "Supplies",
+      pet_type: "cat",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/frisco-travel-safety-dog-cat-carrier-medium/img-494510._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
     createProduct({
@@ -1459,7 +1615,8 @@ export default async function seed() {
       price: 45,
       category: "Supplies",
       pet_type: "cat",
-      image_url: "image", //https://image.chewy.com/catalog/general/images/moe/067f7bd9-ed11-7e47-8000-40f6b5b03fae._AC_SL496_V1_.jpg
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/067f7bd9-ed11-7e47-8000-40f6b5b03fae._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
     createProduct({
@@ -1469,7 +1626,8 @@ export default async function seed() {
       price: 45,
       category: "Supplies",
       pet_type: "cat",
-      image_url: "image", //https://image.chewy.com/catalog/general/images/frisco-travel-collapsible-silicone-dog-cat-bowl-gray-small-1-5-cup/img-595950._AC_SL496_V1_.jpg
+      image_url:
+        "https://image.chewy.com/catalog/general/images/frisco-travel-collapsible-silicone-dog-cat-bowl-gray-small-1-5-cup/img-595950._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
 
@@ -1481,7 +1639,8 @@ export default async function seed() {
       price: 42,
       category: "Supplies",
       pet_type: "cat",
-      image_url: "image", //https://image.chewy.com/catalog/general/images/safe-cat-snag-proof-polyester-breakaway-cat-collar-with-bell-purple/img-239514._AC_SL496_V1_.jpg
+      image_url:
+        "https://image.chewy.com/catalog/general/images/safe-cat-snag-proof-polyester-breakaway-cat-collar-with-bell-purple/img-239514._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
     createProduct({
@@ -1491,7 +1650,8 @@ export default async function seed() {
       price: 42,
       category: "Supplies",
       pet_type: "cat",
-      image_url: "image", //https://image.chewy.com/catalog/general/images/travel-cat-the-true-adventurer-reflective-cat-kitten-harness-leash-red-small/img-504398._AC_SL496_V1_.jpg
+      image_url:
+        "https://image.chewy.com/catalog/general/images/travel-cat-the-true-adventurer-reflective-cat-kitten-harness-leash-red-small/img-504398._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
     createProduct({
@@ -1501,7 +1661,8 @@ export default async function seed() {
       price: 42,
       category: "Supplies",
       pet_type: "cat",
-      image_url: "image", //https://image.chewy.com/catalog/general/images/petsafe-come-with-me-kitty-nylon-cat-harness-bungee-leash-lilacdeep-purple-medium-10-5-to-14in-chest/img-194342._AC_SL496_V1_.jpg
+      image_url:
+        "https://image.chewy.com/catalog/general/images/petsafe-come-with-me-kitty-nylon-cat-harness-bungee-leash-lilacdeep-purple-medium-10-5-to-14in-chest/img-194342._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
     createProduct({
@@ -1510,7 +1671,8 @@ export default async function seed() {
       price: 42,
       category: "Supplies",
       pet_type: "cat",
-      image_url: "image", //https://image.chewy.com/catalog/general/images/gotags-personalized-stainless-steel-with-enamel-paw-design-bone-shaped-pet-id-tag-sage-regular/img-577750._AC_SL496_V1_.jpg
+      image_url:
+        "https://image.chewy.com/catalog/general/images/gotags-personalized-stainless-steel-with-enamel-paw-design-bone-shaped-pet-id-tag-sage-regular/img-577750._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
 
@@ -1521,7 +1683,8 @@ export default async function seed() {
       price: 35,
       category: "Supplies",
       pet_type: "cat",
-      image_url: "image", //https://image.chewy.com/catalog/general/images/moe/0685144d-0e45-7ba8-8000-5411ea16439c._AC_SL496_V1_.jpg
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/0685144d-0e45-7ba8-8000-5411ea16439c._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
     createProduct({
@@ -1530,7 +1693,8 @@ export default async function seed() {
       price: 42,
       category: "Supplies",
       pet_type: "cat",
-      image_url: "image", //https://image.chewy.com/catalog/general/images/pet-fit-for-life-2-feathers-1-coon-tail-wand-cat-toy/img-601715._AC_SL496_V1_.jpg
+      image_url:
+        "https://image.chewy.com/catalog/general/images/pet-fit-for-life-2-feathers-1-coon-tail-wand-cat-toy/img-601715._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
     createProduct({
@@ -1539,7 +1703,8 @@ export default async function seed() {
       price: 42,
       category: "Supplies",
       pet_type: "cat",
-      image_url: "image", //https://image.chewy.com/catalog/general/images/earthtone-solutions-felted-wool-cat-ball-toy-6-count/img-152411._AC_SL496_V1_.jpg
+      image_url:
+        "https://image.chewy.com/catalog/general/images/earthtone-solutions-felted-wool-cat-ball-toy-6-count/img-152411._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
     createProduct({
@@ -1548,7 +1713,8 @@ export default async function seed() {
       price: 42,
       category: "Supplies",
       pet_type: "cat",
-      image_url: "image", //https://image.chewy.com/catalog/general/images/moe/06883cd5-c011-79a8-8000-5d8cbec7fb0c._AC_SL496_V1_.jpg
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/06883cd5-c011-79a8-8000-5d8cbec7fb0c._AC_SL496_V1_.jpg",
       quantity: 1,
     }),
     createProduct({
@@ -1557,7 +1723,1736 @@ export default async function seed() {
       price: 42,
       category: "Supplies",
       pet_type: "cat",
-      image_url: "image", //https://image.chewy.com/catalog/general/images/moe/06883cd7-3509-78d7-8000-8c949cc42886._AC_SL496_V1_.jpg
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/06883cd7-3509-78d7-8000-8c949cc42886._AC_SL496_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Scratchers Toys",
+      description:
+        "Durable scratchers that satisfy your cat's natural urge to scratch.",
+      price: 42,
+      category: "Supplies",
+      pet_type: "cat",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/necoichi-premium-comfort-cat-scratcher-wall-oakbrown-regular/img-627413._AC_SL496_V1_.jpg",
+      quantity: 1,
+    }),
+
+    //KATELYN PRODUCTS
+
+    createProduct({
+      name: "Greenies Original Regular Size",
+      description: "Adult Natural Dental Dog Treats, 36 oz",
+      price: 36,
+      category: "treats",
+      pet_type: "dog",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/0691c86a-89c5-731d-8000-3a1b9663a46d._AC_SL1200_QL100_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Blue Buffalo True Chews",
+      description:
+        "Premium Jerky Cuts with Natural Ingredients Chicken Dog Treats, 32 oz.",
+      price: 18,
+      category: "treats",
+      pet_type: "dog",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/068dd87b-19c8-7738-8000-d0ee074426e3._AC_SL1200_QL100_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Blue Buffalo",
+      description: "Nudges Grillers Chicken Dog Treats, 16 oz.",
+      price: 15,
+      category: "treats",
+      pet_type: "dog",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/0693c33a-2235-7224-8000-04aa8ea0a20a._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Butcher's Naturals",
+      description: "Slow Roasted Salmon Jerky Dog Treats, 16 oz.",
+      price: 12,
+      category: "treats",
+      pet_type: "dog",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/butchers-naturals-slow-roasted-salmon-jerky-dog-treats-16oz-bag/img-713599._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Butcher's Naturals",
+      description: "Dry Pig Ears Dog Treats, 14 oz.",
+      price: 20,
+      category: "treats",
+      pet_type: "dog",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/butchers-naturals-dry-pig-ears-dog-treats-14oz-bag/img-576804._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Good 'n' Fun",
+      description:
+        "Triple Flavor Kabobs Chicken, Duck & Chicken Liver Dog Treat Chews, 18 oz.",
+      price: 9,
+      category: "treats",
+      pet_type: "dog",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/good-n-fun-triple-flavor-kabobs-chicken-duck-chicken-liver-dog-chews-18-count/img-421537._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Blue Buffalo",
+      description:
+        "Health Bars Baked with Apples & Yogurt Dog Treats, 1-lb bag",
+      price: 5,
+      category: "treats",
+      pet_type: "dog",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/0686d745-1a19-7739-8000-8182c48918b2._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Vital Essentials",
+      description: "Beef Liver Freeze-Dried Dog Treats, 2 oz.",
+      price: 6,
+      category: "treats",
+      pet_type: "dog",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/068e3d7d-aa74-76b7-8000-cf496b309bc4._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Milk-Bone",
+      description: "Soft & Chewy Beef & Filet Mignon Recipe Dog Treats, 25 oz.",
+      price: 15,
+      category: "treats",
+      pet_type: "dog",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/06891102-da44-7f42-8000-5b76f3024600._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    //10
+    createProduct({
+      name: "Savory Prime",
+      description: "Beggar Bones 3 in 1 Chicken Wings Dog Treats, 10 count",
+      price: 13,
+      category: "treats",
+      pet_type: "dog",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/06941719-3ec3-786b-8000-3c523a12e779._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Gunnis Taste of Iceland",
+      description: "Wolffish Baby Bites Dehydrated Dog Treats, 2.5 oz.",
+      price: 12,
+      category: "treats",
+      pet_type: "dog",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/06939ce0-8292-7c84-8000-964c9d6be62f._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Wanpy Prime",
+      description:
+        "All Natural Air-Dried Duck Grain-Free Jerky Dog Treats, 3.5 oz.",
+      price: 6,
+      category: "treats",
+      pet_type: "dog",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/0690b77b-61f2-7b07-8000-93bb3bd3b2ed._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Milk Bone",
+      description: "Dunkin' Vanilla Glaze Flavor Dog Treats, 8 oz.",
+      price: 5,
+      category: "treats",
+      pet_type: "dog",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/067d2dff-7f05-7d62-8000-396413b2fdc3._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Pork Chomps",
+      description: "Munchy Sticks Dog Treats, 50 count",
+      price: 6,
+      category: "treats",
+      pet_type: "dog",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/pork-chomps-munchy-sticks-dog-treats-50-count/img-623679._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Portland Pet Food Company",
+      description:
+        "Pumpkin Biscuits Grain-Free & Gluten-Free Dog Treats, 5 oz.",
+      price: 10,
+      category: "treats",
+      pet_type: "dog",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/portland-pet-food-company-pumpkin-biscuits-grain-free-gluten-free-dog-treats-5oz-bag/img-508695._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Newman's Own",
+      description:
+        "Bacon & Berries Recipe Woofles Soft & Chewy Dog Treats, 10 oz.",
+      price: 10,
+      category: "treats",
+      pet_type: "dog",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/newmans-own-bacon-berries-recipe-woofles-soft-chewy-dog-treats-10oz-bag/img-260282._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Dream Bone",
+      description:
+        "Sprials Variety Pack Real Chicken, Beef & Prok Rawhide Free Dog Chews, 18 count",
+      price: 9,
+      category: "treats",
+      pet_type: "dog",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/0691dd73-5101-717e-8000-5e0869712015._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Pup-Peroni",
+      description: "Original Beef Flaor Dog Treats, 22.5 oz.",
+      price: 12,
+      category: "treats",
+      pet_type: "dog",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/067f563d-14f5-769a-8000-848ec4208634._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Poochie Butter",
+      description: "Peanut Butter Blueberry Lickable Dog Treat, 12 oz jar.",
+      price: 9,
+      category: "treats",
+      pet_type: "dog",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/068f7e49-2529-7e3b-8000-728119619fd2._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    //20
+    createProduct({
+      name: "Milk-Bone",
+      description: "MaroSnacks Real Bone Marrow Dog Treats, 40 oz tub",
+      price: 12,
+      category: "treats",
+      pet_type: "dog",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/067d8904-08ff-7d65-8000-58a851a7aabf._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Jack & Pup",
+      description: "Tripe Twist 6-in Dog Chew",
+      price: 2,
+      category: "treats",
+      pet_type: "dog",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/067f93ba-f935-7972-8000-71bc96004e36._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Canine Carry Outs",
+      description: "Cupid Valentine's Cookies Dog Treats, 4.5 oz.",
+      price: 2,
+      category: "treats",
+      pet_type: "dog",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/canine-carry-outs-cupid-valentines-cookies-dog-treats-4-5oz-bag/img-496414._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Wholesome Pride Pet Treats",
+      description:
+        "Sweet Potato Fries All-Natural Single INgredient Dog Treats, 8 oz.",
+      price: 10,
+      category: "treats",
+      pet_type: "dog",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/wholesome-pride-pet-treats-sweet-potato-fries-all-natural-single-ingredient-dog-treats-8oz-bag/img-165343._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Bundle: Variety Pack - Buffallo Health Bars",
+      description:
+        "Baked with Banana & Yogurt Dog Treats, Pumpkin & Cinnamon & Apples & Yogurt Flavors",
+      price: 14,
+      category: "treats",
+      pet_type: "dog",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/variety-pack-blue-buffalo-health-bars-baked-with-banana-yogurt-dog-treats-pumpkin-cinnamon-apples-yogurt-flavors/img-381702._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Three Dog Bakery",
+      description:
+        "Soft Baked Woofers Grain-Free Peanut Butter Banana Dog Treats, 13 oz.",
+      price: 6,
+      category: "treats",
+      pet_type: "dog",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/068b0681-9778-7de6-8000-09ec9f301225._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Smart Bones",
+      description: "Twist Sticks Peanut Butter Flavor Dog Treats, 50 count",
+      price: 8,
+      category: "treats",
+      pet_type: "dog",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/smartbones-twist-sticks-peanut-butter-flavor-dog-treats-50-count/img-330945._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Milk-Bone",
+      description:
+        "Peanut Buttery Bites Real Peanut Butter & Bacon Soft & Chewy Dog Treats, 4.5 oz.",
+      price: 3,
+      category: "treats",
+      pet_type: "dog",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/milk-bone-peanut-buttery-bites-real-peanut-butter-bacon-soft-chewy-dog-treats-4-5oz-bag/img-719248._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Buddy Biscuits",
+      description: "Softies with Peanut Butter Soft & Chewy Dog Treats, 6 oz.",
+      price: 3,
+      category: "treats",
+      pet_type: "dog",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/buddy-biscuits-softies-with-peanut-butter-soft-chewy-dog-treats-6oz-bag/img-344325._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Hartz",
+      description:
+        "Oinkies Hearty Kabobs with 100% Real Chicken & Duck Carrot & Sweet Potato Rawhide-Free Natural Dog Treats, 18 count.",
+      price: 12,
+      category: "treats",
+      pet_type: "dog",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/hartz-oinkies-hearty-kabobs-with-100-real-chicken-duck-carrot-sweet-potato-rawhide-free-natural-dog-treats-18-count/img-782708._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    //30
+    createProduct({
+      name: "PupCorn",
+      description: "Plus Bacon & Peanut Butter Flavor Dog Treats, 4 oz.",
+      price: 3,
+      category: "treats",
+      pet_type: "dog",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/06913162-c978-76f7-8000-807316cae9dd._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "DentaLife",
+      description:
+        "Daily Oral Care Chicken Flavor Small/Medium Adult Dental Treats, 40 count pouch",
+      price: 13,
+      category: "treats",
+      pet_type: "dog",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/0685599d-77da-7353-8000-9e8d91a2ed61._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Milk-Bone",
+      description:
+        "Mini's Flavor Snacks Beef, Chicken & Bacon Flavored Biscuit Dog Treats, 36 oz tub.",
+      price: 12,
+      category: "treats",
+      pet_type: "dog",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/0670e71d-ce99-701d-8000-71e1beb96c5e._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Full Moon",
+      description:
+        "All Natural Human Grade Beef Savory Sticks Dog Treats, 22 oz.",
+      price: 18,
+      category: "treats",
+      pet_type: "dog",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/full-moon-all-natural-human-grade-beef-savory-sticks-dog-treats-22oz-bag/img-335854._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Rachael Ray Nutrish",
+      description:
+        "Turkey Bites Hickory Smoke Bacon Recipe Grain-Free Dog Treats, 5 oz.",
+      price: 6,
+      category: "treats",
+      pet_type: "dog",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/rachael-ray-nutrish-turkey-bites-hickory-smoke-bacon-recipe-grain-free-dog-treats-5oz-bag/img-538313._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Nutrish",
+      description:
+        "Burger Bites, Beef Burger with Bison Grain-Free Dog Treats, 12 oz.",
+      price: 10,
+      category: "treats",
+      pet_type: "dog",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/0694e9f6-7599-73c8-8000-61f7b86fee31._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Bones & Chews",
+      description: "Pig Ear Chews Dog Treats, 1 count",
+      price: 3,
+      category: "treats",
+      pet_type: "dog",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/bones-chews-pig-ear-chews-dog-treats-1-count/img-375355._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "DreamBone",
+      description:
+        "CollaYUMS Twist Plus Collagen Chicken & Peanut Butter Flavor Rawhide Free Dog Chews, 20 count",
+      price: 9,
+      category: "treats",
+      pet_type: "dog",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/068b89a2-58ff-7f5a-8000-2017bcd60047._AC_SL248_V1_.jpgs",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Healthfuls",
+      description: "Salmon Fillets Dog Treats, 3.5 oz.",
+      price: 4,
+      category: "treats",
+      pet_type: "dog",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/healthfuls-salmon-fillets-dog-treats-3-5oz-bag/img-322441._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Ultra Chewy",
+      description:
+        "Double treat Bone Peanut Butter Flavor Dog Treats, 8 count.",
+      price: 8,
+      category: "treats",
+      pet_type: "dog",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/ultra-chewy-double-treat-bone-peanut-butter-flavor-dog-treats-8-count/img-750298._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    //40
+    createProduct({
+      name: "Blue Buffalo",
+      description: "Be Mine Oatmeal & Cinnamon Crunchy Dog Treats, 11 oz.",
+      price: 6,
+      category: "treats",
+      pet_type: "dog",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/068cbdda-cdd7-7405-8000-15b4da123f55._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Fruitables",
+      description: "Pumpkin & Blueberry Flavor Dog Treats, 7 oz.",
+      price: 4,
+      category: "treats",
+      pet_type: "dog",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/068a782a-78f5-7fbb-8000-93e4009bff65._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "TruRanch",
+      description: "Bully Collagen Sticks Dog Treats, 5-in, 15 count.",
+      price: 5,
+      category: "treats",
+      pet_type: "dog",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/truranch-bully-collagen-sticks-dog-treats-5in-15-count/img-543278._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Full Moon",
+      description: "Chicken Jerky Human-Grade Dog Treats, 24 oz.",
+      price: 27,
+      category: "treats",
+      pet_type: "dog",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/full-moon-chicken-jerky-human-grade-dog-treats-24oz-bag/img-780365._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Three Dog Bakery",
+      description: "Blueberry Pancake Soft Baked Dog Treats, 25 oz.",
+      price: 15,
+      category: "treats",
+      pet_type: "dog",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/three-dog-bakery-blueberry-pancake-soft-chewy-dog-treats-25oz-bag/img-589294._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Hartz",
+      description:
+        "Oinkies Chew Bones with 100% Real Chicken Breast Rawhide-Free Natural Dog Treats, 25 count.",
+      price: 15,
+      category: "treats",
+      pet_type: "dog",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/067dac6a-e010-7070-8000-3ebcec7db97b._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Newman's Own",
+      description:
+        "Snack Sticks Chicken & Sweet Potato Recipe Grain-Free Dog Treats, 5 oz.",
+      price: 4,
+      category: "treats",
+      pet_type: "dog",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/newmans-own-snack-sticks-chicken-sweet-potato-recipe-grain-free-dog-treats-5oz-bag/img-181074._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Blue Buffalo",
+      description:
+        "Soft & Chewy Health Bars Chicken & Mixed Berries Dog Treats, 9 oz.",
+      price: 6,
+      category: "treats",
+      pet_type: "dog",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/0691f6fc-9c27-7c0f-8000-7d91cefb9feb._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Bones & Chews",
+      description: "Made in USA Roasted Marrow Bone 6-in Dog Treat, 1 count.",
+      price: 6,
+      category: "treats",
+      pet_type: "dog",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/bones-chews-made-in-usa-roasted-marrow-bone-6-dog-treat-1-count/img-372174._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Purina Beneful",
+      description:
+        "Baked Belights Hugs with Real Beef & Cheese Dog Treats, 19 oz.",
+      price: 7,
+      category: "treats",
+      pet_type: "dog",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/068e52c2-9d0c-7b43-8000-82ae1f4c2d6a._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    //50
+    createProduct({
+      name: "Nutrish",
+      description: "Soup Bones Premium Beef & Barley Flavor Dog Treats, 23 oz.",
+      price: 10,
+      category: "treats",
+      pet_type: "dog",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/06889012-660d-7f6c-8000-2b4aefe08908._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Redbarn",
+      description: "Medium Barky Bark Dog Treats, 6 count",
+      price: 7,
+      category: "treats",
+      pet_type: "dog",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/068308ef-ec8f-7eba-8000-f698573a0c72._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Blue Buffalo",
+      description: "Nudges Grillers Chicken Dog Treats, 16 oz.",
+      price: 15,
+      category: "treats",
+      pet_type: "dog",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/0693c33a-2235-7224-8000-04aa8ea0a20a._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Bocce's Bakery",
+      description:
+        "Birthday Peanut Buttter, Molasses & Vanilla Cake Dog Treats, 5 oz.",
+      price: 7,
+      category: "treats",
+      pet_type: "dog",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/bocces-bakery-birthday-peanut-butter-molasses-vanilla-cake-dog-treats-5oz-bag/img-579806._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Rachael Ray Nutrish",
+      description:
+        "Turkey Bites Hickory Smoke Bacon Recipe Grain-Free Dog Treats, 5 oz.",
+      price: 6,
+      category: "treats",
+      pet_type: "dog",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/rachael-ray-nutrish-turkey-bites-hickory-smoke-bacon-recipe-grain-free-dog-treats-5oz-bag/img-538313._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Waggin' Train",
+      description:
+        "Duck Jercy Tenders Sensitive Stomach Duck Grain-Free High-Protein Jerky Dog Treats, 12 oz.",
+      price: 11,
+      category: "treats",
+      pet_type: "dog",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/waggin-train-duck-jerky-tenders-sensitive-stomach-duck-grain-free-high-protein-jerky-dog-treats-12oz-bag/img-517412._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Redbarn",
+      description: "Bully Slices Peanut Butter Flavor Beef God Treats, 9 oz.",
+      price: 13,
+      category: "treats",
+      pet_type: "dog",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/067ed773-bb96-706d-8000-90f5b4e046f9._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Racheal Ray Nutrish",
+      description:
+        "Soup Bones Long Lasting Chews Variety Pack Dog Treats, 22 count.",
+      price: 22,
+      category: "treats",
+      pet_type: "dog",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/rachael-ray-nutrish-soup-bones-long-lasting-chews-variety-pack-dog-treats-22-count/img-615131._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Jack & Pup",
+      description: "Joint Health 6-inch Beef Gullet Sticks Dog Treat, 1 count",
+      price: 2,
+      category: "treats",
+      pet_type: "dog",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/067beefa-9752-7956-8000-5578a64c508b._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Busy Bone",
+      description:
+        "Peanut Butter Flavor Long-Lasting Chew Adult Small/Medium Dog Treats, 10 count pouch.",
+      price: 16,
+      category: "treats",
+      pet_type: "dog",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/0684832e-dde6-732d-8000-b2d4bcacccc9._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    //60
+
+    //*********CAT TREATS*********//
+    createProduct({
+      name: "Fiskies",
+      description: "Party Mix Natural Yums with Real Tuna Cat Treats, 20 oz.",
+      price: 9,
+      category: "treats",
+      pet_type: "cat",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/friskies-party-mix-natural-yums-with-real-tuna-cat-treats-20oz-tub/img-222203._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Temptations",
+      description:
+        "MixUps Catnip Fever Flavor Soft & Crunchy Cat Treats, 30 oz.",
+      price: 15,
+      category: "treats",
+      pet_type: "cat",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/06916365-f083-784e-8000-01620133be6b._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Temptations",
+      description:
+        "MixUps Catnip Backyard Cookout Flavor Soft & Crunchy Cat Treats, 30 oz.",
+      price: 15,
+      category: "treats",
+      pet_type: "cat",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/06916367-a4e5-7651-8000-b26c936b956c._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Bonkers",
+      description:
+        "Bites Grain-Free Seafood & Eat IT! Crunchy Cat Treats, 30 oz.",
+      price: 13,
+      category: "treats",
+      pet_type: "cat",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/0686ba37-f797-7a2a-8000-e0a39d5baaf1._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Greenies",
+      description:
+        "Feline Oven Roasted Chicken Flavor Adult Natural Dental Cat Treats, 4.6 oz.",
+      price: 6,
+      category: "treats",
+      pet_type: "cat",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/069164ba-f7ec-7216-8000-3f02eee2d7f8._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Meow Mix",
+      description:
+        "Irresistibles White Meat Chicken Soft & Chewy Cat Treats, 3 oz.",
+      price: 2,
+      category: "treats",
+      pet_type: "cat",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/06943e92-0b58-7579-8000-173802136482._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Vital Essentials",
+      description: "Minnows Grain-Free Freeze-Dried Raw Cat Treats, 0.5 oz.",
+      price: 8,
+      category: "treats",
+      pet_type: "cat",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/068d2f74-f063-7bc3-8000-09e1290213ba._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "I and Love and You",
+      description:
+        "Fillin Good Chicken Flavor with Digestive Support Grain-Free Chrunchy Cat Treats, 2 oz. ",
+      price: 5,
+      category: "treats",
+      pet_type: "cat",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/069260a4-ec1c-7178-8000-66a60d8a0cea._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Friskies",
+      description:
+        "Party Mix Cheezy Craze Crunch Flavor Chrunchy Cat Treats, 6 oz.",
+      price: 4,
+      category: "treats",
+      pet_type: "cat",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/friskies-party-mix-cheezy-craze-crunch-flavor-crunchy-cat-treats-6oz-bag/img-416766._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Sheba",
+      description:
+        "Meaty Tender Sticks Chicken Flavor Soft Adult Cat Treats, 5 count.",
+      price: 2,
+      category: "treats",
+      pet_type: "cat",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/068fb96a-175a-7ec4-8000-f98609595bce._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    //10
+    createProduct({
+      name: "Shameless Pets",
+      description: "Catnip N Chill Chicken Crunchy Cat Treats, 3.5 oz.",
+      price: 4,
+      category: "treats",
+      pet_type: "cat",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/067e54c5-1f9b-714b-8000-302991c257bd._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Blue Buffalo",
+      description: "Bursts with Paw-Licken Chicken Cat Treats, 12 oz.",
+      price: 9,
+      category: "treats",
+      pet_type: "cat",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/blue-buffalo-bursts-with-paw-licken-chicken-cat-treats-12oz-tub/img-666388._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "PureBites",
+      description: "Holiday Turkey Freeeze-Dried Cat Treats, 0.8 oz.",
+      price: 3,
+      category: "treats",
+      pet_type: "cat",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/purebites-holiday-turkey-freeze-dried-cat-treats-0-81oz-bag/img-219868._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Vital Essentials",
+      description: "Chicken Breast Freeze-Dried Raw Cat Treats, 1 oz.",
+      price: 6,
+      category: "treats",
+      pet_type: "cat",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/068d2f75-0378-7dcc-8000-fbcc8e336503._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Hartz",
+      description:
+        "Delectables Squeeze Up Chicken, Tuna, Tuna & Salmon Variety Pack Grain-Free Lickable Cat Treats, 0.5 oz, 54 count. ",
+      price: 28,
+      category: "treats",
+      pet_type: "cat",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/06825f9f-d3fa-710a-8000-f6be04953b02._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Fancy Feast",
+      description:
+        "Purina Fancy Feast Purely Natural Chicken, Tuna & Salmon Variety Pack Soft Cat Treat, 10 count.",
+      price: 4,
+      category: "treats",
+      pet_type: "cat",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/purina-fancy-feast-purely-natural-chicken-tuna-salmon-variety-pack-soft-cat-treat-10-count/img-640213._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Bonkers",
+      description:
+        "Purr Pops Grain-Free Chicky Licks Freeze-Dried Cat Treats, 4 count.",
+      price: 3,
+      category: "treats",
+      pet_type: "cat",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/0686ba10-f3c9-7f42-8000-44b9ef0897ef._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Temptations",
+      description:
+        "Classic Shrimpy Shrimp Flavor Soft & Crunchy Cat Treats, 16 oz.",
+      price: 6,
+      category: "treats",
+      pet_type: "cat",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/06916367-4856-76ad-8000-d693bea8eb2d._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "DentalLife",
+      description: "Tasty Chicken Flavor Dental Cat Treats, 1.8 oz.",
+      price: 2,
+      category: "treats",
+      pet_type: "cat",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/dentalife-tasty-chicken-flavor-dental-cat-treats-1-8oz-bag/img-228336._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "MeowMix",
+      description: "Irresistibles Soft Salmon Cat Treats, 3 oz.",
+      price: 2,
+      category: "treats",
+      pet_type: "cat",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/069273f2-e922-79ad-8000-7b529408d770._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    //20
+    createProduct({
+      name: "Vital Essentials",
+      description: "Chicken Hearts Freeze-Dried Raw Cat Treats, 0.8 oz.",
+      price: 7,
+      category: "treats",
+      pet_type: "cat",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/068d2f92-e5bf-703d-8000-caef50f81a87._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Friskies",
+      description:
+        "lil' Lickables Ocean Whitefish Lickable Cat Treats, 2 oz, 4 count.",
+      price: 3,
+      category: "treats",
+      pet_type: "cat",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/0689e433-5393-707f-8000-d84a7839aab8._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Inaba",
+      description:
+        "Churu Tuna & Chicken Puree Variety Pack Grain-Free Lickable Cat Treat, 0.5 oz tube, pack of 50 ",
+      price: 33,
+      category: "treats",
+      pet_type: "cat",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/06879516-1ebc-7372-8000-f5c4238c5e28._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Whisker Lickin's",
+      description: "Tuna Flavor Chruchy Cat Treats, 10 oz.",
+      price: 5,
+      category: "treats",
+      pet_type: "cat",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/whisker-lickins-tuna-flavor-crunchy-cat-treats-10oz-bag/img-468611._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Icelandic+",
+      description: "Herring Whole Fish Dehydrated Cat Treats, 1 oz.",
+      price: 6,
+      category: "treats",
+      pet_type: "cat",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/0690a57d-aeb0-7a6a-8000-d3bd438b87bb._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Temptations",
+      description:
+        "Birhtday Lobster & Beef Flavor Soft & Crunchy Cat Treats, 6.3 oz.",
+      price: 4,
+      category: "treats",
+      pet_type: "cat",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/temptations-birthday-lobster-beef-flavored-crunchy-cat-treats-6-3oz-bag/img-591662._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Choolip",
+      description:
+        "Squeeze Vita Stick Grab n Go Kidney Support Lickable Dog & Cat Treats, 25.9 oz, 49 count.",
+      price: 40,
+      category: "treats",
+      pet_type: "cat",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/068405eb-e844-7516-8000-8c9ecbdf0029._AC_SL1200_QL100_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Blue Buffalo",
+      description:
+        "Wilderness Tasty Chicken Flavor Grain-Free Chunchy Cat Treats, 12 oz.",
+      price: 11,
+      category: "treats",
+      pet_type: "cat",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/blue-buffalo-wilderness-tasty-chicken-flavor-grain-free-crunchy-cat-treats-12oz-tub/img-407753._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Gunnis Taste of Iceland",
+      description: "Salmoon Mini Morsel Dehydrated Cat Treats, 1.5 oz.",
+      price: 8,
+      category: "treats",
+      pet_type: "cat",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/06939ce2-9495-7600-8000-3974f28b03ab._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Van Ness",
+      description: "Oat Garden Kit",
+      price: 3,
+      category: "treats",
+      pet_type: "cat",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/van-ness-oat-garden-kit/img-552362._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    //30
+    createProduct({
+      name: "Inaba",
+      description:
+        "Churu Tidbits Tuna & Salmon Recipe Grain-Free Cat Treats, 0.42 oz, 8 count.",
+      price: 7,
+      category: "treats",
+      pet_type: "cat",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/068a7829-35f0-71c5-8000-cc09821b7aba._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Tiki Cat",
+      description: "Soft & Chewy Chicken Flavor Grain-Free Cat Treats, 2 oz.",
+      price: 4,
+      category: "treats",
+      pet_type: "cat",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/0675aefd-581d-7b76-8000-ea96e647eb1a._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Meowijuana",
+      description: "Chrunchie Munchies Salmon Flavored Cat Treats, 3 oz.",
+      price: 5,
+      category: "treats",
+      pet_type: "cat",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/0690a57c-65f1-729a-8000-76486f14779b._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Hartz",
+      description:
+        "Delectables Lickable Treat Gravy Non Seafood Chicken Lickable Cat Treat, 1.4 oz, 12 count.",
+      price: 11,
+      category: "treats",
+      pet_type: "cat",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/068402df-10eb-7299-8000-01d8cd223ef1._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "WHIMZEES",
+      description:
+        "by Wellness Natural Chicken & Salmon Dental Cat Treats, 4.5 oz.",
+      price: 6,
+      category: "treats",
+      pet_type: "cat",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/whimzees-by-wellness-natural-chicken-salmon-dental-cat-treats-4-5oz-bag/img-210295._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Whole Life Pet",
+      description: "Just One Shrimp Freeze-Dried Cat Treats, 0.7 oz.",
+      price: 5,
+      category: "treats",
+      pet_type: "cat",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/068308ea-d55a-7ac5-8000-3937c2fd2ede._AC_SL1200_QL100_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Get Naked",
+      description: "Digestive Health Soft Cat Treats, 2.5 oz.",
+      price: 5,
+      category: "treats",
+      pet_type: "cat",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/get-naked-digestive-health-soft-cat-treats-2-5oz-bag/img-760855._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Bundle: Varitey Pack - Buffalo Blue",
+      description:
+        "Wilderness Chicken & Trout Grain-Free Cat Treats, 2-oz bag, Chicken & Turkey, Chicken & Duck & Salmon Flavors",
+      price: 10,
+      category: "treats",
+      pet_type: "cat",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/variety-pack-blue-buffalo-wilderness-chicken-trout-grain-free-cat-treats-2oz-bag-chicken-turkey-chicken-duck-salmon-flavors/img-497590._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Shameless Pets",
+      description:
+        "Yam Good Salmon & Sweet Potatos Chrunchy Cat Treats, 2.5 oz.",
+      price: 5,
+      category: "treats",
+      pet_type: "cat",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/067e54c8-3af2-7c3e-8000-77a083c6b6da._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Inaba",
+      description:
+        "Churu for Senior 10+ Tuna & Salmon Bisque Lickable Cat Treats, 1.4 oz, 12 count.",
+      price: 13,
+      category: "treats",
+      pet_type: "cat",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/06822019-121c-70de-8000-9778e8056dce._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    //40
+    createProduct({
+      name: "Jack & Cat",
+      description: "Meaty Tuna Bites Soft & Chewy Cat Treats, 3 oz.",
+      price: 4,
+      category: "treats",
+      pet_type: "cat",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/06853e83-9a07-738d-8000-848c61579fee._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Bonkers",
+      description:
+        "Cat Pillows Bangin Beef Flavored Chruchy Cat Treats, 6.3 oz.",
+      price: 4,
+      category: "treats",
+      pet_type: "cat",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/0686ba3a-eedf-7509-8000-61239ca18475._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Fancy Feast",
+      description:
+        "Purina Fancy Feast Purely Natural Hand-Flaked Tuna Soft Cat Treat, 10 count.",
+      price: 4,
+      category: "treats",
+      pet_type: "cat",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/purina-fancy-feast-purely-natural-hand-flaked-tuna-soft-cat-treat-10-count/img-480481._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Kitford by Pupford",
+      description: "Salmon Freeze-Dried Cat Treats, 1.2 oz.",
+      price: 9,
+      category: "treats",
+      pet_type: "cat",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/068b0a37-e628-7da8-8000-38cff843f146._AC_SL1200_QL100_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Reveal",
+      description:
+        "Natural Grain-Free Whole Tuna Loin Chewy Cat Treats, 1 count.",
+      price: 3,
+      category: "treats",
+      pet_type: "cat",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/0681bb9e-387e-7869-8000-a603870a2f34._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Timy Tiger",
+      description: "Catnip Craze Flavor Filled Chrunchy Cat Treats, 3 oz.",
+      price: 2,
+      category: "treats",
+      pet_type: "cat",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/tiny-tiger-catnip-craze-flavor-filled-crunchy-cat-treats-3oz-bag/img-722226._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "SmartyKat",
+      description: "Silvervine Cat Attrachtant Catnip, 2 oz.",
+      price: 7,
+      category: "treats",
+      pet_type: "cat",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/069257eb-fa22-70a7-8000-1c0caf59e6dd._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Vital Essentials",
+      description: "Duck Liver Treats Freeze-Dried Raw Cat Treats, 1 oz.",
+      price: 8,
+      category: "treats",
+      pet_type: "cat",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/068d2f7d-3d2d-7aee-8000-2d06363cf96c._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Friskies",
+      description:
+        "Lil' Soups with Flaked Chicken in a Velvety Tuna Broth Lickable Cat Food Topper, 1.2 oz, case of 8. ",
+      price: 9,
+      category: "treats",
+      pet_type: "cat",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/friskies-lil-soups-with-flaked-chicken-in-a-velvety-tuna-broth-lickable-cat-food-topper-1-2oz-tub-case-of-8/img-732586._AC_SL1200_QL100_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "ORIJEN",
+      description:
+        "Original Freeze-Dried Grain-Free High-Protien Raw Animal Ingredient Cat Treats, 1.25 oz.",
+      price: 8,
+      category: "treats",
+      pet_type: "cat",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/0685e7dd-23b3-73ee-8000-f1e996a7a4d5._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    //50
+    createProduct({
+      name: "Inaba",
+      description:
+        "Grilled Chicken Fillet in Chicken Flavored Broth Grain-Free Cat Treat, 0.9 oz, 6 count.",
+      price: 11,
+      category: "treats",
+      pet_type: "cat",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/inaba-grilled-chicken-fillet-in-chicken-flavored-broth-grain-free-cat-treat-9oz-pouch-6ct/img-292363._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Wanpy Prime",
+      description:
+        "All Natural Air-Dried Soft Duck High Protien Jerky Strips Cat Treats, 2.8 oz.",
+      price: 4,
+      category: "treats",
+      pet_type: "cat",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/0690b782-3943-70ea-8000-4821e62146de._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Plato",
+      description: "Baltic Herring Dog  Cat Treat, 3 oz.",
+      price: 13,
+      category: "treats",
+      pet_type: "cat",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/plato-baltic-herring-dog-cat-treat-3oz-bag/img-781979._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Whisker Lickin's",
+      description:
+        "Chicken & Salmon Seafood Flavors Chrunchy Cat Treats, 6.5 oz.",
+      price: 4,
+      category: "treats",
+      pet_type: "cat",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/whisker-lickins-chicken-seafood-flavors-crunchy-cat-treats-6-5oz-bag/img-259541._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Whole Life",
+      description:
+        "Just One Ingredient Pure Salmon Fillet Grain-Free Freeze-Dried Cat Treats, 2.5 oz.",
+      price: 14,
+      category: "treats",
+      pet_type: "cat",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/whole-life-just-one-ingredient-pure-salmon-fillet-grain-free-freeze-dried-cat-treats-2-5oz-bag/img-399823._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Fieldcrest Farms",
+      description:
+        "Nothin' to Hide Collagen Chicken Flavor Chrunchy Cat Treats, 3 oz.",
+      price: 4,
+      category: "treats",
+      pet_type: "cat",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/0680a963-4914-76f9-8000-8e3e6c7eb136._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Frisco",
+      description: "Natural Catnip, 2 oz.",
+      price: 6,
+      category: "treats",
+      pet_type: "cat",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/frisco-natural-catnip-2oz/img-337507._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Purina Pro Plan Veterinary Diets",
+      description: "Chrunchy Bites Dental Cat Treats, 1.8 oz.",
+      price: 7,
+      category: "treats",
+      pet_type: "cat",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/0677bd50-b295-7854-8000-fe2ac03335b7._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Get Naked",
+      description: "Urinary Health Grain-Free Chrunchy Cat Treats, 2.6 oz.",
+      price: 5,
+      category: "treats",
+      pet_type: "cat",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/get-naked-urinary-health-grain-free-crunchy-cat-treats-2-5oz-bag/img-189314._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    createProduct({
+      name: "Wellness",
+      description:
+        "Kittles Natural Grain-Free Chicken & Cranberries Chrunchy Cat Treats, 2 oz.",
+      price: 3,
+      category: "treats",
+      pet_type: "cat",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/wellness-kittles-natural-grain-free-chicken-cranberries-crunchy-cat-treats-2oz-bag/img-381520._AC_SL248_V1_.jpg",
+      quantity: 1,
+    }),
+    //60
+
+    //TERANAE
+
+    createProduct({
+      name: "Wuffes Advanced Omega 3 Fish Oil for Healthy Skin & Coat Supplement",
+      description:
+        "Omega fatty acids, vitamins, and minerals work together to nourish the skin and coat",
+      price: 24.99,
+      category: "Skin and Coat Supplements",
+      pet_type: "dog",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/068e7c1e-80e8-7dfd-8000-db03cf6e1be5._AC_SX500_SY400_QL75_V1_.jpg",
+      quantity: 1,
+    }),
+
+    createProduct({
+      name: "Nutri-Vet Fish Oil Omega-3 Liquid Skin & Coat Supplement",
+      description:
+        "Omega-3 fatty acids help maintain the epidermal barrier of your dog’s skin",
+      price: 22.87,
+      category: "Skin and Coat Supplements",
+      pet_type: "dog",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/nutri-vet-fish-oil-omega-3-liquid-skin-coat-supplement-for-dogs-12fl-oz-bottle/img-267363._AC_SX500_SY400_QL75_V1_.jpg",
+      quantity: 1,
+    }),
+
+    createProduct({
+      name: "HOLI Pure Icelandic Salmon Oil Skin & Coat Health ",
+      description:
+        "Omega-3 fish oil supports hip, joint, heart and immune health",
+      price: 16.99,
+      category: "Skin and Coat Supplements",
+      pet_type: "dog",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/holi-pure-icelandic-salmon-oil-skin-coat-health-dog-supplement-10fl-oz-bottle/img-521220._AC_SX500_SY400_QL75_V1_.jpg",
+      quantity: 1,
+    }),
+
+    createProduct({
+      name: "Native Pet Omega-3 Fish Oil & Alaskan Salmon Oil Skin & Coat Health Supplement",
+      description:
+        "This supplement is formulated to support skin, coat, and joint health for your pup.",
+      price: 16.99,
+      category: "Skin and Coat Supplements",
+      pet_type: "dog",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/native-pet-omega-3-fish-oil-alaskan-salmon-oil-skin-coat-health-supplement-for-dogs-8fl-oz-bottle/img-667702._SX500_SY400_QL75_V1_.jpg",
+      quantity: 1,
+    }),
+
+    createProduct({
+      name: "Nutramax Cosequin Joint Health Supplement with Glucosamine, Chondroitin & MSM Chewable Tablets",
+      description:
+        "Contains Glucosamine for Dogs - Cosequin contains glucosamine hydrochloride (FCHG49®) and sodium chondroitin sulfate (TRH122®), plus methylsulfonylmethane (MSM). This unique combination of ingredients supports healthy joints",
+      price: 59.99,
+      category: "Hip and Joint Supplement",
+      pet_type: "dog",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/nutramax-cosequin-joint-health-supplement-with-glucosamine-chondroitin-msm-chewable-tablets-for-dogs-250-count/img-402924._AC_SX500_SY400_QL75_V1_.jpg",
+      quantity: 1,
+    }),
+
+    createProduct({
+      name: "Nutramax Dasuquin Hip & Joint Soft Chews Joint Supplement for Small & Medium Dogs",
+      description:
+        "Vet Recommended Joint Health Supplement for Dogs - More veterinarians recommend Dasuquin than any other brand, making it the #1 veterinarian recommended joint health supplement brand",
+      price: 49.99,
+      category: "Hip and Joint Supplement",
+      pet_type: "dog",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/nutramax-dasuquin-hip-joint-soft-chews-joint-supplement-for-small-medium-dogs-84-count/img-121624._AC_SX500_SY400_QL75_V1_.jpg",
+      quantity: 1,
+    }),
+
+    createProduct({
+      name: "Nutramax Dasuquin Hip & Joint Soft Chews Joint Supplement for Large Dogs,",
+      description:
+        "Better Together with ASU - Dasuquin goes beyond standard glucosamine supplements with avocado/soybean unsaponifiables (ASU), a unique ingredient that works synergistically with glucosamine and chondroitin to help support healthy joints and cartilage",
+      price: 83.99,
+      category: "Hip and Joint Supplement",
+      pet_type: "dog",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/nutramax-dasuquin-hip-joint-soft-chews-joint-supplement-for-large-dogs-150-count/img-267062._AC_SX500_SY400_QL75_V1_.jpg",
+      quantity: 1,
+    }),
+
+    createProduct({
+      name: "Purina Pro Plan Veterinary Diets Joint Supplement for Dogs, Hip & Joint Soft Chews for Small Dogs",
+      description:
+        "Hip and joint supplement supports mobility and healthy cartilage and joints",
+      price: 12.99,
+      category: "Hip and Joint Supplement",
+      pet_type: "dog",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/0678000d-1262-7e9d-8000-ece0ab7af7ef._AC_SL1200_QL100_V1_.jpg",
+      quantity: 1,
+    }),
+
+    createProduct({
+      name: "Purina Pro Plan Veterinary Diets Joint Supplement for Dogs, Hip & Joint Soft Chews for Large Dogs",
+      description:
+        "Supports mobility and daily activities like walking and climbing",
+      price: 19.99,
+      category: "Hip and Joint Supplement",
+      pet_type: "dog",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/0677ffe1-1f94-722e-8000-1655a6f9240f._AC_SL1200_QL100_V1_.jpg",
+      quantity: 1,
+    }),
+
+    createProduct({
+      name: "Purina Pro Plan Veterinary Diets FortiFlora Powder Probiotic Digestive Supplement",
+      description:
+        "Provides gentle support for the dietary management of diarrhea in puppies and adult dogs",
+      price: 30.99,
+      category: "Digestive Supplement",
+      pet_type: "dog",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/purina-pro-plan-veterinary-diets-fortiflora-powder-probiotic-digestive-supplement-for-dogs-30-count/img-706676._AC_SL1200_QL100_V1_.jpg",
+      quantity: 1,
+    }),
+
+    createProduct({
+      name: "Nutramax Proviable Probiotics Daily Digestive Health Chewable Tablet Supplement",
+      description:
+        "Clinically Researched - Backed by multiple published studies, Proviable multi-strain probiotic for dogs contains beneficial bacteria to help support gut health",
+      price: 39.99,
+      category: "Digestive Supplement",
+      pet_type: "dog",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/nutramax-proviable-probiotics-daily-digestive-health-chewable-tablet-supplement-for-dogs-60-count/img-626693._AC_SL1200_QL100_V1_.jpg",
+      quantity: 1,
+    }),
+
+    createProduct({
+      name: "Royal Canin Digestive Support Soft Chews Supplement",
+      description:
+        "Royal Canin Chewable Digestive Supplements are made with prebiotic fibers to promote a balanced gut microbiome for adult dogs of all sizes",
+      price: 17.99,
+      category: "Digestive Supplement",
+      pet_type: "dog",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/068402dd-1a2d-7dee-8000-eb6a87e95739._AC_SL1200_QL100_V1_.jpg",
+      quantity: 1,
+    }),
+
+    createProduct({
+      name: "Greenies Digestive Health Chicken Flavored Soft Chew Digestive Supplement",
+      description:
+        "Millions of live and active probiotics suitable for daily use help support the digestive system and promote optimal stool quality",
+      price: 16.87,
+      category: "Digestive Supplement",
+      pet_type: "dog",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/0691c85f-5e93-7a68-8000-6b6529acd9fb._AC_SL1200_QL100_V1_.jpg",
+      quantity: 1,
+    }),
+
+    createProduct({
+      name: "Capstar Flea Oral Treatment for Dogs, 2-25 lbs",
+      description:
+        "Active ingredient Nitenpyram starts working quickly and kills adult fleas",
+      price: 42.96,
+      category: "Flea and Tick",
+      pet_type: "dog",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/06851c60-6de4-7112-8000-5ffe6e54b7c6._SL1200_QL100_V1_.jpg",
+      quantity: 1,
+    }),
+
+    createProduct({
+      name: "Capstar Flea Oral Treatment for Dogs, over 25 lbs",
+      description:
+        "Kills adult fleas and is indicated for the treatment of flea infestations on dogs, weighing 25.1-125 pounds and 4 weeks of age and older",
+      price: 43.19,
+      category: "Flea and Tick",
+      pet_type: "dog",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/06851c60-3ca9-7294-8000-efe6e3011793._SL1200_QL100_V1_.jpg",
+      quantity: 1,
+    }),
+
+    createProduct({
+      name: "Veterinary Formula Clinical Care Flea & Tick Medicated Shampoo",
+      description:
+        "Formulated with Pyrethrum, a natural insecticide derived from flowers, to help kill and control fleas and ticks on contact",
+      price: 6.97,
+      category: "Flea and Tick",
+      pet_type: "dog",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/veterinary-formula-clinical-care-flea-tick-medicated-shampoo-16fl-oz-bottle/img-458744._AC_SL1200_QL100_V1_.jpg",
+      quantity: 1,
+    }),
+
+    createProduct({
+      name: "Advantage Flea & Tick Treatment Shampoo for Dogs & Puppies",
+      description:
+        "Scientifically-formulated shampoo effectively kills fleas and ticks on contact to help prevent flea dermatitis, Lyme disease and more",
+      price: 14.99,
+      category: "Flea and Tick",
+      pet_type: "dog",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/advantage-flea-tick-treatment-shampoo-for-dogs-puppies-8fl-oz-bottle/img-460241._AC_SL1200_QL100_V1_.jpg",
+      quantity: 1,
+    }),
+
+    createProduct({
+      name: "Purina Pro Plan Veterinary Diets Calming Care Liver Flavored Powder Calming Supplement",
+      description:
+        "Calming dog stress relief supplement promotes a positive emotional state and supports dogs with anxious behaviors—like excessive vocalization, jumping, pacing, and spinning",
+      price: 33.99,
+      category: "Anxiety & Calming",
+      pet_type: "dog",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/068ae0a5-9c08-7c81-8000-8b65cf545639._AC_SL1200_QL100_V1_.jpg",
+      quantity: 1,
+    }),
+
+    createProduct({
+      name: "VetriScience Composure Bacon Flavored Chews Calming Supplement",
+      description:
+        "The chews are designed to help your best friend manage everyday stress and situational anxiety without feeling groggy or tired",
+      price: 33.0,
+      category: "Anxiety & Calming",
+      pet_type: "dog",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/0686d6be-e98b-7d83-8000-f9e1694fdfdd._AC_SL1200_QL100_V1_.jpg",
+      quantity: 1,
+    }),
+
+    // Cat
+
+    createProduct({
+      name: "Nutramax Welactin Omega-3 Fish Oil Liquid Skin & Coat Supplement",
+      description:
+        "Supports Skin and Coat Health - The omega 3s in Welactin fish oil help support skin and coat health, plus overall wellness. It is recommended for cats of all sizes and life stages",
+      price: 15.99,
+      category: "Skin and Coat Supplement ",
+      pet_type: "cat",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/068c8309-7ca0-7b82-8000-b71484ce06ae._AC_SL1200_QL100_V1_.jpg",
+      quantity: 1,
+    }),
+
+    createProduct({
+      name: "Pet Honesty Skin & Coat Health Chews Allergy Relief of Itchy Skin Supplement",
+      description:
+        "Tasty supplement helps to soothe skin, a purr-fect combination of a crunchy outer shell and creamy filling",
+      price: 14.99,
+      category: "Skin and Coat Supplement",
+      pet_type: "cat",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/pet-honesty-skin-coat-health-chews-allergy-relief-of-itchy-skin-supplement-for-cats-3-7oz-bag/img-697084._AC_SL1200_QL100_V1_.jpg",
+      quantity: 1,
+    }),
+
+    createProduct({
+      name: "Vet Worthy Feline Hairball Support with Pumpkin Soft Chew Skin & Coat Supplement",
+      description:
+        "This supplement is formulated for kitties over 12 weeks old to eliminate and prevent hairballs",
+      price: 14.99,
+      category: "Skin and Coat Supplement",
+      pet_type: "cat",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/068e394b-791f-780d-8000-ddc6df539280._AC_SL1200_QL100_V1_.jpg",
+      quantity: 1,
+    }),
+
+    createProduct({
+      name: "Deley Naturals Fish Oil Cat Supplement",
+      description:
+        "Made from wild-caught fish oil from sardines, herrings, mackerels and anchovies that provide omega-3, -6 and -9 fatty acids to deliver higher levels of EPA and DHA without mercury",
+      price: 31.96,
+      category: "Skin and Coat Supplement",
+      pet_type: "cat",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/06818ff7-5865-7fd3-8000-962055f16b18._AC_SL1200_QL100_V1_.jpg",
+      quantity: 1,
+    }),
+
+    createProduct({
+      name: "Pet Honesty Senior Joint Support Chicken Flavored Chews Joint Supplement for Joint Pain & Arthritis Relief for Adult & Senior Cats",
+      description:
+        "This supplement may help ease stiffness and support cartilage health for arthritis pain relief",
+      price: 14.99,
+      category: "Hip and Joint Supplement",
+      pet_type: "cat",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/067d436a-a703-77bd-8000-d7834fff62a3._AC_SL1200_QL100_V1_.jpg",
+      quantity: 1,
+    }),
+
+    createProduct({
+      name: "Nutramax Cosequin Hip & Joint with Glucosamine, Chondroitin & Omega-3s Soft Chew Joint Supplement",
+      description:
+        "Contains Glucosamine for Cats - Cosequin contains glucosamine hydrochloride (FCHG49®) and sodium chondroitin sulfate (TRH122®). This unique combination of ingredients supports healthy joints",
+      price: 12.48,
+      category: "Hip and Joint Supplement",
+      pet_type: "cat",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/068a7822-0006-70c3-8000-9b6f4a2aa7f9._AC_SL1200_QL100_V1_.jpg",
+      quantity: 1,
+    }),
+
+    createProduct({
+      name: "Nutramax Dasuquin Hip & Joint Soft Chews Joint Supplement",
+      description:
+        "Formulated with glucosamine, chondroitin sulfate and avocado/soybean unsaponifiables (ASU) to support your cat’s joint health",
+      price: 15.99,
+      category: "Hip and Joint Supplement",
+      pet_type: "cat",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/nutramax-dasuquin-hip-joint-soft-chews-joint-supplement-for-cats-84-count/img-174158._AC_SL1200_QL100_V1_.jpg",
+      quantity: 1,
+    }),
+
+    createProduct({
+      name: "VetriScience Veterinary Strength Healthy Hip & Joint VetriFlex Chicken Flavored Soft Chew Joint Supplement",
+      description:
+        "Helps maintain mobility, lubricate joints, and manage joint discomfort",
+      price: 20.89,
+      category: "Hip and Joint Supplement",
+      pet_type: "cat",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/06862eab-80dc-795c-8000-3b912a4bec94._AC_SL1200_QL100_V1_.jpg",
+      quantity: 1,
+    }),
+
+    createProduct({
+      name: "Purina Pro Plan Veterinary Diets FortiFlora Powder Probiotic Digestive Supplement",
+      description:
+        "This veterinarian-recommended probiotic helps support digestive health in cats and kittens",
+      price: 30.99,
+      category: "Digestive Supplement",
+      pet_type: "cat",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/purina-pro-plan-veterinary-diets-fortiflora-powder-probiotic-digestive-supplement-for-cats-30-count/img-772792._AC_SL1200_QL100_V1_.jpg",
+      quantity: 1,
+    }),
+
+    createProduct({
+      name: "Nutramax Proviable Probiotics & Prebiotics Digestive Health Supplement",
+      description:
+        "A Healthy Gut Supports Overall Health - Probiotics help support intestinal health after imbalances, such as diet changes, food sensitivities, dietary indiscretions, or stress from travel or kenneling.",
+      price: 19.97,
+      category: "Digestive Supplement",
+      pet_type: "cat",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/nutramax-proviable-probiotics-prebiotics-digestive-health-supplement-for-dogs-cats-30-count/img-490591._AC_SL1200_QL100_V1_.jpg",
+      quantity: 1,
+    }),
+
+    createProduct({
+      name: "Royal Canin Probiotics Digestive & Immune Health Powder Supplement",
+      description:
+        "Royal Canin Cat Probiotics boost beneficial bacteria in the gut for feline friends of all ages and sizes",
+      price: 9.99,
+      category: "Digestive Supplement",
+      pet_type: "cat",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/068402d8-3497-7578-8000-d9e75d11efbd._AC_SL1200_QL100_V1_.jpg",
+      quantity: 1,
+    }),
+
+    createProduct({
+      name: "VetOne Advita Probiotic Nutritional Cat Supplement",
+      description:
+        "Contains vitamins A, E, and C plus taurine for overall health",
+      price: 23.47,
+      category: "Digestive Supplement",
+      pet_type: "cat",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/vetone-advita-probiotic-nutritional-cat-supplement-30-count/img-681574._AC_SL1200_QL100_V1_.jpg",
+      quantity: 1,
+    }),
+
+    createProduct({
+      name: "Capstar Flea Oral Treatment for Cats, 2-25 lbs",
+      description:
+        "This oral flea treatment is a fast, effective way to help your four-legged family member get rid of fleas, and it’s available without a prescription",
+      price: 43.19,
+      category: "Flea & Tick",
+      pet_type: "cat",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/06851c60-54cf-73b3-8000-7ce5d499d1bb._AC_SL1200_QL100_V1_.jpg",
+      quantity: 1,
+    }),
+
+    createProduct({
+      name: "Seresto Flea & Tick Collar for Cats",
+      description:
+        "Seresto kills and repels fleas by contact, so pests don’t have to bite your cat for the collar to be effective",
+      price: 59.99,
+      category: "Flea & Tick",
+      pet_type: "cat",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/seresto-flea-tick-collar-for-cats-1-collar-8-mos-supply/img-761379._SL1200_QL100_V1_.jpg",
+      quantity: 1,
+    }),
+
+    createProduct({
+      name: "Virbac Knockout E.S. Area Treatment Spray",
+      description:
+        "Reaches fleas hidden in carpets, rugs, drapes, upholstery, pet bedding, and floor cracks for greater effectiveness",
+      price: 32.29,
+      category: "Flea & Tick",
+      pet_type: "cat",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/virbac-knockout-es-area-treatment-spray-16fl-oz-can/img-602172._AC_SL1200_QL100_V1_.jpg",
+      quantity: 1,
+    }),
+
+    createProduct({
+      name: "Advantage Flea & Tick Treatment Shampoo for Cats & Kittens",
+      description:
+        "Scientifically-formulated shampoo effectively kills fleas and ticks on contact to help prevent flea dermatitis, Lyme disease and more",
+      price: 14.99,
+      category: "Flea & Tick",
+      pet_type: "cat",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/advantage-flea-tick-treatment-shampoo-for-cats-kittens-8fl-oz-bottle/img-644371._AC_SL1200_QL100_V1_.jpg",
+      quantity: 1,
+    }),
+
+    createProduct({
+      name: "Nutramax Solliquin Soft Chew Calming Behavioral Health Supplement for Small/Medium Dogs & Cats",
+      description:
+        "Solliquin is a non-sedating, calming support supplement that is intended for daily use in small to medium dogs and cats of all sizes",
+      price: 19.99,
+      category: "Anixety & Calming",
+      pet_type: "cat",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/06846b38-3280-766e-8000-112eb2d392d4._AC_SL1200_QL100_V1_.jpg",
+      quantity: 1,
+    }),
+
+    createProduct({
+      name: "Purina Pro Plan Veterinary Diets Calming Care Cat Supplement",
+      description:
+        "Helps your kitty cope with changes in their routine and location, relieves cat stress, and supports positive behaviors—like playing and seeking out social contact",
+      price: 33.99,
+      category: "Anixety & calming ",
+      pet_type: "cat",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/purina-pro-plan-veterinary-diets-calming-care-cat-supplement-30-count/img-387023._AC_SL1200_QL100_V1_.jpg",
       quantity: 1,
     }),
   ]);
