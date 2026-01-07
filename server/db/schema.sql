@@ -17,7 +17,7 @@ CREATE TABLE products(
     id SERIAL PRIMARY KEY,
     name VARCHAR NOT NULL,
     description TEXT NOT NULL,
-    price INTEGER NOT NULL,
+    price NUMERIC(10,2) NOT NULL,
     category VARCHAR NOT NULL,
     pet_type pet_type_enum NOT NULL,
     image_url TEXT NOT NULL,

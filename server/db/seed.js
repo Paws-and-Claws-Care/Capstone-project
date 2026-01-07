@@ -571,7 +571,7 @@ export default async function seed() {
       name: "Blue Buffalo Blue's Stew Natural, Hearty Beef and Country Chicken Wet Dog Food Variety Pack",
       description:
         "12.5oz, Count of 6 - enhanced with vitamins and minerals for adult dogs who prefer a meaty taste. This natural wet dog food is crafted with the finest ingredients that don't contain chicken (or poultry) by-product meals",
-      price: 18.5,
+      price: 18,
       category: "food",
       pet_type: "dog",
       image_url:
@@ -813,7 +813,7 @@ export default async function seed() {
       name: "Friskies Surfin' & Turfin' Favorites Dry Cat Food",
       description:
         "16lbs, Chicken, Ocean Whitefish, Salmon and Filet Mignon flavors served in appealing shapes keep her excited about mealtimes - supports whole-body health - crunchy texture helps to keep her teeth clean",
-      price: 16.5,
+      price: 16,
       category: "food",
       pet_type: "cat",
       image_url:
@@ -1242,6 +1242,7 @@ export default async function seed() {
       pet_type: "dog",
       image_url:
         "https://image.chewy.com/catalog/general/images/bousnic-smart-bark-collar-waterproof-automatic-bark-control-dog-training-collar-black/img-473696._AC_SL496_V1_.jpg",
+      quantity: 1,
     }),
     createProduct({
       name: "Tie Outs",
@@ -1288,6 +1289,7 @@ export default async function seed() {
       pet_type: "dog",
       image_url:
         "https://image.chewy.com/catalog/general/images/moe/06929b3d-55bb-74b2-8000-e24528f6f053._AC_SL496_V1_.jpg",
+      quantity: 1,
     }),
     createProduct({
       name: "Dog Houses",
@@ -1309,6 +1311,7 @@ export default async function seed() {
       pet_type: "dog",
       image_url:
         "https://image.chewy.com/catalog/general/images/petsafe-cozyup-foldable-cat-dog-stairs-grey-large/img-437940._AC_SL496_V1_.jpg",
+      quantity: 1,
     }),
 
     createProduct({
