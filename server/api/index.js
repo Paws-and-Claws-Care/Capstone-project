@@ -19,6 +19,3 @@ router.use("/orders", ordersRouter);
 export default router;
 
 //cheezitsAREgood
-
-//testUser1
-//testpass
