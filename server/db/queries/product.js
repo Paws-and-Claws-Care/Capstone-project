@@ -45,3 +45,25 @@ export async function getProductById(id) {
   const response = await db.query(SQL, [id]);
   return response.rows[0];
 }
+
+//getProductsByCategory
+
+export async function getProductsByCategory(category) {
+  const SQL = `
+  SELECT * 
+FROM products
+WHERE category = $1;
+  `;
+  const response = await db.query(SQL, [category]);
+  return response.rows;
+}
+
+export async function getProductsByPetType(petType) {
+  const SQL = `
+   SELECT *
+    FROM products
+    WHERE pet_type = $1
+  `;
+  const response = await db.query(SQL, [petType]);
+  return response.rows;
+}
