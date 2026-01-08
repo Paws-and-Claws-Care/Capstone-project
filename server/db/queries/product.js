@@ -62,7 +62,7 @@ export async function getProductsByPetType(petType) {
   const SQL = `
    SELECT *
     FROM products
-    WHERE pet_type = $1
+    WHERE pet_type = $1;
   `;
   const response = await db.query(SQL, [petType]);
   return response.rows;
