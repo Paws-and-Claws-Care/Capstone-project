@@ -34,55 +34,6 @@ export default async function seed() {
   //DOG FOOD
   const products = await Promise.all([
     createProduct({
-      name: "Pro Plan Dog Food - Chicken and Rice",
-      description:
-        "Highly digestible adult dog food formula for optimal nutrient delivery",
-      price: 65,
-      category: "food",
-      pet_type: "dog",
-      image_url: "image",
-      quantity: 1,
-    }),
-    createProduct({
-      name: "Pro Plan Dog Food - Sensitive Skin",
-      description: "Vitamin E & Omega-6 Promote Skin & Coat Health",
-      price: 45,
-      category: "food",
-      pet_type: "dog",
-      image_url: "image",
-      quantity: 1,
-    }),
-    createProduct({
-      name: "Pro Plan Dog Food - Digestive Health",
-      description: "High protein chicken and rice",
-      price: 54,
-      category: "food",
-      pet_type: "dog",
-      image_url: "image",
-      quantity: 1,
-    }),
-
-    createProduct({
-      name: "Pro Plan Cat Food - Weight Management",
-      description:
-        "Kibble guaranteed live probiotics for digestive health and antioxidants to boost the immune system",
-      price: 35,
-      category: "food",
-      pet_type: "cat",
-      image_url: "image",
-      quantity: 1,
-    }),
-    createProduct({
-      name: "Pro Plan Cat Food - Urinary Tract Health",
-      description:
-        "Made to maintain your kitty's urinary tract health - high protein wet cat food recipes reduce urinary pH and provide low dietary magnesium",
-      price: 32,
-      category: "food",
-      pet_type: "cat",
-      image_url: "image",
-      quantity: 1,
-    }),
-    createProduct({
       name: "Purina Pro Plan - Sensitive Skin and Stomach",
       description:
         "Salmon and rice adult dry dog food - Nutrient rich food made to nourish beneficial bacteria and improve digestive health",
