@@ -27,8 +27,6 @@ function Products() {
     <div>
       <h2>Products</h2>
 
-      <h2>Products</h2>
-
       {/* CATEGORY FILTERS */}
       <button
         onClick={async () => {
