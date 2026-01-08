@@ -2132,7 +2132,7 @@ export default async function seed() {
       category: "treats",
       pet_type: "dog",
       image_url:
-        "https://image.chewy.com/catalog/general/images/moe/068b89a2-58ff-7f5a-8000-2017bcd60047._AC_SL248_V1_.jpgs",
+        "https://image.chewy.com/catalog/general/images/moe/068b89a2-58ff-7f5a-8000-2017bcd60047._AC_SX500_SY400_QL75_V1_.jpg",
       quantity: 1,
     }),
     createProduct({
