@@ -1,95 +1,150 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { useParams } from "react-router-dom";
 import ReactPaginate from "react-paginate";
-import {
-  fetchAllProducts,
-  fetchProductsByCategory,
-  fetchProductsByPetType,
-} from "../api/products";
+import { fetchAllProducts, fetchProductsByPetType } from "../api/products";
+
+// Normalize: trims + lowercases so "Supplies" == "supplies", and removes extra spaces
+const normalize = (s) => (s ?? "").toString().trim().toLowerCase();
+
+// Your DB “Health & Wellness” is actually 5 different category strings.
+// We include variants/typos from your seed so the button works reliably.
+const HEALTH_CATEGORY_SET = new Set(
+  [
+    // Skin & Coat
+    "skin and coat supplements",
+    "skin and coat supplement",
+
+    // Hip & Joint
+    "hip and joint supplement",
+
+    // Digestive
+    "digestive supplement",
+
+    // Flea & Tick (both formats exist)
+    "flea and tick",
+    "flea & tick",
+
+    // Anxiety & Calming (typos exist in seed)
+    "anxiety & calming",
+    "anxiety & calming",
+    "anixety & calming",
+    "anixety & calming",
+    "anixety & calming",
+  ].map(normalize)
+);
 
 function Products() {
-  const [products, setProducts] = useState([]);
+  const { petType } = useParams(); // "dog" | "cat" | undefined
 
-  // Pagination state
+  // Base list from API (already filtered by petType if route has it)
+  const [baseProducts, setBaseProducts] = useState([]);
+
+  // Page filter: "all" | "food" | "treats" | "supplies" | "health"
+  const [activeFilter, setActiveFilter] = useState("all");
+
+  // Pagination
   const [itemOffset, setItemOffset] = useState(0);
   const itemsPerPage = 12;
 
-  // Compute pagination slices
-  const endOffset = itemOffset + itemsPerPage;
-  const currentProducts = products.slice(itemOffset, endOffset);
-  const pageCount = Math.ceil(products.length / itemsPerPage);
-
-  // When user clicks a pagination button
-  function handlePageClick(event) {
-    const newOffset = event.selected * itemsPerPage;
-    setItemOffset(newOffset);
-  }
-
-  // Helper: load products + reset pagination to page 1
-  async function setProductsAndReset(fetchFn) {
-    try {
-      const data = await fetchFn();
-      setProducts(data);
-      setItemOffset(0); // reset to first page whenever the list changes
-    } catch (err) {
-      console.error(err);
-    }
-  }
-
-  // Initial load
+  // Fetch when petType changes
   useEffect(() => {
-    setProductsAndReset(() => fetchAllProducts());
-  }, []);
+    async function load() {
+      try {
+        const data = petType
+          ? await fetchProductsByPetType(petType)
+          : await fetchAllProducts();
+
+        setBaseProducts(data);
+        setActiveFilter("all");
+        setItemOffset(0);
+
+        // If you ever want to see all category values:
+        // console.log([...new Set(data.map((p) => p.category))]);
+      } catch (err) {
+        console.error(err);
+      }
+    }
+    load();
+  }, [petType]);
+
+  // Apply the category filter
+  const filteredProducts = useMemo(() => {
+    if (activeFilter === "all") return baseProducts;
+
+    if (activeFilter === "health") {
+      return baseProducts.filter((p) =>
+        HEALTH_CATEGORY_SET.has(normalize(p.category))
+      );
+    }
+
+    // food / treats / supplies
+    return baseProducts.filter(
+      (p) => normalize(p.category) === normalize(activeFilter)
+    );
+  }, [baseProducts, activeFilter]);
+
+  // Paginate the filtered list
+  const endOffset = itemOffset + itemsPerPage;
+  const currentProducts = filteredProducts.slice(itemOffset, endOffset);
+  const pageCount = Math.ceil(filteredProducts.length / itemsPerPage);
+
+  function handlePageClick(event) {
+    setItemOffset(event.selected * itemsPerPage);
+  }
+
+  function setFilter(filterName) {
+    setActiveFilter(filterName);
+    setItemOffset(0);
+  }
+
+  const title = petType
+    ? `${petType[0].toUpperCase()}${petType.slice(1)} Products`
+    : "All Products";
 
   return (
     <div className="container py-4">
-      <h2 className="mb-3">Products</h2>
+      <h2 className="mb-3">{title}</h2>
 
       {/* FILTER BUTTONS */}
       <div className="d-flex flex-wrap gap-2 mb-4">
-        {/* Category filters */}
         <button
-          className="btn btn-outline-primary"
-          onClick={() =>
-            setProductsAndReset(() => fetchProductsByCategory("treats"))
-          }
+          className={`btn ${
+            activeFilter === "food" ? "btn-primary" : "btn-outline-primary"
+          }`}
+          onClick={() => setFilter("food")}
+        >
+          Food
+        </button>
+
+        <button
+          className={`btn ${
+            activeFilter === "treats" ? "btn-primary" : "btn-outline-primary"
+          }`}
+          onClick={() => setFilter("treats")}
         >
           Treats
         </button>
 
         <button
-          className="btn btn-outline-primary"
-          onClick={() =>
-            setProductsAndReset(() => fetchProductsByCategory("food"))
-          }
+          className={`btn ${
+            activeFilter === "supplies" ? "btn-primary" : "btn-outline-primary"
+          }`}
+          onClick={() => setFilter("supplies")}
         >
-          Food
-        </button>
-
-        {/* Pet type filters */}
-        <button
-          className="btn btn-outline-secondary"
-          onClick={() =>
-            setProductsAndReset(() => fetchProductsByPetType("dog"))
-          }
-        >
-          Dog
+          Supplies
         </button>
 
         <button
-          className="btn btn-outline-secondary"
-          onClick={() =>
-            setProductsAndReset(() => fetchProductsByPetType("cat"))
-          }
+          className={`btn ${
+            activeFilter === "health" ? "btn-primary" : "btn-outline-primary"
+          }`}
+          onClick={() => setFilter("health")}
         >
-          Cat
+          Health & Wellness
         </button>
 
-        {/* Reset */}
-        <button
-          className="btn btn-dark"
-          onClick={() => setProductsAndReset(() => fetchAllProducts())}
-        >
-          All Products
+        <button className="btn btn-dark" onClick={() => setFilter("all")}>
+          All {petType ? petType : ""} Products
         </button>
       </div>
 
