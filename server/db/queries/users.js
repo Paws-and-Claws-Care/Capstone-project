@@ -47,3 +47,13 @@ export async function getUserByUsername(username) {
 
   return response.rows[0];
 }
+
+export async function getUserByEmail(email) {
+  const SQL = `
+    SELECT *
+    FROM users
+    WHERE email = $1
+  `;
+  const response = await db.query(SQL, [email]);
+  return response.rows[0];
+}
