@@ -57,17 +57,16 @@ export default function Home() {
         <div className="container py-5">
           <div className="row align-items-center g-4">
             <div className="col-12 col-lg-6">
-              <span className="badge text-bg-success mb-3">
+              {/* <span className="badge text-bg-success mb-3">
                 Free shipping on $49+
-              </span>
+              </span> */}
 
-              <h1 className="display-5 fw-bold">
-                Healthy essentials for dogs & cats — delivered fast.
-              </h1>
+              <h1 className="display-5 fw-bold">Paws & Claws Care </h1>
 
               <p className="lead text-secondary mt-3">
-                Food, treats, and supplements curated for everyday wellness.
-                Stock up on the things your pets love (and need).
+                Healthy essentials for dogs and cats. Food, treats, and
+                supplements curated for everyday wellness. Stock up on the
+                things your pets love (and need).
               </p>
 
               <div className="d-flex gap-2 mt-4 flex-wrap">
@@ -87,10 +86,10 @@ export default function Home() {
                   <i className="bi bi-shield-check" />
                   Secure checkout
                 </div>
-                <div className="d-flex align-items-center gap-2">
+                {/* <div className="d-flex align-items-center gap-2">
                   <i className="bi bi-truck" />
                   Quick delivery
-                </div>
+                </div> */}
                 <div className="d-flex align-items-center gap-2">
                   <i className="bi bi-chat-dots" />
                   Friendly support
@@ -98,7 +97,7 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Hero image placeholder (simple Bootstrap “card image” style) */}
+            {/* Hero image placeholder (simple Bootstrap “card image” style)
             <div className="col-12 col-lg-6">
               <div className="card shadow-sm border-0">
                 <div className="card-body p-0">
@@ -123,7 +122,7 @@ export default function Home() {
               <p className="text-secondary small mt-2 mb-0">
                 (Swap this for a real dog/cat banner image when you’re ready.)
               </p>
-            </div>
+            </div> */}
           </div>
         </div>
       </section>
@@ -174,7 +173,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* BEST SELLERS */}
+      {/* BEST SELLERS
       <section className="bg-light border-top border-bottom">
         <div className="container py-5">
           <div className="d-flex align-items-end justify-content-between mb-3">
@@ -233,9 +232,9 @@ export default function Home() {
             When your API is ready, we’ll replace this with real product data.
           </p>
         </div>
-      </section>
+      </section> */}
 
-      {/* PROMO STRIP */}
+      {/* PROMO STRIP
       <section className="container py-5">
         <div className="row g-3">
           <div className="col-12 col-lg-8">
@@ -267,9 +266,9 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
-      {/* NEWSLETTER */}
+      {/* NEWSLETTER
       <section className="bg-light border-top">
         <div className="container py-5">
           <div className="row align-items-center g-3">
@@ -297,7 +296,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* FOOTER */}
       <footer className="container py-4">

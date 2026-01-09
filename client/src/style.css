@@ -1,0 +1,10 @@
+/* Keep the navbar hamburger visible on all screen sizes */
+.navbar .navbar-toggler {
+  display: inline-block !important;
+}
+
+/* Prevent Bootstrap from forcing the collapse open on wide screens */
+.navbar .navbar-collapse {
+  flex-basis: 100%;
+  flex-grow: 1;
+}

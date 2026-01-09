@@ -1,5 +1,6 @@
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { getUser, logout } from "../auth";
+import logo from "../assets/logo.png";
 
 function Navbar() {
   const user = getUser();
@@ -11,29 +12,76 @@ function Navbar() {
   }
 
   return (
-    <nav className="navbar navbar-expand-lg bg-body-tertiary">
+    <nav className="navbar bg-body-tertiary">
+      <div className="container-fluid d-flex align-items-center">
+        {/* LEFT: Brand + Hamburger */}
+        <div className="d-flex align-items-center gap-2">
+          <Link
+            className="navbar-brand m-0 p-0 d-flex align-items-center"
+            to="/"
+          >
+            <img src={logo} alt="Paws & Claws" style={{ height: "120px" }} />
+          </Link>
+
+          <button
+            className="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNavDropdown"
+            aria-controls="navbarNavDropdown"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span className="navbar-toggler-icon" />
+          </button>
+        </div>
+
+        {/* RIGHT: Account (always visible, not inside hamburger) */}
+        <ul className="navbar-nav ms-auto flex-row gap-3">
+          {!user ? (
+            <>
+              <li className="nav-item">
+                <NavLink className="nav-link" to="/login">
+                  Login
+                </NavLink>
+              </li>
+              <li className="nav-item">
+                <NavLink className="nav-link" to="/register">
+                  Register
+                </NavLink>
+              </li>
+            </>
+          ) : (
+            <li className="nav-item dropdown">
+              <button
+                className="nav-link dropdown-toggle btn btn-link"
+                type="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+                style={{ textDecoration: "none" }}
+              >
+                Hi, {user.username}
+              </button>
+
+              <ul className="dropdown-menu dropdown-menu-end">
+                <li>
+                  <button
+                    className="dropdown-item text-danger"
+                    onClick={handleLogout}
+                  >
+                    Logout
+                  </button>
+                </li>
+              </ul>
+            </li>
+          )}
+        </ul>
+      </div>
+
+      {/* COLLAPSIBLE MENU (hamburger dropdown) */}
       <div className="container-fluid">
-        {/* Brand */}
-        <Link className="navbar-brand" to="/">
-          Paws & Claws
-        </Link>
-
-        {/* Hamburger */}
-        <button
-          className="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNavDropdown"
-          aria-controls="navbarNavDropdown"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span className="navbar-toggler-icon" />
-        </button>
-
-        {/* Collapsible content */}
-        <div className="collapse navbar-collapse" id="navbarNavDropdown">
-          <ul className="navbar-nav me-auto">
+        <div className="collapse navbar-collapse mt-2" id="navbarNavDropdown">
+          <ul className="navbar-nav">
             {/* Home */}
             <li className="nav-item">
               <NavLink className="nav-link" to="/">
@@ -90,47 +138,6 @@ function Navbar() {
                 Cart
               </NavLink>
             </li>
-          </ul>
-
-          {/* RIGHT SIDE: Account */}
-          <ul className="navbar-nav ms-auto">
-            {!user ? (
-              <>
-                <li className="nav-item">
-                  <NavLink className="nav-link" to="/login">
-                    Login
-                  </NavLink>
-                </li>
-                <li className="nav-item">
-                  <NavLink className="nav-link" to="/register">
-                    Register
-                  </NavLink>
-                </li>
-              </>
-            ) : (
-              <li className="nav-item dropdown">
-                <button
-                  className="nav-link dropdown-toggle btn btn-link"
-                  type="button"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                  style={{ textDecoration: "none" }}
-                >
-                  Hi, {user.username}
-                </button>
-
-                <ul className="dropdown-menu dropdown-menu-end">
-                  <li>
-                    <button
-                      className="dropdown-item text-danger"
-                      onClick={handleLogout}
-                    >
-                      Logout
-                    </button>
-                  </li>
-                </ul>
-              </li>
-            )}
           </ul>
         </div>
       </div>
