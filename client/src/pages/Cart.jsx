@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, Navigate } from "react-router-dom";
-import { getCart } from "../api/cart";
 import { getUser } from "../api/auth";
+import { getCart, removeFromCart } from "../api/cart";
 
 export default function Cart() {
   const user = getUser();
@@ -17,9 +17,8 @@ export default function Cart() {
   }, []);
 
   function removeItem(productId) {
-    const updated = cart.filter((item) => item.productId !== productId);
+    const updated = removeFromCart(productId);
     setCart(updated);
-    localStorage.setItem("cart", JSON.stringify(updated));
   }
 
   const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
