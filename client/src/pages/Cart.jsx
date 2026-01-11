@@ -1,27 +1,40 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 import { getUser } from "../api/auth";
-import { getCart, removeFromCart } from "../api/cart";
+import { getCart, changeQuantity, removeFromCart } from "../api/cart";
 
 export default function Cart() {
   const user = getUser();
   const [cart, setCart] = useState([]);
 
   // Redirect if not logged in
-  if (!user) {
-    return <Navigate to="/login" replace />;
-  }
+  if (!user) return <Navigate to="/login" replace />;
 
   useEffect(() => {
     setCart(getCart());
   }, []);
 
-  function removeItem(productId) {
+  function dec(productId) {
+    const updated = changeQuantity(productId, -1);
+    setCart(updated);
+  }
+
+  function inc(productId) {
+    const updated = changeQuantity(productId, +1);
+    setCart(updated);
+  }
+
+  function removeLine(productId) {
     const updated = removeFromCart(productId);
     setCart(updated);
   }
 
-  const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const total = useMemo(() => {
+    return cart.reduce(
+      (sum, item) => sum + Number(item.price) * Number(item.quantity),
+      0
+    );
+  }, [cart]);
 
   return (
     <div className="container py-4" style={{ maxWidth: 900 }}>
@@ -40,41 +53,74 @@ export default function Cart() {
         <>
           {/* CART ITEMS */}
           <div className="list-group mb-4">
-            {cart.map((item, idx) => (
-              <div
-                key={`${item.productId ?? "noid"}-${idx}`}
-                className="list-group-item d-flex align-items-center gap-3"
-              >
-                <img
-                  src={item.image_url}
-                  alt={item.name}
-                  style={{
-                    width: 80,
-                    height: 80,
-                    objectFit: "cover",
-                    borderRadius: 6,
-                  }}
-                />
+            {cart.map((item, idx) => {
+              const price = Number(item.price) || 0;
+              const qty = Number(item.quantity) || 0;
+              const lineTotal = price * qty;
 
-                <div className="flex-grow-1">
-                  <h6 className="mb-1">{item.name}</h6>
-                  <div className="text-muted">
-                    ${Number(item.price).toFixed(2)}× {item.quantity}
-                  </div>
-                </div>
-
-                <div className="fw-bold me-3">
-                  ${(Number(item.price) * Number(item.quantity)).toFixed(2)}
-                </div>
-
-                <button
-                  className="btn btn-sm btn-outline-danger"
-                  onClick={() => removeItem(item.productId)}
+              return (
+                <div
+                  key={`${item.productId ?? "noid"}-${idx}`}
+                  className="list-group-item d-flex align-items-center gap-3"
                 >
-                  Remove
-                </button>
-              </div>
-            ))}
+                  <img
+                    src={item.image_url}
+                    alt={item.name}
+                    style={{
+                      width: 80,
+                      height: 80,
+                      objectFit: "cover",
+                      borderRadius: 6,
+                    }}
+                  />
+
+                  <div className="flex-grow-1">
+                    <h6 className="mb-1">{item.name}</h6>
+                    <div className="text-muted">${price.toFixed(2)}</div>
+                  </div>
+
+                  {/* Quantity controls */}
+                  <div className="d-flex align-items-center gap-2">
+                    <button
+                      type="button"
+                      className="btn btn-outline-secondary btn-sm"
+                      onClick={() => dec(item.productId)}
+                      aria-label="Decrease quantity"
+                    >
+                      −
+                    </button>
+
+                    <span style={{ minWidth: 28, textAlign: "center" }}>
+                      {qty}
+                    </span>
+
+                    <button
+                      type="button"
+                      className="btn btn-outline-secondary btn-sm"
+                      onClick={() => inc(item.productId)}
+                      aria-label="Increase quantity"
+                    >
+                      +
+                    </button>
+                  </div>
+
+                  <div
+                    className="fw-bold ms-3"
+                    style={{ minWidth: 90, textAlign: "right" }}
+                  >
+                    ${lineTotal.toFixed(2)}
+                  </div>
+
+                  {/* Remove whole line item */}
+                  <button
+                    className="btn btn-sm btn-outline-danger ms-3"
+                    onClick={() => removeLine(item.productId)}
+                  >
+                    Remove
+                  </button>
+                </div>
+              );
+            })}
           </div>
 
           {/* SUMMARY */}
