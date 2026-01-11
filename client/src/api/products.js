@@ -1,22 +1,57 @@
-export async function fetchAllProducts() {
-  const res = await fetch("/api/products");
+// client/src/api/products.js
 
-  if (!res.ok) {
-    throw new Error("Failed to fetch products");
+const API = "/api";
+
+// Small helper so all functions handle errors the same way
+async function parseResponse(res, defaultMsg) {
+  const text = await res.text();
+  let data = null;
+
+  try {
+    data = text ? JSON.parse(text) : null;
+  } catch {
+    // If backend returned HTML or plain text, still show something useful
+    throw new Error(
+      `${defaultMsg}. Status ${res.status}. Response: ${text.slice(0, 200)}`
+    );
   }
 
-  return res.json();
-}
-export async function fetchProductsByCategory(category) {
-  const res = await fetch(`/api/products?category=${category}`);
-  if (!res.ok) throw new Error("Failed to fetch by category");
-  return res.json();
+  if (!res.ok) {
+    throw new Error(data?.error || defaultMsg);
+  }
+
+  return data;
 }
 
+// ✅ Used by Products.jsx when no petType param
+export async function fetchAllProducts() {
+  const res = await fetch(`${API}/products`);
+  return parseResponse(res, "Failed to fetch products");
+}
+
+// ✅ Used by Products.jsx for /products/dog and /products/cat
 export async function fetchProductsByPetType(petType) {
   const res = await fetch(
-    `/api/products?pet_type=${encodeURIComponent(petType)}`
+    `${API}/products?pet_type=${encodeURIComponent(petType)}`
   );
-  if (!res.ok) throw new Error("Failed to fetch products by pet type");
-  return res.json();
+  return parseResponse(res, "Failed to fetch products by pet type");
+}
+
+// Optional: if you ever want a category filter via backend
+export async function fetchProductsByCategory(category) {
+  const res = await fetch(
+    `${API}/products?category=${encodeURIComponent(category)}`
+  );
+  return parseResponse(res, "Failed to fetch products by category");
+}
+
+export async function fetchProductById(id) {
+  const res = await fetch(`/api/products/${id}`);
+  const text = await res.text();
+
+  if (!res.ok) {
+    throw new Error(text || "Failed to fetch product");
+  }
+
+  return text ? JSON.parse(text) : null;
 }

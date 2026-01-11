@@ -2,6 +2,9 @@ import { useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import ReactPaginate from "react-paginate";
 import { fetchAllProducts, fetchProductsByPetType } from "../api/products";
+import ProductCard from "../components/ProductCard";
+import { useNavigate } from "react-router-dom";
+import { addToCart } from "../api/cart";
 
 // Normalize: trims + lowercases so "Supplies" == "supplies", and removes extra spaces
 const normalize = (s) => (s ?? "").toString().trim().toLowerCase();
@@ -35,6 +38,23 @@ const HEALTH_CATEGORY_SET = new Set(
 
 function Products() {
   const { petType } = useParams(); // "dog" | "cat" | undefined
+
+  const navigate = useNavigate();
+  const [msg, setMsg] = useState("");
+
+  function handleAdd(product) {
+    try {
+      addToCart(product, 1);
+      setMsg("Added to cart!");
+      setTimeout(() => setMsg(""), 1500);
+    } catch (err) {
+      const text = err?.message || "Login to add items to your cart";
+      setMsg(text);
+      if (text.toLowerCase().includes("login")) {
+        setTimeout(() => navigate("/login"), 800);
+      }
+    }
+  }
 
   // Base list from API (already filtered by petType if route has it)
   const [baseProducts, setBaseProducts] = useState([]);
@@ -148,7 +168,7 @@ function Products() {
         </button>
       </div>
 
-      {/* PRODUCTS GRID */}
+      {/* PRODUCTS GRID
       <div className="row g-4">
         {currentProducts.map((product) => (
           <div key={product.id} className="col-12 col-sm-6 col-lg-4 col-xl-3">
@@ -179,6 +199,25 @@ function Products() {
                 <p className="fw-bold mb-0">${product.price}</p>
               </div>
             </div>
+          </div>
+        ))}
+      </div> */}
+      {msg && (
+        <div
+          className={`alert ${
+            msg.toLowerCase().includes("added")
+              ? "alert-success"
+              : "alert-warning"
+          }`}
+        >
+          {msg}
+        </div>
+      )}
+
+      <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        {currentProducts.map((p) => (
+          <div className="col" key={p.id}>
+            <ProductCard product={p} onAdd={handleAdd} />
           </div>
         ))}
       </div>

@@ -73,7 +73,15 @@ function Navbar() {
                 <li>
                   <hr className="dropdown-divider" />
                 </li>
+                <li>
+                  <Link className="dropdown-item" to="/cart">
+                    Cart
+                  </Link>
+                </li>
 
+                <li>
+                  <hr className="dropdown-divider" />
+                </li>
                 <li>
                   <button
                     className="dropdown-item text-danger"
@@ -113,12 +121,12 @@ function Navbar() {
 
               <ul className="dropdown-menu">
                 <li>
-                  <Link className="dropdown-item" to="/products/dog">
+                  <Link className="dropdown-item" to="/products/pet/dog">
                     Dog
                   </Link>
                 </li>
                 <li>
-                  <Link className="dropdown-item" to="/products/cat">
+                  <Link className="dropdown-item" to="/products/pet/cat">
                     Cat
                   </Link>
                 </li>
@@ -141,13 +149,6 @@ function Navbar() {
                 </NavLink>
               </li>
             )}
-
-            {/* Cart */}
-            <li className="nav-item">
-              <NavLink className="nav-link" to="/cart">
-                Cart
-              </NavLink>
-            </li>
           </ul>
         </div>
       </div>
