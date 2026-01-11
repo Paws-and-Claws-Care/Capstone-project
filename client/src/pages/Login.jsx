@@ -1,44 +1,29 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { saveAuth } from "../auth";
+import { loginUser, fetchMe, saveAuth } from "../api/auth";
 
-const API = import.meta.env.VITE_API_URL ?? "http://localhost:3000/api";
+const API = "/api";
 
 export default function Login() {
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
   async function handleSubmit(e) {
     e.preventDefault();
+    setError("");
 
     try {
-      const res = await fetch(`${API}/users/login`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-      });
+      // 1) login -> { token }
+      const { token } = await loginUser({ username, password });
 
-      const text = await res.text(); // ✅ always works
-      let data = {};
+      // 2) get the user -> user object
+      const user = await fetchMe(token);
 
-      try {
-        data = text ? JSON.parse(text) : {};
-      } catch {
-        // This is the key: shows what you actually got back (often HTML)
-        throw new Error(
-          `Server did not return JSON. Status ${
-            res.status
-          }. Response: ${text.slice(0, 200)}`
-        );
-      }
+      // 3) store both
+      saveAuth({ token, user });
 
-      if (!res.ok) {
-        throw new Error(data?.error || `Login failed (status ${res.status})`);
-      }
-
-      saveAuth(data);
       navigate("/");
     } catch (err) {
       setError(err.message);
@@ -54,9 +39,9 @@ export default function Login() {
       <form onSubmit={handleSubmit}>
         <input
           className="form-control mb-3"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          placeholder="Username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
         />
 
         <input
