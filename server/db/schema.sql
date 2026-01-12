@@ -28,14 +28,26 @@ CREATE TABLE orders(
     id SERIAL PRIMARY KEY,
     date DATE NOT NULL,
     user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    pet_id INTEGER REFERENCES pets(id) ON DELETE SET NULL,
     is_cart BOOLEAN NOT NULL DEFAULT true
 );
+
 
 CREATE TABLE order_items(
     id SERIAL PRIMARY KEY,
     order_id INTEGER NOT NULL REFERENCES orders(id) ON DELETE CASCADE,
     product_id INTEGER NOT NULL REFERENCES products(id) ON DELETE CASCADE,
     quantity INTEGER NOT NULL,
-    price INTEGER NOT NULL,
+    price NUMERIC(10,2) NOT NULL,
     UNIQUE (order_id, product_id)
-)
+);
+
+
+CREATE TABLE pets (
+  id SERIAL PRIMARY KEY,
+  user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  name VARCHAR NOT NULL,
+  breed VARCHAR,
+  pet_type pet_type_enum NOT NULL,
+  created_at TIMESTAMP DEFAULT NOW()
+);

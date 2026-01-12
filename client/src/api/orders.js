@@ -107,3 +107,57 @@ export async function addProductToOrder(
     );
   return data;
 }
+
+// Add item to the active cart for a pet
+export async function addItemToPetCart(token, petId, { productId, quantity }) {
+  const res = await fetch(`${API_URL}/orders/pets/${petId}/cart/items`, {
+    method: "POST",
+    headers: headers(token),
+    body: JSON.stringify({ productId, quantity }),
+  });
+
+  const data = await parse(res);
+  if (!res.ok)
+    throw new Error(
+      typeof data === "string"
+        ? data
+        : data?.error || "Failed to add item to pet cart"
+    );
+
+  return data;
+}
+
+// Checkout the cart for a pet
+export async function checkoutPetCart(token, petId) {
+  const res = await fetch(`${API_URL}/orders/pets/${petId}/cart/checkout`, {
+    method: "POST",
+    headers: headers(token),
+  });
+
+  const data = await parse(res);
+  if (!res.ok)
+    throw new Error(
+      typeof data === "string"
+        ? data
+        : data?.error || "Failed to checkout pet cart"
+    );
+
+  return data;
+}
+
+// Get order history for a pet
+export async function getPetOrderHistory(token, petId) {
+  const res = await fetch(`${API_URL}/orders/pets/${petId}/history`, {
+    headers: headers(token),
+  });
+
+  const data = await parse(res);
+  if (!res.ok)
+    throw new Error(
+      typeof data === "string"
+        ? data
+        : data?.error || "Failed to load pet order history"
+    );
+
+  return data;
+}

@@ -6,6 +6,9 @@ const app = express();
 //body parsing middleware
 app.use(express.json());
 
+import petsRouter from "./api/pets.js";
+app.use("/api/pets", petsRouter);
+
 //for deployment only
 import path from "path";
 import { fileURLToPath } from "url";
