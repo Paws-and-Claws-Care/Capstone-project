@@ -2,19 +2,22 @@
 import { useEffect, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { fetchProductById } from "../api/products";
-import { addToCart } from "../api/cart";
+import { useCart } from "../context/CartContext";
 
 export default function ProductDetails() {
-  //get ID from URL
   const { id } = useParams();
   const navigate = useNavigate();
+
+  const { addItem, isInCart } = useCart();
 
   //store fetched product object
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  //stores "added to cart" or "Login to account" message
   const [msg, setMsg] = useState("");
+
+  // ✅ compute AFTER product exists
+  const added = product ? isInCart(product.id) : false;
 
   useEffect(() => {
     async function load() {
@@ -32,24 +35,16 @@ export default function ProductDetails() {
       }
     }
     load();
-    //dependency on id so it refetches if id changes
   }, [id]);
 
-  //add to cart handler function
   function handleAdd() {
     try {
-      //add quantity of 1 product to cart on click
-      addToCart(product, 1);
+      addItem(product, 1);
       setMsg("Added to cart!");
-      //clears message after a minute and a half
       setTimeout(() => setMsg(""), 1500);
     } catch (err) {
       const text = err?.message || "Login to add items to your cart";
       setMsg(text);
-      // // send to login - might change because its pretty quick
-      // if (text.toLowerCase().includes("login")) {
-      //   setTimeout(() => navigate("/login"), 800);
-      // }
     }
   }
 
@@ -126,8 +121,11 @@ export default function ProductDetails() {
             ${Number(product.price).toFixed(2)}
           </p>
 
-          <button className="btn btn-primary w-100 mb-3" onClick={handleAdd}>
-            Add to Cart
+          <button
+            className={`btn w-100 mb-3 ${added ? "btn-primary" : "btn-light"}`}
+            onClick={handleAdd}
+          >
+            {added ? "Added to Cart" : "Add to Cart"}
           </button>
 
           {product.description && (

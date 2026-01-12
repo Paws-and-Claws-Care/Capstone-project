@@ -1,4 +1,6 @@
 import { Link, NavLink, useNavigate } from "react-router-dom";
+import { useEffect, useRef } from "react";
+import Offcanvas from "bootstrap/js/dist/offcanvas";
 import { getUser, logout } from "../api/auth";
 import logo from "../assets/logo.png";
 
@@ -6,9 +8,58 @@ function Navbar() {
   const user = getUser();
   const navigate = useNavigate();
 
+  const offcanvasRef = useRef(null);
+  const offcanvasInstanceRef = useRef(null);
+
+  // Strong cleanup if Bootstrap leaves backdrop/body in a weird state
+  function cleanupBackdropAndBody() {
+    document.querySelectorAll(".offcanvas-backdrop").forEach((b) => b.remove());
+    document.body.classList.remove("modal-open");
+    document.body.style.overflow = "";
+    document.body.style.paddingRight = "";
+  }
+
+  useEffect(() => {
+    const el = offcanvasRef.current;
+    if (!el) return;
+
+    offcanvasInstanceRef.current = Offcanvas.getOrCreateInstance(el);
+
+    // When Bootstrap says it's fully hidden, clean up any leftovers
+    const onHidden = () => cleanupBackdropAndBody();
+
+    el.addEventListener("hidden.bs.offcanvas", onHidden);
+
+    return () => {
+      el.removeEventListener("hidden.bs.offcanvas", onHidden);
+      offcanvasInstanceRef.current?.dispose();
+      offcanvasInstanceRef.current = null;
+      cleanupBackdropAndBody();
+    };
+  }, []);
+
+  function openOffcanvas() {
+    const el = offcanvasRef.current;
+    if (!el) return;
+
+    // If anything got stuck from a previous open, clean it first
+    cleanupBackdropAndBody();
+
+    // Ensure we have an instance, then show
+    const inst = Offcanvas.getOrCreateInstance(el);
+    offcanvasInstanceRef.current = inst;
+    inst.show();
+  }
+
+  function closeOffcanvas() {
+    offcanvasInstanceRef.current?.hide();
+  }
+
   function handleLogout() {
     logout();
-    navigate("/");
+    closeOffcanvas();
+    // tiny delay so close starts before navigation
+    window.setTimeout(() => navigate("/"), 10);
   }
 
   return (
@@ -23,20 +74,18 @@ function Navbar() {
             <img src={logo} alt="Paws & Claws" style={{ height: "120px" }} />
           </Link>
 
+          {/* IMPORTANT: no data-bs-toggle/target here */}
           <button
             className="navbar-toggler"
             type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarNavDropdown"
-            aria-controls="navbarNavDropdown"
-            aria-expanded="false"
             aria-label="Toggle navigation"
+            onClick={openOffcanvas}
           >
             <span className="navbar-toggler-icon" />
           </button>
         </div>
 
-        {/* RIGHT: Account (always visible, not inside hamburger) */}
+        {/* RIGHT: Account dropdown */}
         <ul className="navbar-nav ms-auto flex-row gap-3">
           {!user ? (
             <>
@@ -73,6 +122,7 @@ function Navbar() {
                 <li>
                   <hr className="dropdown-divider" />
                 </li>
+
                 <li>
                   <Link className="dropdown-item" to="/cart">
                     Cart
@@ -82,6 +132,7 @@ function Navbar() {
                 <li>
                   <hr className="dropdown-divider" />
                 </li>
+
                 <li>
                   <button
                     className="dropdown-item text-danger"
@@ -96,49 +147,80 @@ function Navbar() {
         </ul>
       </div>
 
-      {/* COLLAPSIBLE MENU (hamburger dropdown) */}
-      <div className="container-fluid">
-        <div className="collapse navbar-collapse mt-2" id="navbarNavDropdown">
+      {/* OFFCANVAS */}
+      <div
+        className="offcanvas offcanvas-start"
+        tabIndex="-1"
+        id="mainMenu"
+        aria-labelledby="mainMenuLabel"
+        ref={offcanvasRef}
+      >
+        <div className="offcanvas-header">
+          <h5 className="offcanvas-title" id="mainMenuLabel">
+            Menu
+          </h5>
+
+          <button
+            type="button"
+            className="btn-close"
+            aria-label="Close"
+            onClick={closeOffcanvas}
+          />
+        </div>
+
+        <div className="offcanvas-body">
           <ul className="navbar-nav">
-            {/* Home */}
             <li className="nav-item">
-              <NavLink className="nav-link" to="/">
+              <NavLink className="nav-link" to="/" onClick={closeOffcanvas}>
                 Home
               </NavLink>
             </li>
 
-            {/* Products dropdown */}
-            <li className="nav-item dropdown">
+            {/* Products collapse */}
+            <li className="nav-item">
               <button
-                className="nav-link dropdown-toggle btn btn-link"
+                className="nav-link btn btn-link w-100 text-start d-flex justify-content-between align-items-center"
                 type="button"
-                data-bs-toggle="dropdown"
+                data-bs-toggle="collapse"
+                data-bs-target="#productsMenu"
                 aria-expanded="false"
+                aria-controls="productsMenu"
                 style={{ textDecoration: "none" }}
               >
-                Products
+                Products <span className="ms-2">▾</span>
               </button>
 
-              <ul className="dropdown-menu">
-                <li>
-                  <Link className="dropdown-item" to="/products/pet/dog">
-                    Dog
-                  </Link>
-                </li>
-                <li>
-                  <Link className="dropdown-item" to="/products/pet/cat">
-                    Cat
-                  </Link>
-                </li>
-                <li>
-                  <hr className="dropdown-divider" />
-                </li>
-                <li>
-                  <Link className="dropdown-item" to="/products">
-                    All Products
-                  </Link>
-                </li>
-              </ul>
+              <div className="collapse" id="productsMenu">
+                <ul className="navbar-nav ms-3">
+                  <li className="nav-item">
+                    <NavLink
+                      className="nav-link"
+                      to="/products/pet/dog"
+                      onClick={closeOffcanvas}
+                    >
+                      Dog
+                    </NavLink>
+                  </li>
+                  <li className="nav-item">
+                    <NavLink
+                      className="nav-link"
+                      to="/products/pet/cat"
+                      onClick={closeOffcanvas}
+                    >
+                      Cat
+                    </NavLink>
+                  </li>
+                  <li className="nav-item">
+                    <NavLink
+                      className="nav-link"
+                      to="/products"
+                      onClick={closeOffcanvas}
+                    >
+                      All Products
+                    </NavLink>
+                  </li>
+                </ul>
+              </div>
             </li>
           </ul>
         </div>

@@ -1,3 +1,5 @@
+import { getToken } from "../api/auth";
+
 const CART_KEY = "cart";
 
 export function getCart() {
@@ -15,6 +17,11 @@ export function saveCart(cart) {
 }
 
 export function addToCart(product, qty = 1) {
+  const token = getToken();
+  if (!token) {
+    throw new Error("Login to add items to your cart");
+  }
+
   const cart = getCart();
   const productId = Number(product.id);
 
