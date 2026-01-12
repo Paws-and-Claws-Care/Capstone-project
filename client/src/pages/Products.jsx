@@ -3,7 +3,7 @@ import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import ReactPaginate from "react-paginate";
 import { fetchAllProducts, fetchProductsByPetType } from "../api/products";
 import ProductCard from "../components/ProductCard";
-import { addToCart } from "../api/cart";
+import { useCart } from "../context/CartContext";
 
 /**
  * CODE REVIEW NOTE:
@@ -55,6 +55,8 @@ const ALLOWED_FILTERS = new Set([
 function Products() {
   const navigate = useNavigate();
 
+  const { addItem, isInCart } = useCart();
+
   /**
    * CODE REVIEW NOTE:
    * We support petType from TWO places:
@@ -64,6 +66,8 @@ function Products() {
   const { petType: petTypeParam } = useParams();
 
   const [searchParams, setSearchParams] = useSearchParams();
+
+  const [addedProductIds, setAddedProductIds] = useState(new Set());
 
   // Query-string values
   const petTypeQuery = normalize(searchParams.get("petType")); // "dog" | "cat" | ""
@@ -86,14 +90,13 @@ function Products() {
 
   function handleAdd(product) {
     try {
-      addToCart(product, 1);
+      addItem(product, 1);
       setMsg("Added to cart!");
       setTimeout(() => setMsg(""), 1500);
     } catch (err) {
       const text = err?.message || "Login to add items to your cart";
       setMsg(text);
 
-      // CODE REVIEW NOTE: If not logged in, send user to login.
       if (text.toLowerCase().includes("login")) {
         setTimeout(() => navigate("/login"), 800);
       }
@@ -253,7 +256,11 @@ function Products() {
       <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
         {currentProducts.map((p) => (
           <div className="col" key={p.id}>
-            <ProductCard product={p} onAdd={handleAdd} />
+            <ProductCard
+              product={p}
+              onAdd={handleAdd}
+              isAdded={isInCart(p.id)}
+            />
           </div>
         ))}
       </div>

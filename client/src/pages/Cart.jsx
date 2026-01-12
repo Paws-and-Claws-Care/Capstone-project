@@ -1,32 +1,27 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
 import { Link, Navigate } from "react-router-dom";
 import { getUser } from "../api/auth";
-import { getCart, changeQuantity, removeFromCart } from "../api/cart";
+import { useCart } from "../context/CartContext";
 
 export default function Cart() {
   const user = getUser();
-  const [cart, setCart] = useState([]);
+
+  // ✅ use context as the source of truth
+  const { cart, updateItemQty, removeItem } = useCart();
 
   // Redirect if not logged in
   if (!user) return <Navigate to="/login" replace />;
 
-  useEffect(() => {
-    setCart(getCart());
-  }, []);
-
-  function dec(productId) {
-    const updated = changeQuantity(productId, -1);
-    setCart(updated);
+  function dec(productId, currentQty) {
+    updateItemQty(productId, Number(currentQty) - 1);
   }
 
-  function inc(productId) {
-    const updated = changeQuantity(productId, +1);
-    setCart(updated);
+  function inc(productId, currentQty) {
+    updateItemQty(productId, Number(currentQty) + 1);
   }
 
   function removeLine(productId) {
-    const updated = removeFromCart(productId);
-    setCart(updated);
+    removeItem(productId);
   }
 
   const total = useMemo(() => {
@@ -84,7 +79,7 @@ export default function Cart() {
                     <button
                       type="button"
                       className="btn btn-outline-secondary btn-sm"
-                      onClick={() => dec(item.productId)}
+                      onClick={() => dec(item.productId, qty)}
                       aria-label="Decrease quantity"
                     >
                       −
@@ -97,7 +92,7 @@ export default function Cart() {
                     <button
                       type="button"
                       className="btn btn-outline-secondary btn-sm"
-                      onClick={() => inc(item.productId)}
+                      onClick={() => inc(item.productId, qty)}
                       aria-label="Increase quantity"
                     >
                       +
