@@ -2,19 +2,16 @@
 // This page explains what the capstone project is, why it was built,
 // and highlights the tech stack (frontend, backend, database) using Bootstrap cards.
 
-import { Link } from "react-router-dom"; // Link = client-side navigation without page refresh
+import { Link } from "react-router-dom";
 
 export default function About() {
   return (
     <div>
-      {/* HEADER / HERO SECTION:
-          Gives the page title and a quick overview of what the project is. */}
+      {/* HEADER / HERO SECTION */}
       <section className="bg-light border-bottom">
         <div className="container py-5">
-          {/* Big heading for the page */}
           <h1 className="display-6 fw-bold mb-2">About Paws & Claws Care</h1>
 
-          {/* Short summary under the heading */}
           <p className="lead text-secondary mb-0">
             Paws & Claws Care is a full-stack e-commerce application built as a
             capstone project. The goal of this project is to provide a clean,
@@ -23,16 +20,13 @@ export default function About() {
         </div>
       </section>
 
-      {/* MISSION + PROJECT INFO SECTION:
-          Two-column layout: mission/goals on the left, reasons + buttons on the right. */}
+      {/* MISSION + PROJECT INFO SECTION */}
       <section className="container py-5">
         <div className="row g-4">
           {/* LEFT COLUMN */}
           <div className="col-12 col-lg-7">
-            {/* Card adds a clean box with shadow and no border */}
             <div className="card shadow-sm border-0 h-100">
               <div className="card-body p-4">
-                {/* Mission explains the purpose of the app */}
                 <h2 className="h4 fw-bold mb-3">Our mission</h2>
                 <p className="text-secondary mb-3">
                   We created Paws & Claws Care to make shopping for pet wellness
@@ -41,7 +35,6 @@ export default function About() {
                   demonstrating full-stack development skills.
                 </p>
 
-                {/* Project goals list  */}
                 <h3 className="h5 fw-bold mb-2">Project goals</h3>
                 <ul className="text-secondary mb-0">
                   <li>Build a full-stack React and Express application</li>
@@ -57,7 +50,6 @@ export default function About() {
           <div className="col-12 col-lg-5">
             <div className="card shadow-sm border-0 h-100">
               <div className="card-body p-4">
-                {/* This paragraph is your “why” statement for the capstone */}
                 <h2 className="h5 fw-bold mb-3">Why we built it</h2>
                 <p className="text-secondary">
                   This project demonstrates how a modern e-commerce application
@@ -65,14 +57,11 @@ export default function About() {
                   backend APIs, authentication, and database relationships.
                 </p>
 
-                {/* Buttons help users navigate to core pages */}
                 <div className="d-grid gap-2 mt-4">
-                  {/* Link to products page */}
                   <Link className="btn btn-primary" to="/products">
                     Shop products <i className="bi bi-arrow-right ms-2" />
                   </Link>
 
-                  {/* Link back to homepage */}
                   <Link className="btn btn-outline-primary" to="/">
                     Back to home
                   </Link>
@@ -83,9 +72,7 @@ export default function About() {
         </div>
       </section>
 
-      {/* TECH STACK SECTION:
-          Shows the tools used for the project in three Bootstrap cards.
-          (These items match your package.json dependencies.) */}
+      {/* TECH STACK SECTION */}
       <section className="container py-5">
         <div className="mb-4">
           <h2 className="fw-bold">Project Tech Stack</h2>
@@ -95,19 +82,16 @@ export default function About() {
           </p>
         </div>
 
-        {/* Grid of 3 cards */}
         <div className="row g-3">
-          {/* FRONTEND TECH CARD */}
+          {/* FRONTEND */}
           <div className="col-12 col-md-6 col-lg-4">
             <div className="card h-100 shadow-sm border-0">
               <div className="card-body">
-                {/* Card title with icon */}
                 <h5 className="fw-semibold mb-3">
                   <i className="bi bi-window me-2 text-primary" />
                   Frontend
                 </h5>
 
-                {/* List the main frontend dependencies/tools */}
                 <ul className="text-secondary mb-0">
                   <li>React 19</li>
                   <li>Vite (dev server & build tool)</li>
@@ -122,7 +106,7 @@ export default function About() {
             </div>
           </div>
 
-          {/* BACKEND TECH CARD */}
+          {/* BACKEND */}
           <div className="col-12 col-md-6 col-lg-4">
             <div className="card h-100 shadow-sm border-0">
               <div className="card-body">
@@ -131,7 +115,6 @@ export default function About() {
                   Backend
                 </h5>
 
-                {/* Backend tools/libraries used for API + authentication */}
                 <ul className="text-secondary mb-0">
                   <li>Node.js (22+)</li>
                   <li>Express.js</li>
@@ -146,7 +129,7 @@ export default function About() {
             </div>
           </div>
 
-          {/* DATABASE TECH CARD */}
+          {/* DATABASE */}
           <div className="col-12 col-md-6 col-lg-4">
             <div className="card h-100 shadow-sm border-0">
               <div className="card-body">
@@ -155,7 +138,6 @@ export default function About() {
                   Database
                 </h5>
 
-                {/* Database + modeling notes */}
                 <ul className="text-secondary mb-0">
                   <li>PostgreSQL</li>
                   <li>pg (Postgres client)</li>
@@ -169,29 +151,41 @@ export default function About() {
         </div>
       </section>
 
-      {/* TEAM SECTION:
-          Simple section for collaboration credit. You can later add names/roles as cards. */}
-      <section className="bg-light border-top">
+      {/* MEET THE TEAM (white background) */}
+      <section className="border-top">
         <div className="container py-5">
           <div className="row g-3 align-items-center">
-            {/* Left side text */}
-            <div className="col-12 col-lg-8">
+            <div className="col-12">
               <h2 className="h4 fw-bold mb-1">Meet the team</h2>
               <p className="text-secondary mb-0">
                 Built collaboratively by the Paws & Claws Care capstone team.
                 Team member names and roles can be added here.
               </p>
             </div>
+          </div>
+        </div>
+      </section>
 
-            {/* Right side button */}
-            <div className="col-12 col-lg-4 text-lg-end">
-              <Link to="/" className="btn btn-outline-secondary">
-                Back to home <i className="bi bi-house ms-2" />
+      {/* FOOTER (grey background like Home) */}
+      <footer className="bg-light border-top">
+        <div className="container py-4">
+          <div className="d-flex flex-column flex-md-row justify-content-between gap-2 text-secondary small">
+            <div>© {new Date().getFullYear()} Paws & Claws Care</div>
+
+            <div className="d-flex gap-3">
+              <Link className="text-secondary text-decoration-none" to="/">
+                Home
+              </Link>
+              <Link
+                className="text-secondary text-decoration-none"
+                to="/contact"
+              >
+                Contact
               </Link>
             </div>
           </div>
         </div>
-      </section>
+      </footer>
     </div>
   );
 }

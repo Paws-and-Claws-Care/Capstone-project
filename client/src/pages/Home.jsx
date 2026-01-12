@@ -115,17 +115,22 @@ export default function Home() {
       </section>
 
       {/* FOOTER */}
-      <footer className="container py-4">
-        <div className="d-flex flex-column flex-md-row justify-content-between gap-2 text-secondary small">
-          <div>© {new Date().getFullYear()} Paws & Claws Care</div>
+      <footer className="bg-light border-top">
+        <div className="container py-4">
+          <div className="d-flex flex-column flex-md-row justify-content-between gap-2 text-secondary small">
+            <div>© {new Date().getFullYear()} Paws & Claws Care</div>
 
-          <div className="d-flex gap-3">
-            <Link className="text-secondary text-decoration-none" to="/about">
-              About
-            </Link>
-            <Link className="text-secondary text-decoration-none" to="/contact">
-              Contact
-            </Link>
+            <div className="d-flex gap-3">
+              <Link className="text-secondary text-decoration-none" to="/about">
+                About
+              </Link>
+              <Link
+                className="text-secondary text-decoration-none"
+                to="/contact"
+              >
+                Contact
+              </Link>
+            </div>
           </div>
         </div>
       </footer>
