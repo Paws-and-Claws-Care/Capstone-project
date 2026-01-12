@@ -1,5 +1,3 @@
-// client/src/api/products.js
-
 const API = "/api";
 
 // Small helper so all functions handle errors the same way
@@ -10,7 +8,7 @@ async function parseResponse(res, defaultMsg) {
   try {
     data = text ? JSON.parse(text) : null;
   } catch {
-    // If backend returned HTML or plain text, still show something useful
+    // If backend returned HTML or plain text, a message is still shown
     throw new Error(
       `${defaultMsg}. Status ${res.status}. Response: ${text.slice(0, 200)}`
     );
@@ -23,13 +21,13 @@ async function parseResponse(res, defaultMsg) {
   return data;
 }
 
-// ✅ Used by Products.jsx when no petType param
+//Used by Products.jsx when there is no petType param
 export async function fetchAllProducts() {
   const res = await fetch(`${API}/products`);
   return parseResponse(res, "Failed to fetch products");
 }
 
-// ✅ Used by Products.jsx for /products/dog and /products/cat
+//Used by Products.jsx for /products/dog and /products/cat
 export async function fetchProductsByPetType(petType) {
   const res = await fetch(
     `${API}/products?pet_type=${encodeURIComponent(petType)}`
@@ -37,7 +35,6 @@ export async function fetchProductsByPetType(petType) {
   return parseResponse(res, "Failed to fetch products by pet type");
 }
 
-// Optional: if you ever want a category filter via backend
 export async function fetchProductsByCategory(category) {
   const res = await fetch(
     `${API}/products?category=${encodeURIComponent(category)}`

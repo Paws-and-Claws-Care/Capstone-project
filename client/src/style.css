@@ -8,3 +8,19 @@
   flex-basis: 100%;
   flex-grow: 1;
 }
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+.app-shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-main {
+  flex: 1; /* this pushes the footer to the bottom */
+}

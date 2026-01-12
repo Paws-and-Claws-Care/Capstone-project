@@ -5,13 +5,16 @@ import { fetchProductById } from "../api/products";
 import { addToCart } from "../api/cart";
 
 export default function ProductDetails() {
+  //get ID from URL
   const { id } = useParams();
   const navigate = useNavigate();
 
+  //store fetched product object
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const [msg, setMsg] = useState(""); // success or error message
+  //stores "added to cart" or "Login to account" message
+  const [msg, setMsg] = useState("");
 
   useEffect(() => {
     async function load() {
@@ -29,20 +32,24 @@ export default function ProductDetails() {
       }
     }
     load();
+    //dependency on id so it refetches if id changes
   }, [id]);
 
+  //add to cart handler function
   function handleAdd() {
     try {
+      //add quantity of 1 product to cart on click
       addToCart(product, 1);
       setMsg("Added to cart!");
+      //clears message after a minute and a half
       setTimeout(() => setMsg(""), 1500);
     } catch (err) {
       const text = err?.message || "Login to add items to your cart";
       setMsg(text);
-      // send them to login (optional but matches what you asked for)
-      if (text.toLowerCase().includes("login")) {
-        setTimeout(() => navigate("/login"), 800);
-      }
+      // // send to login - might change because its pretty quick
+      // if (text.toLowerCase().includes("login")) {
+      //   setTimeout(() => navigate("/login"), 800);
+      // }
     }
   }
 

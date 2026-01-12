@@ -1,5 +1,3 @@
-// client/src/api/orders.js
-
 const API_URL = "/api";
 
 function headers(token) {
@@ -19,8 +17,7 @@ async function parse(res) {
 }
 
 /**
- * GET /api/orders
- * returns: array of orders for logged-in user
+ * returns an array of orders for logged-in user
  */
 export async function getMyOrders(token) {
   const res = await fetch(`${API_URL}/orders`, {
@@ -36,8 +33,7 @@ export async function getMyOrders(token) {
 }
 
 /**
- * GET /api/orders/:id
- * returns: single order
+ * returns a single order
  */
 export async function getOrderById(token, orderId) {
   const res = await fetch(`${API_URL}/orders/${orderId}`, {
@@ -53,8 +49,7 @@ export async function getOrderById(token, orderId) {
 }
 
 /**
- * GET /api/orders/:id/products
- * returns: products for that order (order_items joined with products)
+ * returns products for that order (order_items joined with products)
  */
 export async function getOrderProducts(token, orderId) {
   const res = await fetch(`${API_URL}/orders/${orderId}/products`, {
@@ -72,9 +67,7 @@ export async function getOrderProducts(token, orderId) {
 }
 
 /**
- * POST /api/orders
- * body: { date, note? }
- * returns: created order
+ * returns a created order
  */
 export async function createOrder(token, { date, note }) {
   const res = await fetch(`${API_URL}/orders`, {
@@ -92,9 +85,7 @@ export async function createOrder(token, { date, note }) {
 }
 
 /**
- * POST /api/orders/:id/products
- * body: { productId, quantity }
- * returns: created order_items row
+ * returns created order_items row
  */
 export async function addProductToOrder(
   token,

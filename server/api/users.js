@@ -12,9 +12,6 @@ import {
 
 const router = express.Router();
 
-/**
- * GET all users
- */
 router.get("/", async (req, res, next) => {
   try {
     const users = await getAllUsers();
@@ -24,9 +21,6 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-/**
- * GET user by username
- */
 router.get("/username/:username", async (req, res, next) => {
   try {
     const user = await getUserByUsername(req.params.username);
@@ -37,9 +31,6 @@ router.get("/username/:username", async (req, res, next) => {
   }
 });
 
-/**
- * GET user by id
- */
 router.get("/:id", async (req, res, next) => {
   try {
     const user = await getUserById(req.params.id);
@@ -50,9 +41,6 @@ router.get("/:id", async (req, res, next) => {
   }
 });
 
-/**
- * POST register
- */
 router.post("/register", async (req, res, next) => {
   try {
     const { username, email, password } = req.body;
@@ -61,7 +49,6 @@ router.post("/register", async (req, res, next) => {
       return res.status(400).json({ error: "Missing required fields" });
     }
 
-    // ✅ DO NOT hash here — createUser already hashes
     const user = await createUser({ username, email, password });
 
     const token = jwt.sign(
@@ -79,9 +66,6 @@ router.post("/register", async (req, res, next) => {
   }
 });
 
-/**
- * POST login
- */
 router.post("/login", async (req, res, next) => {
   try {
     const { email, password } = req.body;
