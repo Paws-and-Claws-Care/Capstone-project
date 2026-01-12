@@ -7,6 +7,7 @@ export default function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  //tracks whether the form is being submitted
   const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
@@ -14,6 +15,7 @@ export default function Register() {
   async function handleSubmit(e) {
     e.preventDefault();
     setError("");
+    //mark the form as "submitting"
     setIsLoading(true);
 
     try {
@@ -24,6 +26,7 @@ export default function Register() {
       });
 
       const text = await res.text();
+      //hold json content from response
       let data = {};
 
       try {
@@ -32,6 +35,7 @@ export default function Register() {
         throw new Error(
           `Server did not return JSON. Status ${
             res.status
+            //includes only the first 200 characters of raw response in error message
           }. Response: ${text.slice(0, 200)}`
         );
       }
@@ -48,7 +52,9 @@ export default function Register() {
       navigate("/");
     } catch (err) {
       setError(err.message);
+      //runs if there is success or failure
     } finally {
+      //re-enables button
       setIsLoading(false);
     }
   }

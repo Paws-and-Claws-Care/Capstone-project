@@ -34,7 +34,7 @@ export async function fetchMe(token) {
 
   const data = await res.json();
   if (!res.ok) throw new Error(data.error || "Not logged in");
-  return data; // user object
+  return data;
 }
 
 export function saveAuth({ token, user }) {
@@ -91,7 +91,7 @@ export function getUser() {
 
     return parsed && typeof parsed === "object" ? parsed : null;
   } catch {
-    // clean up corrupted values so it doesn't keep crashing
+    // clean up any corrupted values so it doesn't keep crashing
     localStorage.removeItem("user");
     return null;
   }

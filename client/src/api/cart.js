@@ -36,7 +36,7 @@ export function addToCart(product, qty = 1) {
   return cart;
 }
 
-// ✅ sets quantity to an exact number
+// sets quantity to an exact number
 export function updateQuantity(productId, nextQty) {
   const pid = Number(productId);
   const qty = Number(nextQty);
@@ -52,7 +52,7 @@ export function updateQuantity(productId, nextQty) {
   return cart;
 }
 
-// ✅ +1 / -1 convenience
+// +1 / -1 convenience
 export function changeQuantity(productId, delta) {
   const pid = Number(productId);
   const d = Number(delta);
