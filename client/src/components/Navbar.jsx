@@ -1,5 +1,5 @@
 import { Link, NavLink, useNavigate } from "react-router-dom";
-import { getUser, logout } from "../auth";
+import { getUser, logout } from "../api/auth";
 import logo from "../assets/logo.png";
 
 function Navbar() {

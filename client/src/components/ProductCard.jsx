@@ -15,7 +15,7 @@ export default function ProductCard({ product, onAdd }) {
           src={product.image_url}
           alt={product.name}
           className="card-img-top"
-          style={{ height: "260px", objectFit: "cover" }}
+          style={{ height: "260px", objectFit: "contain" }}
         />
 
         <div className="card-body">
