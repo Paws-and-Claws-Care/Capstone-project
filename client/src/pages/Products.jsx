@@ -1,16 +1,22 @@
 import { useEffect, useMemo, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import ReactPaginate from "react-paginate";
 import { fetchAllProducts, fetchProductsByPetType } from "../api/products";
 import ProductCard from "../components/ProductCard";
-import { useNavigate } from "react-router-dom";
 import { addToCart } from "../api/cart";
 
-// Normalize: trims + lowercases so "Supplies" == "supplies", and removes extra spaces
+/**
+ * CODE REVIEW NOTE:
+ * normalize() prevents bugs caused by casing/spaces.
+ * Example: " Treats " == "treats"
+ */
 const normalize = (s) => (s ?? "").toString().trim().toLowerCase();
 
-// Your DB “Health & Wellness” is actually 5 different category strings.
-// We include variants/typos from your seed so the button works reliably.
+/**
+ * CODE REVIEW NOTE:
+ * Our seed data uses multiple category strings for what we show as "Health & Wellness".
+ * Until the DB is cleaned up, we group them here so the UI filter works reliably.
+ */
 const HEALTH_CATEGORY_SET = new Set(
   [
     // Skin & Coat
@@ -23,24 +29,60 @@ const HEALTH_CATEGORY_SET = new Set(
     // Digestive
     "digestive supplement",
 
-    // Flea & Tick (both formats exist)
+    // Flea & Tick
     "flea and tick",
     "flea & tick",
 
     // Anxiety & Calming (typos exist in seed)
     "anxiety & calming",
-    "anxiety & calming",
-    "anixety & calming",
-    "anixety & calming",
     "anixety & calming",
   ].map(normalize)
 );
 
-function Products() {
-  const { petType } = useParams(); // "dog" | "cat" | undefined
+/**
+ * CODE REVIEW NOTE:
+ * Filters the Products page supports.
+ * We validate filterFromUrl against this so random URLs don't break the UI.
+ */
+const ALLOWED_FILTERS = new Set([
+  "all",
+  "food",
+  "treats",
+  "supplies",
+  "health",
+]);
 
+function Products() {
   const navigate = useNavigate();
+
+  /**
+   * CODE REVIEW NOTE:
+   * We support petType from TWO places:
+   * 1) Query string (Home page): /products?petType=dog
+   * 2) Route param (alternate route): /products/pet/dog
+   */
+  const { petType: petTypeParam } = useParams();
+
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  // Query-string values
+  const petTypeQuery = normalize(searchParams.get("petType")); // "dog" | "cat" | ""
+  const filterFromUrl = normalize(searchParams.get("filter")); // "treats" | "health" | ...
+
+  // Use query petType first (because Home sends it), fallback to param petType
+  const petType = petTypeQuery || normalize(petTypeParam) || "";
+
   const [msg, setMsg] = useState("");
+
+  // Base list from API (already filtered by petType if provided)
+  const [baseProducts, setBaseProducts] = useState([]);
+
+  // UI filter state ("all" | "food" | "treats" | "supplies" | "health")
+  const [activeFilter, setActiveFilter] = useState("all");
+
+  // Pagination
+  const [itemOffset, setItemOffset] = useState(0);
+  const itemsPerPage = 12;
 
   function handleAdd(product) {
     try {
@@ -50,23 +92,32 @@ function Products() {
     } catch (err) {
       const text = err?.message || "Login to add items to your cart";
       setMsg(text);
+
+      // CODE REVIEW NOTE: If not logged in, send user to login.
       if (text.toLowerCase().includes("login")) {
         setTimeout(() => navigate("/login"), 800);
       }
     }
   }
 
-  // Base list from API (already filtered by petType if route has it)
-  const [baseProducts, setBaseProducts] = useState([]);
+  /**
+   * CODE REVIEW NOTE:
+   * URL -> UI SYNC:
+   * Whenever the URL filter changes (Home click, back button, manual URL edit),
+   * we update activeFilter and reset pagination to page 1.
+   */
+  useEffect(() => {
+    const next = ALLOWED_FILTERS.has(filterFromUrl) ? filterFromUrl : "all";
+    setActiveFilter(next);
+    setItemOffset(0);
+  }, [filterFromUrl]);
 
-  // Page filter: "all" | "food" | "treats" | "supplies" | "health"
-  const [activeFilter, setActiveFilter] = useState("all");
-
-  // Pagination
-  const [itemOffset, setItemOffset] = useState(0);
-  const itemsPerPage = 12;
-
-  // Fetch when petType changes
+  /**
+   * CODE REVIEW NOTE:
+   * We fetch products when petType changes.
+   * - If petType exists -> call fetchProductsByPetType(petType)
+   * - Else -> fetchAllProducts()
+   */
   useEffect(() => {
     async function load() {
       try {
@@ -75,19 +126,20 @@ function Products() {
           : await fetchAllProducts();
 
         setBaseProducts(data);
-        setActiveFilter("all");
         setItemOffset(0);
-
-        // If you ever want to see all category values:
-        // console.log([...new Set(data.map((p) => p.category))]);
       } catch (err) {
         console.error(err);
       }
     }
+
     load();
   }, [petType]);
 
-  // Apply the category filter
+  /**
+   * CODE REVIEW NOTE:
+   * Filtering happens in memory (client-side) AFTER fetching.
+   * This avoids extra API calls for basic UI filtering.
+   */
   const filteredProducts = useMemo(() => {
     if (activeFilter === "all") return baseProducts;
 
@@ -103,7 +155,7 @@ function Products() {
     );
   }, [baseProducts, activeFilter]);
 
-  // Paginate the filtered list
+  // Pagination calculations
   const endOffset = itemOffset + itemsPerPage;
   const currentProducts = filteredProducts.slice(itemOffset, endOffset);
   const pageCount = Math.ceil(filteredProducts.length / itemsPerPage);
@@ -112,8 +164,26 @@ function Products() {
     setItemOffset(event.selected * itemsPerPage);
   }
 
+  /**
+   * CODE REVIEW NOTE:
+   * Keep filters in the URL so:
+   * - refresh keeps selection
+   * - shareable links
+   * - back/forward works correctly
+   *
+   * ALSO: Keep petType in the URL when switching filters.
+   */
   function setFilter(filterName) {
-    setActiveFilter(filterName);
+    const next = new URLSearchParams(searchParams);
+
+    if (!filterName || filterName === "all") next.delete("filter");
+    else next.set("filter", filterName);
+
+    // Keep petType consistent (especially when user started from /products?petType=dog)
+    if (petType) next.set("petType", petType);
+    else next.delete("petType");
+
+    setSearchParams(next);
     setItemOffset(0);
   }
 
@@ -168,40 +238,6 @@ function Products() {
         </button>
       </div>
 
-      {/* PRODUCTS GRID
-      <div className="row g-4">
-        {currentProducts.map((product) => (
-          <div key={product.id} className="col-12 col-sm-6 col-lg-4 col-xl-3">
-            <div className="card h-100">
-              <img
-                src={product.image_url}
-                alt={product.name}
-                className="card-img-top"
-                style={{ height: "200px", objectFit: "cover" }}
-              />
-
-              <div className="card-body d-flex flex-column">
-                <h5 className="card-title">{product.name}</h5>
-
-                <div className="d-flex gap-2 flex-wrap mb-2">
-                  <span className="badge text-bg-primary">
-                    {product.category}
-                  </span>
-                  <span className="badge text-bg-secondary">
-                    {product.pet_type}
-                  </span>
-                </div>
-
-                <p className="card-text" style={{ flexGrow: 1 }}>
-                  {product.description}
-                </p>
-
-                <p className="fw-bold mb-0">${product.price}</p>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div> */}
       {msg && (
         <div
           className={`alert ${
