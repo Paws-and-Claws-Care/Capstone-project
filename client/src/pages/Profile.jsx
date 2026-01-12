@@ -2,9 +2,10 @@ import { Link, Navigate } from "react-router-dom";
 import { getUser } from "../api/auth";
 
 export default function Profile() {
+  //gets current user object
   const user = getUser();
 
-  // Guard: redirect if not logged in
+  //redirect back to login if not logged in - user cannot hit back button
   if (!user) {
     return <Navigate to="/login" replace />;
   }
