@@ -227,10 +227,6 @@ export default function Contact() {
 
                 {/* Quick navigation buttons */}
                 <div className="d-grid gap-2">
-                  <Link className="btn btn-outline-primary" to="/products">
-                    <i className="bi bi-bag me-2" />
-                    Browse products
-                  </Link>
                   <Link className="btn btn-outline-primary" to="/about">
                     <i className="bi bi-info-circle me-2" />
                     Learn about the project
@@ -244,22 +240,22 @@ export default function Contact() {
 
       {/* Footer */}
 
-      <section className="bg-light border-top">
-        <div className="container py-4 text-secondary small d-flex flex-column flex-md-row justify-content-between gap-2">
-          <div>© {new Date().getFullYear()} Paws & Claws Care</div>
-          <div className="d-flex gap-3">
-            <Link
-              className="text-secondary text-decoration-none"
-              to="/products"
-            >
-              Shop
-            </Link>
-            <Link className="text-secondary text-decoration-none" to="/about">
-              About
-            </Link>
+      <footer className="bg-light border-top">
+        <div className="container py-4">
+          <div className="d-flex flex-column flex-md-row justify-content-between gap-2 text-secondary small">
+            <div>© {new Date().getFullYear()} Paws & Claws Care</div>
+
+            <div className="d-flex gap-3">
+              <Link className="text-secondary text-decoration-none" to="/">
+                Home
+              </Link>
+              <Link className="text-secondary text-decoration-none" to="/about">
+                About
+              </Link>
+            </div>
           </div>
         </div>
-      </section>
+      </footer>
     </div>
   );
 }
