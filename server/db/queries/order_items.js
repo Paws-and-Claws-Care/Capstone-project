@@ -61,3 +61,26 @@ export async function getProductsByOrderId(orderId) {
   const response = await db.query(SQL, [orderId]);
   return response.rows;
 }
+
+// Update quantity for a line item in an order
+export async function updateOrderItemQuantity(orderId, productId, quantity) {
+  const SQL = `
+    UPDATE order_items
+    SET quantity = $1
+    WHERE order_id = $2 AND product_id = $3
+    RETURNING *;
+  `;
+  const result = await db.query(SQL, [quantity, orderId, productId]);
+  return result.rows[0] || null;
+}
+
+// Remove a line item from an order
+export async function deleteOrderItemByProduct(orderId, productId) {
+  const SQL = `
+    DELETE FROM order_items
+    WHERE order_id = $1 AND product_id = $2
+    RETURNING *;
+  `;
+  const result = await db.query(SQL, [orderId, productId]);
+  return result.rows[0] || null;
+}

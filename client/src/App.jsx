@@ -13,10 +13,13 @@ import ProductDetails from "./pages/ProductDetails";
 import Cart from "./pages/Cart";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
+import Pets from "./pages/Pets";
+
+import { ActivePetProvider } from "./context/ActivePetContext";
 
 function App() {
   return (
-    <>
+    <ActivePetProvider>
       <Navbar />
 
       <Routes>
@@ -33,8 +36,9 @@ function App() {
         <Route path="/cart" element={<Cart />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/pets" element={<Pets />} />
       </Routes>
-    </>
+    </ActivePetProvider>
   );
 }
 

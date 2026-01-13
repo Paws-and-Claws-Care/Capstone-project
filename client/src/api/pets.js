@@ -16,6 +16,20 @@ async function parse(res) {
   }
 }
 
+export async function deletePet(token, petId) {
+  const res = await fetch(`${API_URL}/pets/${petId}`, {
+    method: "DELETE",
+    headers: headers(token),
+  });
+
+  const data = await parse(res);
+  if (!res.ok)
+    throw new Error(
+      typeof data === "string" ? data : data?.error || "Failed to delete pet"
+    );
+  return data; // { deleted: true, petId }
+}
+
 export async function getMyPets(token) {
   const res = await fetch(`${API_URL}/pets`, {
     headers: headers(token),

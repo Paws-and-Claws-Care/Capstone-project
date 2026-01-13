@@ -8,12 +8,18 @@ import {
   createCartOrderForPet,
   getCompletedOrdersByPet,
 } from "../db/queries/orders.js";
+
 import requireUser from "../middleware/requireUser.js";
+
 import {
   getProductsByOrderId,
   addProductToOrder,
+  updateOrderItemQuantity,
+  deleteOrderItemByProduct,
 } from "../db/queries/order_items.js";
+
 import { getProductById } from "../db/queries/product.js";
+
 import db from "../db/client.js";
 
 const router = express.Router();
@@ -23,16 +29,44 @@ router.get("/", getUserFromToken, requireUser, async (req, res) => {
   res.send(orders);
 });
 
-router.get("/:id", getUserFromToken, requireUser, async (req, res, next) => {
-  const order = await getOrderById(req.params.id);
+router.get(
+  "/:id/products",
+  getUserFromToken,
+  requireUser,
+  async (req, res, next) => {
+    try {
+      const orderId = req.params.id;
 
-  if (!order) return res.status(404).send("Order not found.");
+      const order = await getOrderById(orderId);
+      if (!order) return res.status(404).send("Order not found.");
+      if (order.user_id !== req.user.id)
+        return res.status(403).send("Unauthorized access to order.");
 
-  if (order.user_id !== req.user.id)
-    return res.status(403).send("Unauthorized access to order.");
+      const items = await getProductsByOrderId(orderId);
 
-  res.send(order);
-});
+      // ✅ add line_total to each item (use snapshot price: item_price)
+      const itemsWithLineTotals = items.map((item) => ({
+        ...item,
+        line_total: Number(item.item_price) * Number(item.quantity),
+      }));
+
+      // ✅ add order_total
+      const order_total = itemsWithLineTotals.reduce(
+        (sum, item) => sum + item.line_total,
+        0
+      );
+
+      // ✅ send a clean shape
+      res.send({
+        order_id: Number(orderId),
+        items: itemsWithLineTotals,
+        order_total,
+      });
+    } catch (err) {
+      next(err);
+    }
+  }
+);
 
 router.get(
   "/:id/products",
@@ -144,6 +178,78 @@ router.post(
       });
 
       res.status(201).send({ order: cart, added: row });
+    } catch (err) {
+      next(err);
+    }
+  }
+);
+
+router.patch(
+  "/pets/:petId/cart/items/:productId",
+  getUserFromToken,
+  requireUser,
+  async (req, res, next) => {
+    try {
+      const petId = Number(req.params.petId);
+      const productId = Number(req.params.productId);
+      const quantity = Number(req.body.quantity);
+
+      if (!Number.isFinite(productId)) {
+        return res.status(400).send("Invalid productId.");
+      }
+      if (!Number.isFinite(quantity) || quantity < 0) {
+        return res.status(400).send("Quantity must be 0 or more.");
+      }
+
+      // ensure pet belongs to user
+      const petCheck = await db.query(
+        `SELECT id FROM pets WHERE id = $1 AND user_id = $2`,
+        [petId, req.user.id]
+      );
+      if (!petCheck.rows[0]) return res.status(404).send("Pet not found.");
+
+      // find cart for pet
+      const cart = await getCartOrderByPet(req.user.id, petId);
+      if (!cart) return res.status(400).send("No active cart for this pet.");
+
+      // quantity 0 = delete the item
+      if (quantity === 0) {
+        const removed = await deleteOrderItemByProduct(cart.id, productId);
+        return res.send({ orderId: cart.id, removed });
+      }
+
+      const updated = await updateOrderItemQuantity(
+        cart.id,
+        productId,
+        quantity
+      );
+      res.send({ orderId: cart.id, updated });
+    } catch (err) {
+      next(err);
+    }
+  }
+);
+router.delete(
+  "/pets/:petId/cart/items/:productId",
+  getUserFromToken,
+  requireUser,
+  async (req, res, next) => {
+    try {
+      const petId = Number(req.params.petId);
+      const productId = Number(req.params.productId);
+
+      // ensure pet belongs to user
+      const petCheck = await db.query(
+        `SELECT id FROM pets WHERE id = $1 AND user_id = $2`,
+        [petId, req.user.id]
+      );
+      if (!petCheck.rows[0]) return res.status(404).send("Pet not found.");
+
+      const cart = await getCartOrderByPet(req.user.id, petId);
+      if (!cart) return res.status(400).send("No active cart for this pet.");
+
+      const removed = await deleteOrderItemByProduct(cart.id, productId);
+      res.send({ orderId: cart.id, removed });
     } catch (err) {
       next(err);
     }

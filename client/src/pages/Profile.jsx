@@ -1,13 +1,49 @@
 import { Link, Navigate } from "react-router-dom";
+import { useState } from "react";
 import { getUser } from "../api/auth";
+import { useActivePet } from "../context/ActivePetContext";
 
 export default function Profile() {
-  //gets current user object
   const user = getUser();
+  const { pets, addPet, activePetId, setActivePet } = useActivePet();
 
-  //redirect back to login if not logged in - user cannot hit back button
+  const [name, setName] = useState("");
+  const [petType, setPetType] = useState("dog");
+  const [breed, setBreed] = useState("");
+  const [status, setStatus] = useState({ type: "", msg: "" });
+  const [saving, setSaving] = useState(false);
+
   if (!user) {
     return <Navigate to="/login" replace />;
+  }
+
+  async function handleAddPet(e) {
+    e.preventDefault();
+    setStatus({ type: "", msg: "" });
+
+    if (!name.trim()) {
+      setStatus({ type: "error", msg: "Pet name is required." });
+      return;
+    }
+
+    try {
+      setSaving(true);
+      await addPet({
+        name: name.trim(),
+        pet_type: petType,
+        breed: breed.trim(),
+      });
+      setName("");
+      setBreed("");
+      setStatus({ type: "success", msg: "Pet added! ✅" });
+    } catch (err) {
+      setStatus({
+        type: "error",
+        msg: err?.message || "Failed to add pet.",
+      });
+    } finally {
+      setSaving(false);
+    }
   }
 
   return (
@@ -45,37 +81,123 @@ export default function Profile() {
         </div>
       </div>
 
-      {/* PET INFO (TEMP / MVP PLACEHOLDER) */}
+      {/* PETS */}
       <div className="card">
         <div className="card-body">
-          <h5 className="card-title">My Pet</h5>
+          <div className="d-flex justify-content-between align-items-center">
+            <h5 className="card-title mb-0">My Pets</h5>
+            {pets?.length ? (
+              <span className="text-muted small">
+                Active:{" "}
+                <strong>
+                  {pets.find((p) => p.id === activePetId)?.name || "—"}
+                </strong>
+              </span>
+            ) : null}
+          </div>
 
-          {/* TEMP FORM — not wired yet */}
-          <form>
-            <div className="mb-3">
-              <label className="form-label">Pet Name</label>
-              <input
-                type="text"
-                className="form-control"
-                placeholder="e.g. Luna"
-                disabled
-              />
+          {/* STATUS MESSAGE */}
+          {status.msg && (
+            <div
+              className={`alert mt-3 mb-0 ${
+                status.type === "success" ? "alert-success" : "alert-danger"
+              }`}
+              role="alert"
+            >
+              {status.msg}
             </div>
+          )}
 
-            <div className="mb-3">
-              <label className="form-label">Breed</label>
-              <input
-                type="text"
-                className="form-control"
-                placeholder="e.g. Golden Retriever"
-                disabled
-              />
+          {/* ADD PET FORM */}
+          <form className="mt-3" onSubmit={handleAddPet}>
+            <div className="row g-3">
+              <div className="col-12 col-md-5">
+                <label className="form-label">Pet Name *</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="e.g. Luna"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  disabled={saving}
+                />
+              </div>
+
+              <div className="col-12 col-md-3">
+                <label className="form-label">Pet Type *</label>
+                <select
+                  className="form-select"
+                  value={petType}
+                  onChange={(e) => setPetType(e.target.value)}
+                  disabled={saving}
+                >
+                  <option value="dog">Dog</option>
+                  <option value="cat">Cat</option>
+                </select>
+              </div>
+
+              <div className="col-12 col-md-4">
+                <label className="form-label">Breed (optional)</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="e.g. Golden Retriever"
+                  value={breed}
+                  onChange={(e) => setBreed(e.target.value)}
+                  disabled={saving}
+                />
+              </div>
+
+              <div className="col-12 d-flex justify-content-end">
+                <button
+                  type="submit"
+                  className="btn btn-primary"
+                  disabled={saving}
+                >
+                  {saving ? "Saving..." : "Add Pet"}
+                </button>
+              </div>
             </div>
-
-            <button type="button" className="btn btn-secondary" disabled>
-              Save Pet Info (Coming Soon)
-            </button>
           </form>
+
+          {/* PET LIST */}
+          <hr className="my-4" />
+
+          {!pets?.length ? (
+            <p className="text-muted mb-0">
+              You don’t have any pets yet. Add one above to start shopping for
+              them.
+            </p>
+          ) : (
+            <div className="list-group">
+              {pets.map((p) => (
+                <button
+                  key={p.id}
+                  type="button"
+                  className={`list-group-item list-group-item-action d-flex justify-content-between align-items-center ${
+                    p.id === activePetId ? "active" : ""
+                  }`}
+                  onClick={() => setActivePet(p.id)}
+                >
+                  <div>
+                    <div className="fw-semibold">
+                      {p.name}{" "}
+                      <span className="text-white-50">({p.pet_type})</span>
+                    </div>
+                    {p.breed ? (
+                      <div className="small">Breed: {p.breed}</div>
+                    ) : null}
+                  </div>
+
+                  {p.id === activePetId ? (
+                    <span className="badge bg-light text-dark">Active</span>
+                  ) : (
+                    <span className="badge bg-secondary">Set Active</span>
+                  )}
+                </button>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </div>
