@@ -3,10 +3,12 @@ import { useEffect, useRef } from "react";
 import Offcanvas from "bootstrap/js/dist/offcanvas";
 import { getUser, logout } from "../api/auth";
 import logo from "../assets/logo.png";
+import { useActivePet } from "../context/ActivePetContext";
 
 function Navbar() {
   const user = getUser();
   const navigate = useNavigate();
+  const { pets, activePetId, setActivePet } = useActivePet();
 
   const offcanvasRef = useRef(null);
   const offcanvasInstanceRef = useRef(null);
@@ -85,8 +87,31 @@ function Navbar() {
           </button>
         </div>
 
-        {/* RIGHT: Account dropdown */}
-        <ul className="navbar-nav ms-auto flex-row gap-3">
+        {/* RIGHT: Active Pet + Account */}
+        <ul className="navbar-nav ms-auto flex-row gap-3 align-items-center">
+          {/* Active Pet Selector (only when logged in) */}
+          {user && (
+            <li className="nav-item">
+              {pets.length ? (
+                <select
+                  className="form-select form-select-sm"
+                  style={{ width: 220 }}
+                  value={activePetId ?? ""}
+                  onChange={(e) => setActivePet(e.target.value)}
+                  aria-label="Select active pet"
+                >
+                  {pets.map((p) => (
+                    <option key={p.id} value={p.id}>
+                      {p.name} ({p.pet_type})
+                    </option>
+                  ))}
+                </select>
+              ) : (
+                <span className="text-muted small">No pets yet</span>
+              )}
+            </li>
+          )}
+
           {!user ? (
             <>
               <li className="nav-item">
@@ -124,9 +149,19 @@ function Navbar() {
                 </li>
 
                 <li>
-                  <Link className="dropdown-item" to="/cart">
+                  <NavLink className="dropdown-item" to="/cart">
                     Cart
-                  </Link>
+                  </NavLink>
+                </li>
+
+                <li>
+                  <hr className="dropdown-divider" />
+                </li>
+
+                <li>
+                  <NavLink className="dropdown-item" to="/pets">
+                    My Pets
+                  </NavLink>
                 </li>
 
                 <li>

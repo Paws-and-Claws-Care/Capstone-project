@@ -63,17 +63,20 @@ export async function getOrderProducts(token, orderId) {
         ? data
         : data?.error || "Failed to load order products"
     );
-  return data;
+
+  // ✅ return the new shape
+  return data; // { order_id, items, order_total }
 }
 
 /**
- * returns a created order
+ * returns a created order (generic)
+ * NOTE: if your backend now requires pet_id, update this body accordingly
  */
-export async function createOrder(token, { date, note }) {
+export async function createOrder(token, { date, pet_id, is_cart }) {
   const res = await fetch(`${API_URL}/orders`, {
     method: "POST",
     headers: headers(token),
-    body: JSON.stringify({ date, note }),
+    body: JSON.stringify({ date, pet_id, is_cart }),
   });
 
   const data = await parse(res);
@@ -85,7 +88,7 @@ export async function createOrder(token, { date, note }) {
 }
 
 /**
- * returns created order_items row
+ * returns created order_items row (generic)
  */
 export async function addProductToOrder(
   token,
@@ -104,6 +107,101 @@ export async function addProductToOrder(
       typeof data === "string"
         ? data
         : data?.error || "Failed to add product to order"
+    );
+  return data;
+}
+
+/**
+ * ✅ Option B: Add item to the active cart for a pet
+ */
+export async function addItemToPetCart(token, petId, { productId, quantity }) {
+  const res = await fetch(`${API_URL}/orders/pets/${petId}/cart/items`, {
+    method: "POST",
+    headers: headers(token),
+    body: JSON.stringify({ productId, quantity }),
+  });
+
+  const data = await parse(res);
+  if (!res.ok)
+    throw new Error(
+      typeof data === "string"
+        ? data
+        : data?.error || "Failed to add item to pet cart"
+    );
+
+  return data; // { order, added }
+}
+
+/**
+ * Checkout the cart for a pet
+ */
+export async function checkoutPetCart(token, petId) {
+  const res = await fetch(`${API_URL}/orders/pets/${petId}/cart/checkout`, {
+    method: "POST",
+    headers: headers(token),
+  });
+
+  const data = await parse(res);
+  if (!res.ok)
+    throw new Error(
+      typeof data === "string"
+        ? data
+        : data?.error || "Failed to checkout pet cart"
+    );
+
+  return data;
+}
+
+/**
+ * Get order history for a pet
+ */
+export async function getPetOrderHistory(token, petId) {
+  const res = await fetch(`${API_URL}/orders/pets/${petId}/history`, {
+    headers: headers(token),
+  });
+
+  const data = await parse(res);
+  if (!res.ok)
+    throw new Error(
+      typeof data === "string"
+        ? data
+        : data?.error || "Failed to load pet order history"
+    );
+
+  return data;
+}
+
+export async function updatePetCartItem(token, petId, productId, quantity) {
+  const res = await fetch(
+    `${API_URL}/orders/pets/${petId}/cart/items/${productId}`,
+    {
+      method: "PATCH",
+      headers: headers(token),
+      body: JSON.stringify({ quantity }),
+    }
+  );
+
+  const data = await parse(res);
+  if (!res.ok)
+    throw new Error(
+      typeof data === "string" ? data : data?.error || "Failed to update item"
+    );
+  return data;
+}
+
+export async function removePetCartItem(token, petId, productId) {
+  const res = await fetch(
+    `${API_URL}/orders/pets/${petId}/cart/items/${productId}`,
+    {
+      method: "DELETE",
+      headers: headers(token),
+    }
+  );
+
+  const data = await parse(res);
+  if (!res.ok)
+    throw new Error(
+      typeof data === "string" ? data : data?.error || "Failed to remove item"
     );
   return data;
 }

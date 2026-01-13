@@ -1,9 +1,13 @@
-import { useEffect, useMemo, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import ReactPaginate from "react-paginate";
 import { fetchAllProducts, fetchProductsByPetType } from "../api/products";
 import ProductCard from "../components/ProductCard";
-import { useCart } from "../context/CartContext";
+
+// NEW: active pet + server cart api
+import { useActivePet } from "../context/ActivePetContext";
+// adjust path if needed
+import { addItemToPetCart } from "../api/orders"; // your existing function
 
 /**
  * CODE REVIEW NOTE:
@@ -55,7 +59,15 @@ const ALLOWED_FILTERS = new Set([
 function Products() {
   const navigate = useNavigate();
 
-  const { addItem, isInCart } = useCart();
+  // NEW: active pet comes from context
+  const { activePet } = useActivePet();
+
+  /**
+   * IMPORTANT:
+   * If you already have an AuthContext, use that token instead.
+   * For now, this is a safe fallback.
+   */
+  const token = localStorage.getItem("token");
 
   /**
    * CODE REVIEW NOTE:
@@ -67,6 +79,7 @@ function Products() {
 
   const [searchParams, setSearchParams] = useSearchParams();
 
+  // Used for the "Added" UI state on cards (since cart is server-side now)
   const [addedProductIds, setAddedProductIds] = useState(new Set());
 
   // Query-string values
@@ -88,16 +101,43 @@ function Products() {
   const [itemOffset, setItemOffset] = useState(0);
   const itemsPerPage = 12;
 
-  function handleAdd(product) {
+  // NEW: per-pet add-to-cart
+  async function handleAdd(product) {
+    // Must have active pet selected
+    if (!activePet?.id) {
+      setMsg("Select an active pet in the navbar to add items to a cart.");
+      return;
+    }
+
+    // Must be logged in
+    if (!token) {
+      setMsg("Login to add items to your cart");
+      setTimeout(() => navigate("/login"), 800);
+      return;
+    }
+
     try {
-      addItem(product, 1);
+      await addItemToPetCart(token, activePet.id, {
+        productId: product.id,
+        quantity: 1,
+      });
+
+      setAddedProductIds((prev) => {
+        const next = new Set(prev);
+        next.add(product.id);
+        return next;
+      });
+
       setMsg("Added to cart!");
       setTimeout(() => setMsg(""), 1500);
     } catch (err) {
-      const text = err?.message || "Login to add items to your cart";
+      const text = err?.message || "Failed to add item to cart";
       setMsg(text);
 
-      if (text.toLowerCase().includes("login")) {
+      if (
+        text.toLowerCase().includes("login") ||
+        text.toLowerCase().includes("unauthorized")
+      ) {
         setTimeout(() => navigate("/login"), 800);
       }
     }
@@ -137,6 +177,10 @@ function Products() {
 
     load();
   }, [petType]);
+
+  useEffect(() => {
+    setAddedProductIds(new Set());
+  }, [activePet?.id]);
 
   /**
    * CODE REVIEW NOTE:
@@ -196,7 +240,13 @@ function Products() {
 
   return (
     <div className="container py-4">
-      <h2 className="mb-3">{title}</h2>
+      <h2 className="mb-2">{title}</h2>
+
+      {/* NEW: show active pet context */}
+      <div className="text-muted mb-3">
+        Adding to cart for:{" "}
+        <strong>{activePet ? activePet.name : "No active pet selected"}</strong>
+      </div>
 
       {/* FILTER BUTTONS */}
       <div className="d-flex flex-wrap gap-2 mb-4">
@@ -253,13 +303,20 @@ function Products() {
         </div>
       )}
 
+      {/* (Optional) gentle warning when no pet selected */}
+      {!activePet && (
+        <div className="alert alert-warning">
+          Select an active pet in the navbar to add items to a cart.
+        </div>
+      )}
+
       <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
         {currentProducts.map((p) => (
           <div className="col" key={p.id}>
             <ProductCard
               product={p}
               onAdd={handleAdd}
-              isAdded={isInCart(p.id)}
+              isAdded={addedProductIds.has(p.id)}
             />
           </div>
         ))}

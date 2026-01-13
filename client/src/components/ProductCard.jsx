@@ -1,35 +1,47 @@
 import { Link } from "react-router-dom";
 
-export default function ProductCard({ product, onAdd, isAdded }) {
+export default function ProductCard({
+  product,
+  onAdd,
+  isAdded,
+  disabled = false,
+}) {
   if (!product) return null;
 
   return (
     <div className="card h-100 shadow-sm">
-      <Link
-        to={`/products/${product.id}`}
-        className="text-decoration-none text-dark"
-        style={{ display: "block" }}
-      >
+      {/* IMAGE — clickable */}
+      <Link to={`/products/${product.id}`} className="text-decoration-none">
         <img
           src={product.image_url}
           alt={product.name}
           className="card-img-top"
           style={{ height: "260px", objectFit: "contain" }}
         />
-
-        <div className="card-body">
-          <h5 className="card-title mb-2">{product.name}</h5>
-          <p className="fw-bold mb-0">${Number(product.price).toFixed(2)}</p>
-        </div>
       </Link>
 
+      <div className="card-body">
+        {/* TITLE — clickable */}
+        <Link
+          to={`/products/${product.id}`}
+          className="text-decoration-none text-dark"
+        >
+          <h5 className="card-title mb-2">{product.name}</h5>
+        </Link>
+
+        <p className="fw-bold mb-0">${Number(product.price).toFixed(2)}</p>
+      </div>
+
+      {/* BUTTON — NOT inside a Link */}
       <div className="card-footer bg-white border-0 pt-0">
         <button
-          className={`btn w-100 ${isAdded ? "btn-primary" : "btn-light"}`}
           type="button"
+          className={`btn w-100 ${isAdded ? "btn-primary" : "btn-light"}`}
+          disabled={disabled}
           onClick={(e) => {
             e.preventDefault();
             e.stopPropagation();
+            if (disabled) return;
             onAdd?.(product);
           }}
         >
