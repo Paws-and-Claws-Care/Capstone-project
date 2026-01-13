@@ -1,10 +1,13 @@
 import { useState } from "react";
 import { useActivePet } from "../context/ActivePetContext";
+import { useCart } from "../context/CartContext";
 import { deletePet } from "../api/pets";
 import { getToken } from "../api/auth";
 
 export default function Pets() {
   const { pets, activePetId, setActivePet, refreshPets } = useActivePet();
+  const { refreshCart } = useCart();
+
   const [msg, setMsg] = useState("");
   const [busyId, setBusyId] = useState(null);
 
@@ -15,11 +18,11 @@ export default function Pets() {
       return;
     }
 
-    const pet = pets.find((p) => p.id === petId);
+    const pet = pets.find((p) => Number(p.id) === Number(petId));
+
+    // NOTE: Only keep the "orders/cart history" line if your backend truly cascades deletes.
     const ok = window.confirm(
-      `Delete ${
-        pet?.name || "this pet"
-      }?\nThis will also remove its orders/cart history.`
+      `Delete ${pet?.name || "this pet"}?\nThis cannot be undone.`
     );
     if (!ok) return;
 
@@ -37,6 +40,9 @@ export default function Pets() {
         const next = updated?.[0]?.id ?? null;
         setActivePet(next);
       }
+
+      // ✅ keep backend cart cache + navbar badge in sync
+      await refreshCart();
 
       setMsg("Pet deleted.");
       setTimeout(() => setMsg(""), 1500);

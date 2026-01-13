@@ -2,7 +2,7 @@ import express from "express";
 import getUserFromToken from "../middleware/getUserFromToken.js";
 import requireUser from "../middleware/requireUser.js";
 import { getPetsByUserId, createPet } from "../db/queries/pets.js";
-import db from "../db/client.js"; // ✅ ADD THIS
+import db from "../db/client.js";
 
 const router = express.Router();
 

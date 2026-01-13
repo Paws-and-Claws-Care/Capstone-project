@@ -8,7 +8,6 @@ async function parseResponse(res, defaultMsg) {
   try {
     data = text ? JSON.parse(text) : null;
   } catch {
-    // If backend returned HTML or plain text, a message is still shown
     throw new Error(
       `${defaultMsg}. Status ${res.status}. Response: ${text.slice(0, 200)}`
     );
@@ -21,13 +20,13 @@ async function parseResponse(res, defaultMsg) {
   return data;
 }
 
-//Used by Products.jsx when there is no petType param
+// Used by Products.jsx when there is no petType param
 export async function fetchAllProducts() {
   const res = await fetch(`${API}/products`);
   return parseResponse(res, "Failed to fetch products");
 }
 
-//Used by Products.jsx for /products/dog and /products/cat
+// Used by Products.jsx for /products/dog and /products/cat
 export async function fetchProductsByPetType(petType) {
   const res = await fetch(
     `${API}/products?pet_type=${encodeURIComponent(petType)}`
@@ -43,12 +42,6 @@ export async function fetchProductsByCategory(category) {
 }
 
 export async function fetchProductById(id) {
-  const res = await fetch(`/api/products/${id}`);
-  const text = await res.text();
-
-  if (!res.ok) {
-    throw new Error(text || "Failed to fetch product");
-  }
-
-  return text ? JSON.parse(text) : null;
+  const res = await fetch(`${API}/products/${id}`);
+  return parseResponse(res, "Failed to fetch product");
 }

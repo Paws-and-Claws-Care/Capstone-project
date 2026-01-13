@@ -1,5 +1,8 @@
+// server/api/orders.js
 import express from "express";
 import getUserFromToken from "../middleware/getUserFromToken.js";
+import requireUser from "../middleware/requireUser.js";
+
 import {
   createOrder,
   getOrdersByUserId,
@@ -9,8 +12,6 @@ import {
   getCompletedOrdersByPet,
 } from "../db/queries/orders.js";
 
-import requireUser from "../middleware/requireUser.js";
-
 import {
   getProductsByOrderId,
   addProductToOrder,
@@ -18,47 +19,64 @@ import {
   deleteOrderItemByProduct,
 } from "../db/queries/order_items.js";
 
+// ✅ IMPORTANT: make sure this path matches your actual file name
+// If your file is product.js, change it back.
 import { getProductById } from "../db/queries/product.js";
 
 import db from "../db/client.js";
 
 const router = express.Router();
 
-router.get("/", getUserFromToken, requireUser, async (req, res) => {
-  const orders = await getOrdersByUserId(req.user.id);
-  res.send(orders);
+/**
+ * GET /api/orders
+ * Return all orders for logged-in user
+ */
+router.get("/", getUserFromToken, requireUser, async (req, res, next) => {
+  try {
+    const orders = await getOrdersByUserId(req.user.id);
+    res.send(orders);
+  } catch (err) {
+    next(err);
+  }
 });
 
+/**
+ * GET /api/orders/:id/products
+ * Return order items joined with products + computed totals
+ * Shape: { order_id, items, order_total }
+ */
 router.get(
   "/:id/products",
   getUserFromToken,
   requireUser,
   async (req, res, next) => {
     try {
-      const orderId = req.params.id;
+      const orderId = Number(req.params.id);
 
       const order = await getOrderById(orderId);
       if (!order) return res.status(404).send("Order not found.");
-      if (order.user_id !== req.user.id)
+      if (Number(order.user_id) !== Number(req.user.id)) {
         return res.status(403).send("Unauthorized access to order.");
+      }
 
       const items = await getProductsByOrderId(orderId);
 
-      // ✅ add line_total to each item (use snapshot price: item_price)
-      const itemsWithLineTotals = items.map((item) => ({
-        ...item,
-        line_total: Number(item.item_price) * Number(item.quantity),
-      }));
+      const itemsWithLineTotals = (items || []).map((item) => {
+        const qty = Number(item.quantity || 0);
+        const price = Number(item.item_price ?? 0); // snapshot price from order_items
+        return {
+          ...item,
+          line_total: qty * price,
+        };
+      });
 
-      // ✅ add order_total
       const order_total = itemsWithLineTotals.reduce(
-        (sum, item) => sum + item.line_total,
+        (sum, item) => sum + Number(item.line_total || 0),
         0
       );
 
-      // ✅ send a clean shape
       res.send({
-        order_id: Number(orderId),
+        order_id: orderId,
         items: itemsWithLineTotals,
         order_total,
       });
@@ -68,37 +86,25 @@ router.get(
   }
 );
 
-router.get(
-  "/:id/products",
-  getUserFromToken,
-  requireUser,
-  async (req, res, next) => {
-    const orderId = req.params.id;
-
-    const order = await getOrderById(orderId);
-    if (!order) {
-      return res.status(404).send("Order not found.");
-    }
-    if (order.user_id !== req.user.id) {
-      return res.status(403).send("Unauthorized access to order.");
-    }
-
-    const products = await getProductsByOrderId(orderId);
-    res.send(products);
-  }
-);
-
+/**
+ * POST /api/orders
+ * Create an order (generic)
+ * Body: { date, pet_id, is_cart }
+ */
 router.post("/", getUserFromToken, requireUser, async (req, res, next) => {
   try {
     const { date, pet_id, is_cart } = req.body;
 
-    if (!date) return res.status(400).send("Date is required.");
     if (!pet_id) return res.status(400).send("pet_id is required.");
+
+    // If you want to require date, keep this check.
+    // Otherwise, default it.
+    const safeDate = date || new Date().toISOString().slice(0, 10);
 
     const order = await createOrder({
       user_id: req.user.id,
       pet_id,
-      date,
+      date: safeDate,
       is_cart: is_cart ?? true,
     });
 
@@ -108,21 +114,29 @@ router.post("/", getUserFromToken, requireUser, async (req, res, next) => {
   }
 });
 
+/**
+ * POST /api/orders/:id/products
+ * Add product to a specific order (generic)
+ * Body: { productId, quantity }
+ */
 router.post(
   "/:id/products",
   getUserFromToken,
   requireUser,
   async (req, res, next) => {
     try {
-      const orderId = req.params.id;
+      const orderId = Number(req.params.id);
       const { productId, quantity } = req.body;
 
       const order = await getOrderById(orderId);
       if (!order) return res.status(404).send("Order not found.");
-      if (order.user_id !== req.user.id)
+      if (Number(order.user_id) !== Number(req.user.id)) {
         return res.status(403).send("Unauthorized access to order.");
-      if (!productId || quantity == null)
+      }
+
+      if (!productId || quantity == null) {
         return res.status(400).send("Product ID and quantity are required.");
+      }
 
       const product = await getProductById(productId);
       if (!product) return res.status(400).send("Product does not exist");
@@ -131,7 +145,7 @@ router.post(
         order_id: orderId,
         product_id: productId,
         quantity,
-        price: product.price, // ✅ REQUIRED
+        price: product.price, // snapshot
       });
 
       res.status(201).send(row);
@@ -141,6 +155,11 @@ router.post(
   }
 );
 
+/**
+ * POST /api/orders/pets/:petId/cart/items
+ * Add item to the active cart for a pet (find-or-create cart order)
+ * Body: { productId, quantity }
+ */
 router.post(
   "/pets/:petId/cart/items",
   getUserFromToken,
@@ -154,27 +173,29 @@ router.post(
         return res.status(400).send("Product ID and quantity are required.");
       }
 
-      // 1) Make sure the pet belongs to the user
-      const petCheckSQL = `SELECT id FROM pets WHERE id = $1 AND user_id = $2`;
-      const petCheck = await db.query(petCheckSQL, [petId, req.user.id]);
+      // ensure pet belongs to user
+      const petCheck = await db.query(
+        `SELECT id FROM pets WHERE id = $1 AND user_id = $2`,
+        [petId, req.user.id]
+      );
       if (!petCheck.rows[0]) return res.status(404).send("Pet not found.");
 
-      // 2) Validate product exists
+      // validate product exists
       const product = await getProductById(productId);
       if (!product) return res.status(400).send("Product does not exist");
 
-      // 3) Find-or-create cart order for THIS pet
+      // find-or-create cart order for this pet
       let cart = await getCartOrderByPet(req.user.id, petId);
       if (!cart) {
         cart = await createCartOrderForPet(req.user.id, petId);
       }
 
-      // 4) Add product to that cart order
+      // add product to cart (upsert/increment)
       const row = await addProductToOrder({
         order_id: cart.id,
         product_id: productId,
         quantity,
-        price: product.price, // ✅ REQUIRED
+        price: product.price,
       });
 
       res.status(201).send({ order: cart, added: row });
@@ -184,6 +205,11 @@ router.post(
   }
 );
 
+/**
+ * PATCH /api/orders/pets/:petId/cart/items/:productId
+ * Update quantity for a cart item (quantity 0 deletes)
+ * Body: { quantity }
+ */
 router.patch(
   "/pets/:petId/cart/items/:productId",
   getUserFromToken,
@@ -201,18 +227,15 @@ router.patch(
         return res.status(400).send("Quantity must be 0 or more.");
       }
 
-      // ensure pet belongs to user
       const petCheck = await db.query(
         `SELECT id FROM pets WHERE id = $1 AND user_id = $2`,
         [petId, req.user.id]
       );
       if (!petCheck.rows[0]) return res.status(404).send("Pet not found.");
 
-      // find cart for pet
       const cart = await getCartOrderByPet(req.user.id, petId);
       if (!cart) return res.status(400).send("No active cart for this pet.");
 
-      // quantity 0 = delete the item
       if (quantity === 0) {
         const removed = await deleteOrderItemByProduct(cart.id, productId);
         return res.send({ orderId: cart.id, removed });
@@ -229,6 +252,11 @@ router.patch(
     }
   }
 );
+
+/**
+ * DELETE /api/orders/pets/:petId/cart/items/:productId
+ * Remove an item from pet cart
+ */
 router.delete(
   "/pets/:petId/cart/items/:productId",
   getUserFromToken,
@@ -238,7 +266,6 @@ router.delete(
       const petId = Number(req.params.petId);
       const productId = Number(req.params.productId);
 
-      // ensure pet belongs to user
       const petCheck = await db.query(
         `SELECT id FROM pets WHERE id = $1 AND user_id = $2`,
         [petId, req.user.id]
@@ -256,6 +283,10 @@ router.delete(
   }
 );
 
+/**
+ * POST /api/orders/pets/:petId/cart/checkout
+ * Convert cart -> placed order (is_cart false, set date)
+ */
 router.post(
   "/pets/:petId/cart/checkout",
   getUserFromToken,
@@ -264,7 +295,6 @@ router.post(
     try {
       const petId = Number(req.params.petId);
 
-      // ensure pet belongs to user
       const petCheck = await db.query(
         `SELECT id FROM pets WHERE id = $1 AND user_id = $2`,
         [petId, req.user.id]
@@ -289,6 +319,10 @@ router.post(
   }
 );
 
+/**
+ * GET /api/orders/pets/:petId/history
+ * Return completed orders for a pet, grouped for frontend
+ */
 router.get(
   "/pets/:petId/history",
   getUserFromToken,
@@ -297,7 +331,6 @@ router.get(
     try {
       const petId = Number(req.params.petId);
 
-      // ensure pet belongs to user
       const petCheck = await db.query(
         `SELECT id FROM pets WHERE id = $1 AND user_id = $2`,
         [petId, req.user.id]
@@ -306,7 +339,6 @@ router.get(
 
       const rows = await getCompletedOrdersByPet(req.user.id, petId);
 
-      // group rows by order_id so frontend is easy
       const grouped = rows.reduce((acc, row) => {
         if (!acc[row.order_id]) {
           acc[row.order_id] = {

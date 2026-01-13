@@ -2,9 +2,12 @@ import { Link, Navigate } from "react-router-dom";
 import { useState } from "react";
 import { getUser } from "../api/auth";
 import { useActivePet } from "../context/ActivePetContext";
+import { useCart } from "../context/CartContext";
 
 export default function Profile() {
   const user = getUser();
+  const { refreshCart } = useCart();
+
   const { pets, addPet, activePetId, setActivePet } = useActivePet();
 
   const [name, setName] = useState("");
@@ -177,7 +180,10 @@ export default function Profile() {
                   className={`list-group-item list-group-item-action d-flex justify-content-between align-items-center ${
                     p.id === activePetId ? "active" : ""
                   }`}
-                  onClick={() => setActivePet(p.id)}
+                  onClick={async () => {
+                    setActivePet(p.id);
+                    await refreshCart();
+                  }}
                 >
                   <div>
                     <div className="fw-semibold">

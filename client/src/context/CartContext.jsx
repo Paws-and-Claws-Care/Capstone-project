@@ -1,81 +1,151 @@
-import { createContext, useContext, useMemo, useState } from "react";
-import { getCart, addToCart as addToCartLS, saveCart } from "../api/cart";
+// src/context/CartContext.jsx
+import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import { useActivePet } from "./ActivePetContext";
+import {
+  getPetCart,
+  addToCart,
+  updateQuantity,
+  removeFromCart,
+  clearCart,
+} from "../api/cart";
 
 const CartContext = createContext(null);
 
 export function CartProvider({ children }) {
-  const [cart, setCart] = useState(() => getCart());
+  const { activePet } = useActivePet();
 
-  function sync(nextCart) {
-    // keep localStorage + state in sync
-    saveCart(nextCart);
-    setCart(nextCart);
-  }
+  const [cartData, setCartData] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
-  function addItem(product, qty = 1) {
-    const productId = Number(product.id);
-
-    const existing = cart.find((i) => Number(i.productId) === productId);
-
-    let nextCart;
-    if (existing) {
-      nextCart = cart.map((i) =>
-        Number(i.productId) === productId
-          ? { ...i, quantity: Number(i.quantity || 0) + Number(qty) }
-          : i
-      );
-    } else {
-      nextCart = [
-        ...cart,
-        {
-          productId,
-          name: product.name,
-          price: Number(product.price),
-          image_url: product.image_url,
-          quantity: Number(qty),
-        },
-      ];
+  async function refreshCart() {
+    if (!activePet?.id) {
+      setCartData(null);
+      setError("");
+      return;
     }
 
-    sync(nextCart);
+    try {
+      setLoading(true);
+      setError("");
+      const data = await getPetCart(activePet.id);
+      setCartData(data);
+    } catch (err) {
+      setError(err?.message || "Failed to load cart");
+      setCartData(null);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  // reload cart when active pet changes
+  useEffect(() => {
+    refreshCart();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activePet?.id]);
+
+  const items = useMemo(() => {
+    return Array.isArray(cartData?.items) ? cartData.items : [];
+  }, [cartData]);
+
+  // Map productId -> item (so qty lookups are easy)
+  const itemById = useMemo(() => {
+    const m = new Map();
+    for (const i of items) {
+      const pid = Number(i.product_id ?? i.id);
+      if (Number.isFinite(pid)) m.set(pid, i);
+    }
+    return m;
+  }, [items]);
+
+  const ids = useMemo(() => new Set([...itemById.keys()]), [itemById]);
+
+  const itemCount = useMemo(() => {
+    return items.reduce((sum, i) => sum + Number(i.quantity || 0), 0);
+  }, [items]);
+
+  const orderTotal = useMemo(() => {
+    if (cartData?.order_total != null) return Number(cartData.order_total);
+
+    return items.reduce((sum, i) => {
+      const qty = Number(i.quantity || 0);
+      const unit = Number(i.item_price ?? i.price ?? 0);
+      return sum + qty * unit;
+    }, 0);
+  }, [cartData, items]);
+
+  function getQty(productId) {
+    const pid = Number(productId);
+    return Number(itemById.get(pid)?.quantity || 0);
+  }
+
+  // ✅ Actions (now use the returned updated cart)
+  async function addItem(product, qty = 1) {
+    if (!activePet?.id) throw new Error("Select an active pet first.");
+    const nextCart = await addToCart(activePet.id, product, qty);
+    setCartData(nextCart);
     return nextCart;
   }
 
-  function removeItem(productId) {
+  async function setQty(productId, nextQty) {
+    if (!activePet?.id) throw new Error("Select an active pet first.");
     const pid = Number(productId);
-    const nextCart = cart.filter((i) => Number(i.productId) !== pid);
-    sync(nextCart);
+    const qty = Math.max(0, Number(nextQty || 0));
+
+    let nextCart;
+    if (qty === 0) {
+      nextCart = await removeFromCart(activePet.id, pid);
+    } else {
+      nextCart = await updateQuantity(activePet.id, pid, qty);
+    }
+
+    setCartData(nextCart);
+    return nextCart;
   }
 
-  function updateItemQty(productId, nextQty) {
-    const pid = Number(productId);
-    const qty = Number(nextQty);
-
-    const nextCart = cart
-      .map((item) =>
-        Number(item.productId) === pid ? { ...item, quantity: qty } : item
-      )
-      .filter((item) => Number(item.quantity) > 0);
-
-    sync(nextCart);
+  async function updateItemQty(productId, nextQty) {
+    return setQty(productId, nextQty);
   }
 
-  function clear() {
-    sync([]);
+  async function removeItem(productId) {
+    if (!activePet?.id) throw new Error("Select an active pet first.");
+    const nextCart = await removeFromCart(activePet.id, Number(productId));
+    setCartData(nextCart);
+    return nextCart;
   }
 
-  const value = useMemo(() => {
-    const ids = new Set(cart.map((i) => Number(i.productId)));
-    return {
-      cart,
+  async function clear() {
+    if (!activePet?.id) throw new Error("Select an active pet first.");
+    const nextCart = await clearCart(activePet.id);
+    setCartData(nextCart);
+    return nextCart;
+  }
+
+  const value = useMemo(
+    () => ({
+      // data
+      cartData,
+      items,
       ids,
+      itemCount,
+      orderTotal,
+      loading,
+      error,
+
+      // helpers
       isInCart: (productId) => ids.has(Number(productId)),
+      getQty,
+      refreshCart,
+
+      // actions
       addItem,
       removeItem,
       updateItemQty,
+      setQty,
       clear,
-    };
-  }, [cart]);
+    }),
+    [cartData, items, ids, itemCount, orderTotal, loading, error, itemById]
+  );
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 }

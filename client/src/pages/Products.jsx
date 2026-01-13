@@ -1,53 +1,27 @@
-import { useContext, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import ReactPaginate from "react-paginate";
 import { fetchAllProducts, fetchProductsByPetType } from "../api/products";
 import ProductCard from "../components/ProductCard";
-
-// NEW: active pet + server cart api
 import { useActivePet } from "../context/ActivePetContext";
-// adjust path if needed
-import { addItemToPetCart } from "../api/orders"; // your existing function
+import { getUser, getToken } from "../api/auth";
+import { useCart } from "../context/CartContext";
 
-/**
- * CODE REVIEW NOTE:
- * normalize() prevents bugs caused by casing/spaces.
- * Example: " Treats " == "treats"
- */
 const normalize = (s) => (s ?? "").toString().trim().toLowerCase();
 
-/**
- * CODE REVIEW NOTE:
- * Our seed data uses multiple category strings for what we show as "Health & Wellness".
- * Until the DB is cleaned up, we group them here so the UI filter works reliably.
- */
 const HEALTH_CATEGORY_SET = new Set(
   [
-    // Skin & Coat
     "skin and coat supplements",
     "skin and coat supplement",
-
-    // Hip & Joint
     "hip and joint supplement",
-
-    // Digestive
     "digestive supplement",
-
-    // Flea & Tick
     "flea and tick",
     "flea & tick",
-
-    // Anxiety & Calming (typos exist in seed)
     "anxiety & calming",
     "anixety & calming",
   ].map(normalize)
 );
 
-/**
- * CODE REVIEW NOTE:
- * Filters the Products page supports.
- * We validate filterFromUrl against this so random URLs don't break the UI.
- */
 const ALLOWED_FILTERS = new Set([
   "all",
   "food",
@@ -56,80 +30,114 @@ const ALLOWED_FILTERS = new Set([
   "health",
 ]);
 
-function Products() {
+export default function Products() {
   const navigate = useNavigate();
+  const user = getUser();
+  const token = getToken?.() || localStorage.getItem("token");
 
-  // NEW: active pet comes from context
   const { activePet } = useActivePet();
+  const { addItem, isInCart } = useCart();
 
-  /**
-   * IMPORTANT:
-   * If you already have an AuthContext, use that token instead.
-   * For now, this is a safe fallback.
-   */
-  const token = localStorage.getItem("token");
-
-  /**
-   * CODE REVIEW NOTE:
-   * We support petType from TWO places:
-   * 1) Query string (Home page): /products?petType=dog
-   * 2) Route param (alternate route): /products/pet/dog
-   */
   const { petType: petTypeParam } = useParams();
-
   const [searchParams, setSearchParams] = useSearchParams();
 
-  // Used for the "Added" UI state on cards (since cart is server-side now)
-  const [addedProductIds, setAddedProductIds] = useState(new Set());
-
-  // Query-string values
-  const petTypeQuery = normalize(searchParams.get("petType")); // "dog" | "cat" | ""
-  const filterFromUrl = normalize(searchParams.get("filter")); // "treats" | "health" | ...
-
-  // Use query petType first (because Home sends it), fallback to param petType
+  const petTypeQuery = normalize(searchParams.get("petType"));
+  const filterFromUrl = normalize(searchParams.get("filter"));
   const petType = petTypeQuery || normalize(petTypeParam) || "";
 
-  const [msg, setMsg] = useState("");
-
-  // Base list from API (already filtered by petType if provided)
   const [baseProducts, setBaseProducts] = useState([]);
-
-  // UI filter state ("all" | "food" | "treats" | "supplies" | "health")
   const [activeFilter, setActiveFilter] = useState("all");
 
-  // Pagination
   const [itemOffset, setItemOffset] = useState(0);
   const itemsPerPage = 12;
 
-  // NEW: per-pet add-to-cart
+  const [msg, setMsg] = useState("");
+  const [addingId, setAddingId] = useState(null);
+
+  // keep UI filter synced with URL
+  useEffect(() => {
+    const next = ALLOWED_FILTERS.has(filterFromUrl) ? filterFromUrl : "all";
+    setActiveFilter(next);
+    setItemOffset(0);
+  }, [filterFromUrl]);
+
+  // fetch products when petType changes
+  useEffect(() => {
+    async function load() {
+      try {
+        const data = petType
+          ? await fetchProductsByPetType(petType)
+          : await fetchAllProducts();
+
+        setBaseProducts(Array.isArray(data) ? data : []);
+        setItemOffset(0);
+      } catch (err) {
+        console.error(err);
+      }
+    }
+    load();
+  }, [petType]);
+
+  // in-memory filtering
+  const filteredProducts = useMemo(() => {
+    if (activeFilter === "all") return baseProducts;
+
+    if (activeFilter === "health") {
+      return baseProducts.filter((p) =>
+        HEALTH_CATEGORY_SET.has(normalize(p.category))
+      );
+    }
+
+    return baseProducts.filter(
+      (p) => normalize(p.category) === normalize(activeFilter)
+    );
+  }, [baseProducts, activeFilter]);
+
+  // pagination
+  const endOffset = itemOffset + itemsPerPage;
+  const currentProducts = filteredProducts.slice(itemOffset, endOffset);
+  const pageCount = Math.ceil(filteredProducts.length / itemsPerPage);
+
+  function handlePageClick(event) {
+    setItemOffset(event.selected * itemsPerPage);
+  }
+
+  function setFilter(filterName) {
+    const next = new URLSearchParams(searchParams);
+
+    if (!filterName || filterName === "all") next.delete("filter");
+    else next.set("filter", filterName);
+
+    if (petType) next.set("petType", petType);
+    else next.delete("petType");
+
+    setSearchParams(next);
+    setItemOffset(0);
+  }
+
   async function handleAdd(product) {
-    // Must have active pet selected
+    setMsg("");
+
     if (!activePet?.id) {
       setMsg("Select an active pet in the navbar to add items to a cart.");
       return;
     }
 
-    // Must be logged in
-    if (!token) {
+    if (!token || !user) {
       setMsg("Login to add items to your cart");
       setTimeout(() => navigate("/login"), 800);
       return;
     }
 
     try {
-      await addItemToPetCart(token, activePet.id, {
-        productId: product.id,
-        quantity: 1,
-      });
+      setAddingId(product.id);
 
-      setAddedProductIds((prev) => {
-        const next = new Set(prev);
-        next.add(product.id);
-        return next;
-      });
+      // ✅ this triggers CartContext to refresh the cart
+      // so isInCart(product.id) becomes true immediately
+      await addItem(product, 1);
 
       setMsg("Added to cart!");
-      setTimeout(() => setMsg(""), 1500);
+      setTimeout(() => setMsg(""), 1200);
     } catch (err) {
       const text = err?.message || "Failed to add item to cart";
       setMsg(text);
@@ -140,98 +148,9 @@ function Products() {
       ) {
         setTimeout(() => navigate("/login"), 800);
       }
+    } finally {
+      setAddingId(null);
     }
-  }
-
-  /**
-   * CODE REVIEW NOTE:
-   * URL -> UI SYNC:
-   * Whenever the URL filter changes (Home click, back button, manual URL edit),
-   * we update activeFilter and reset pagination to page 1.
-   */
-  useEffect(() => {
-    const next = ALLOWED_FILTERS.has(filterFromUrl) ? filterFromUrl : "all";
-    setActiveFilter(next);
-    setItemOffset(0);
-  }, [filterFromUrl]);
-
-  /**
-   * CODE REVIEW NOTE:
-   * We fetch products when petType changes.
-   * - If petType exists -> call fetchProductsByPetType(petType)
-   * - Else -> fetchAllProducts()
-   */
-  useEffect(() => {
-    async function load() {
-      try {
-        const data = petType
-          ? await fetchProductsByPetType(petType)
-          : await fetchAllProducts();
-
-        setBaseProducts(data);
-        setItemOffset(0);
-      } catch (err) {
-        console.error(err);
-      }
-    }
-
-    load();
-  }, [petType]);
-
-  useEffect(() => {
-    setAddedProductIds(new Set());
-  }, [activePet?.id]);
-
-  /**
-   * CODE REVIEW NOTE:
-   * Filtering happens in memory (client-side) AFTER fetching.
-   * This avoids extra API calls for basic UI filtering.
-   */
-  const filteredProducts = useMemo(() => {
-    if (activeFilter === "all") return baseProducts;
-
-    if (activeFilter === "health") {
-      return baseProducts.filter((p) =>
-        HEALTH_CATEGORY_SET.has(normalize(p.category))
-      );
-    }
-
-    // food / treats / supplies
-    return baseProducts.filter(
-      (p) => normalize(p.category) === normalize(activeFilter)
-    );
-  }, [baseProducts, activeFilter]);
-
-  // Pagination calculations
-  const endOffset = itemOffset + itemsPerPage;
-  const currentProducts = filteredProducts.slice(itemOffset, endOffset);
-  const pageCount = Math.ceil(filteredProducts.length / itemsPerPage);
-
-  function handlePageClick(event) {
-    setItemOffset(event.selected * itemsPerPage);
-  }
-
-  /**
-   * CODE REVIEW NOTE:
-   * Keep filters in the URL so:
-   * - refresh keeps selection
-   * - shareable links
-   * - back/forward works correctly
-   *
-   * ALSO: Keep petType in the URL when switching filters.
-   */
-  function setFilter(filterName) {
-    const next = new URLSearchParams(searchParams);
-
-    if (!filterName || filterName === "all") next.delete("filter");
-    else next.set("filter", filterName);
-
-    // Keep petType consistent (especially when user started from /products?petType=dog)
-    if (petType) next.set("petType", petType);
-    else next.delete("petType");
-
-    setSearchParams(next);
-    setItemOffset(0);
   }
 
   const title = petType
@@ -242,19 +161,41 @@ function Products() {
     <div className="container py-4">
       <h2 className="mb-2">{title}</h2>
 
-      {/* NEW: show active pet context */}
-      <div className="text-muted mb-3">
-        Adding to cart for:{" "}
-        <strong>{activePet ? activePet.name : "No active pet selected"}</strong>
+      <div className="d-flex justify-content-between align-items-start flex-wrap gap-2 mb-3">
+        <div className="text-muted">
+          Adding to cart for:{" "}
+          <strong>
+            {activePet ? activePet.name : "No active pet selected"}
+          </strong>
+        </div>
+
+        {!user && (
+          <div className="d-flex gap-2">
+            <button
+              className="btn btn-outline-primary btn-sm"
+              type="button"
+              onClick={() => navigate("/login")}
+            >
+              Login
+            </button>
+            <button
+              className="btn btn-primary btn-sm"
+              type="button"
+              onClick={() => navigate("/register")}
+            >
+              Register
+            </button>
+          </div>
+        )}
       </div>
 
-      {/* FILTER BUTTONS */}
       <div className="d-flex flex-wrap gap-2 mb-4">
         <button
           className={`btn ${
             activeFilter === "food" ? "btn-primary" : "btn-outline-primary"
           }`}
           onClick={() => setFilter("food")}
+          type="button"
         >
           Food
         </button>
@@ -264,6 +205,7 @@ function Products() {
             activeFilter === "treats" ? "btn-primary" : "btn-outline-primary"
           }`}
           onClick={() => setFilter("treats")}
+          type="button"
         >
           Treats
         </button>
@@ -273,6 +215,7 @@ function Products() {
             activeFilter === "supplies" ? "btn-primary" : "btn-outline-primary"
           }`}
           onClick={() => setFilter("supplies")}
+          type="button"
         >
           Supplies
         </button>
@@ -282,11 +225,16 @@ function Products() {
             activeFilter === "health" ? "btn-primary" : "btn-outline-primary"
           }`}
           onClick={() => setFilter("health")}
+          type="button"
         >
           Health & Wellness
         </button>
 
-        <button className="btn btn-dark" onClick={() => setFilter("all")}>
+        <button
+          className="btn btn-dark"
+          onClick={() => setFilter("all")}
+          type="button"
+        >
           All {petType ? petType : ""} Products
         </button>
       </div>
@@ -303,7 +251,6 @@ function Products() {
         </div>
       )}
 
-      {/* (Optional) gentle warning when no pet selected */}
       {!activePet && (
         <div className="alert alert-warning">
           Select an active pet in the navbar to add items to a cart.
@@ -316,13 +263,14 @@ function Products() {
             <ProductCard
               product={p}
               onAdd={handleAdd}
-              isAdded={addedProductIds.has(p.id)}
+              disabled={!activePet?.id || addingId === p.id}
+              isAdded={isInCart(p.id)}
+              busy={addingId === p.id}
             />
           </div>
         ))}
       </div>
 
-      {/* PAGINATION */}
       {pageCount > 1 && (
         <nav className="d-flex justify-content-center mt-4">
           <ReactPaginate
@@ -350,5 +298,3 @@ function Products() {
     </div>
   );
 }
-
-export default Products;

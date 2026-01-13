@@ -4,11 +4,15 @@ import Offcanvas from "bootstrap/js/dist/offcanvas";
 import { getUser, logout } from "../api/auth";
 import logo from "../assets/logo.png";
 import { useActivePet } from "../context/ActivePetContext";
+import { useCart } from "../context/CartContext";
 
 function Navbar() {
   const user = getUser();
   const navigate = useNavigate();
   const { pets, activePetId, setActivePet } = useActivePet();
+
+  // ✅ backend cart context
+  const { itemCount, refreshCart } = useCart();
 
   const offcanvasRef = useRef(null);
   const offcanvasInstanceRef = useRef(null);
@@ -59,10 +63,18 @@ function Navbar() {
 
   function handleLogout() {
     logout();
+
+    // ✅ clear any stale cart badge after logout
+    // (refreshCart will set cartData to null because activePet/user are gone)
+    refreshCart?.();
+
     closeOffcanvas();
     // tiny delay so close starts before navigation
     window.setTimeout(() => navigate("/"), 10);
   }
+
+  const showCart = Boolean(user);
+  const cartDisabled = !user || !activePetId;
 
   return (
     <nav className="navbar bg-body-tertiary">
@@ -148,11 +160,37 @@ function Navbar() {
                   <hr className="dropdown-divider" />
                 </li>
 
-                <li>
-                  <NavLink className="dropdown-item" to="/cart">
-                    Cart
-                  </NavLink>
-                </li>
+                {/* ✅ Cart (backend) + badge */}
+                {showCart && (
+                  <li>
+                    <NavLink
+                      className={`dropdown-item d-flex justify-content-between align-items-center ${
+                        cartDisabled ? "disabled" : ""
+                      }`}
+                      to={cartDisabled ? "#" : "/cart"}
+                      onClick={(e) => {
+                        if (cartDisabled) {
+                          e.preventDefault();
+                          return;
+                        }
+                      }}
+                    >
+                      <span>Cart</span>
+                      {Number(itemCount) > 0 && (
+                        <span className="badge text-bg-primary ms-2">
+                          {itemCount}
+                        </span>
+                      )}
+                    </NavLink>
+
+                    {/* Optional hint if no active pet */}
+                    {cartDisabled && (
+                      <div className="dropdown-item-text text-muted small">
+                        Select an active pet to view cart
+                      </div>
+                    )}
+                  </li>
+                )}
 
                 <li>
                   <hr className="dropdown-divider" />
@@ -257,6 +295,32 @@ function Navbar() {
                 </ul>
               </div>
             </li>
+
+            {/* (Optional) Add Cart link inside offcanvas too */}
+            {user && (
+              <li className="nav-item mt-2">
+                <NavLink
+                  className={`nav-link d-flex justify-content-between align-items-center ${
+                    cartDisabled ? "disabled" : ""
+                  }`}
+                  to={cartDisabled ? "#" : "/cart"}
+                  onClick={(e) => {
+                    if (cartDisabled) {
+                      e.preventDefault();
+                      return;
+                    }
+                    closeOffcanvas();
+                  }}
+                >
+                  <span>Cart</span>
+                  {Number(itemCount) > 0 && (
+                    <span className="badge text-bg-primary ms-2">
+                      {itemCount}
+                    </span>
+                  )}
+                </NavLink>
+              </li>
+            )}
           </ul>
         </div>
       </div>

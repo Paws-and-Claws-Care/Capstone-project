@@ -1,35 +1,37 @@
-// client/src/pages/ProductDetails.jsx
 import { useEffect, useState } from "react";
-import { useParams, Link, useNavigate } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { fetchProductById } from "../api/products";
 import { useCart } from "../context/CartContext";
+import { useActivePet } from "../context/ActivePetContext";
 
 export default function ProductDetails() {
   const { id } = useParams();
-  const navigate = useNavigate();
 
-  const { addItem, isInCart } = useCart();
+  const { addItem, getQty, setQty, loading: cartLoading } = useCart();
+  const { activePet } = useActivePet();
 
-  //store fetched product object
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [msg, setMsg] = useState("");
+  const [busy, setBusy] = useState(""); // "add" | "inc" | "dec" | ""
 
-  // ✅ compute AFTER product exists
-  const added = product ? isInCart(product.id) : false;
+  const qty = product ? getQty(product.id) : 0;
+  const inCart = qty > 0;
+
+  const noPet = !activePet?.id;
+  const blocked = cartLoading || noPet || Boolean(busy);
 
   useEffect(() => {
     async function load() {
       setLoading(true);
       setError("");
       setMsg("");
-
       try {
         const data = await fetchProductById(id);
         setProduct(data);
       } catch (err) {
-        setError(err.message || "Failed to load product");
+        setError(err?.message || "Failed to load product");
       } finally {
         setLoading(false);
       }
@@ -37,15 +39,41 @@ export default function ProductDetails() {
     load();
   }, [id]);
 
-  function handleAdd() {
+  async function run(action, fn) {
+    if (blocked) return;
     try {
-      addItem(product, 1);
-      setMsg("Added to cart!");
-      setTimeout(() => setMsg(""), 1500);
+      setBusy(action);
+      await fn();
     } catch (err) {
-      const text = err?.message || "Login to add items to your cart";
-      setMsg(text);
+      setMsg(err?.message || "Cart action failed");
+    } finally {
+      setBusy("");
     }
+  }
+
+  function handleAdd() {
+    if (!product) return;
+
+    if (noPet) {
+      setMsg("Select an active pet to add items to the cart.");
+      return;
+    }
+
+    run("add", async () => {
+      await addItem(product, 1);
+      setMsg("Added to cart!");
+      setTimeout(() => setMsg(""), 1200);
+    });
+  }
+
+  function decQty() {
+    if (!product) return;
+    run("dec", () => setQty(product.id, qty - 1));
+  }
+
+  function incQty() {
+    if (!product) return;
+    run("inc", () => setQty(product.id, qty + 1));
   }
 
   if (loading) {
@@ -79,15 +107,9 @@ export default function ProductDetails() {
         </Link>
       </div>
 
-      {msg && (
-        <div
-          className={`alert ${
-            msg.toLowerCase().includes("added")
-              ? "alert-success"
-              : "alert-warning"
-          }`}
-        >
-          {msg}
+      {noPet && (
+        <div className="alert alert-warning">
+          Select an active pet in the navbar to add items to a cart.
         </div>
       )}
 
@@ -121,12 +143,61 @@ export default function ProductDetails() {
             ${Number(product.price).toFixed(2)}
           </p>
 
-          <button
-            className={`btn w-100 mb-3 ${added ? "btn-primary" : "btn-light"}`}
-            onClick={handleAdd}
-          >
-            {added ? "Added to Cart" : "Add to Cart"}
-          </button>
+          {msg && (
+            <div
+              className={`alert ${
+                msg.toLowerCase().includes("added")
+                  ? "alert-success"
+                  : "alert-warning"
+              }`}
+            >
+              {msg}
+            </div>
+          )}
+
+          {!inCart ? (
+            <button
+              className="btn btn-light w-100 mb-3"
+              onClick={handleAdd}
+              disabled={blocked}
+              type="button"
+            >
+              {busy === "add" ? "Adding..." : "Add to Cart"}
+            </button>
+          ) : (
+            <div className="d-flex align-items-center gap-2 mb-3">
+              <button
+                type="button"
+                className="btn btn-outline-secondary"
+                disabled={blocked}
+                onClick={decQty}
+                style={{ width: 56 }}
+                title={qty === 1 ? "Remove from cart" : "Decrease quantity"}
+              >
+                {busy === "dec" ? "…" : "−"}
+              </button>
+
+              <button
+                type="button"
+                className="btn btn-primary flex-grow-1"
+                disabled
+                style={{ cursor: "default" }}
+              >
+                In Cart: {qty}
+              </button>
+
+              <button
+                type="button"
+                className="btn btn-outline-secondary"
+                disabled={blocked}
+                onClick={incQty}
+                style={{ width: 56 }}
+                title="Increase quantity"
+              >
+                {busy === "inc" ? "…" : "+"}
+              </button>
+            </div>
+          )}
 
           {product.description && (
             <p className="text-muted" style={{ lineHeight: 1.6 }}>

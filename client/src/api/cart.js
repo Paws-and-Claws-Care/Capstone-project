@@ -1,95 +1,173 @@
-import { getToken } from "../api/auth";
+// src/api/cart.js
+import { getToken } from "./auth";
 
-const CART_KEY = "cart";
+const API = "/api";
 
-export function getCart() {
+// -----------------------
+// internal helper
+// -----------------------
+async function apiFetch(path, options = {}) {
+  const token = getToken() || localStorage.getItem("token");
+  if (!token) throw new Error("Login to use your cart");
+
+  const res = await fetch(`${API}${path}`, {
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+      ...(options.headers || {}),
+    },
+  });
+
+  // backend sometimes returns text, sometimes json
+  const text = await res.text();
+  let data = {};
   try {
-    const raw = localStorage.getItem(CART_KEY);
-    const parsed = raw ? JSON.parse(raw) : [];
-    return Array.isArray(parsed) ? parsed : [];
+    data = text ? JSON.parse(text) : {};
   } catch {
-    return [];
-  }
-}
-
-export function saveCart(cart) {
-  localStorage.setItem(CART_KEY, JSON.stringify(cart));
-}
-
-export function addToCart(product, qty = 1) {
-  const token = getToken();
-  if (!token) {
-    throw new Error("Login to add items to your cart");
+    data = { error: text };
   }
 
-  const cart = getCart();
-  const productId = Number(product.id);
+  if (!res.ok) {
+    const msg = data?.error || data?.message || "Request failed";
+    throw new Error(msg);
+  }
 
-  const existing = cart.find((i) => Number(i.productId) === productId);
+  return data;
+}
 
-  if (existing) {
-    existing.quantity = Number(existing.quantity || 0) + Number(qty);
-  } else {
-    cart.push({
-      productId,
-      name: product.name,
-      price: Number(product.price),
-      image_url: product.image_url,
+// -----------------------
+// CART (based on your backend routes)
+// -----------------------
+
+/**
+ * Get the active cart for a pet.
+ * Your backend doesn't have GET /orders/pets/:petId/cart,
+ * so we do:
+ *   1) GET /orders   (find is_cart for pet)
+ *   2) GET /orders/:orderId/products  (returns { order_id, items, order_total })
+ */
+export async function getPetCart(petId) {
+  if (!petId) throw new Error("petId is required");
+
+  const orders = await apiFetch("/orders");
+
+  const cart = (Array.isArray(orders) ? orders : []).find(
+    (o) => o.is_cart === true && Number(o.pet_id) === Number(petId)
+  );
+
+  if (!cart) {
+    return {
+      order_id: null,
+      pet_id: Number(petId),
+      items: [],
+      order_total: 0,
+    };
+  }
+
+  const cartData = await apiFetch(`/orders/${cart.id}/products`);
+
+  // ensure pet_id exists on the object so frontend can rely on it
+  return { ...cartData, pet_id: Number(petId) };
+}
+
+/**
+ * Add item to the pet's cart
+ * POST /orders/pets/:petId/cart/items
+ * Body: { productId, quantity }
+ *
+ * Backend returns { order, added } (NOT the full cart),
+ * so we follow with getPetCart() and return the full cart.
+ */
+export async function addToCart(petId, product, qty = 1) {
+  if (!petId) throw new Error("Select an active pet to add items to your cart");
+  if (!product?.id) throw new Error("product.id is required");
+
+  await apiFetch(`/orders/pets/${petId}/cart/items`, {
+    method: "POST",
+    body: JSON.stringify({
+      productId: Number(product.id),
       quantity: Number(qty),
-    });
-  }
+    }),
+  });
 
-  saveCart(cart);
-  return cart;
+  return getPetCart(petId);
 }
 
-// sets quantity to an exact number
-export function updateQuantity(productId, nextQty) {
-  const pid = Number(productId);
-  const qty = Number(nextQty);
+/**
+ * Set quantity exactly (0 removes)
+ * PATCH /orders/pets/:petId/cart/items/:productId
+ * Body: { quantity }
+ *
+ * Backend returns { orderId, updated } or { orderId, removed } (NOT full cart),
+ * so we follow with getPetCart() and return the full cart.
+ */
+export async function updateQuantity(petId, productId, nextQty) {
+  if (!petId) throw new Error("petId is required");
+  if (!productId) throw new Error("productId is required");
 
-  const cart = getCart()
-    .map((item) => {
-      if (Number(item.productId) !== pid) return item;
-      return { ...item, quantity: qty };
+  await apiFetch(`/orders/pets/${petId}/cart/items/${productId}`, {
+    method: "PATCH",
+    body: JSON.stringify({ quantity: Number(nextQty) }),
+  });
+
+  return getPetCart(petId);
+}
+
+/**
+ * Convenience +/- change (loads current cart, computes next qty, PATCHes)
+ */
+export async function changeQuantity(petId, productId, delta) {
+  if (!petId) throw new Error("petId is required");
+
+  const cart = await getPetCart(petId);
+  const items = Array.isArray(cart?.items) ? cart.items : [];
+
+  const pid = Number(productId);
+  const item = items.find((i) => Number(i.product_id ?? i.id) === pid);
+
+  const currentQty = Number(item?.quantity || 0);
+  const nextQty = currentQty + Number(delta);
+
+  return updateQuantity(petId, pid, nextQty);
+}
+
+/**
+ * Remove item entirely
+ * DELETE /orders/pets/:petId/cart/items/:productId
+ *
+ * Backend returns { orderId, removed } (NOT full cart),
+ * so we follow with getPetCart() and return the full cart.
+ */
+export async function removeFromCart(petId, productId) {
+  if (!petId) throw new Error("petId is required");
+  if (!productId) throw new Error("productId is required");
+
+  await apiFetch(`/orders/pets/${petId}/cart/items/${productId}`, {
+    method: "DELETE",
+  });
+
+  return getPetCart(petId);
+}
+
+/**
+ * Clear cart (PATCH each item quantity to 0) then return fresh cart
+ */
+export async function clearCart(petId) {
+  if (!petId) throw new Error("petId is required");
+
+  const cart = await getPetCart(petId);
+  const items = Array.isArray(cart?.items) ? cart.items : [];
+
+  await Promise.all(
+    items.map((i) => {
+      const pid = Number(i.product_id ?? i.id);
+      return apiFetch(`/orders/pets/${petId}/cart/items/${pid}`, {
+        method: "PATCH",
+        body: JSON.stringify({ quantity: 0 }),
+      });
     })
-    .filter((item) => Number(item.quantity) > 0); // remove if 0 or less
+  );
 
-  saveCart(cart);
-  return cart;
-}
-
-// +1 / -1 convenience
-export function changeQuantity(productId, delta) {
-  const pid = Number(productId);
-  const d = Number(delta);
-
-  const cart = getCart();
-  const item = cart.find((i) => Number(i.productId) === pid);
-
-  if (!item) return cart;
-
-  const nextQty = Number(item.quantity || 0) + d;
-
-  const updated =
-    nextQty <= 0
-      ? cart.filter((i) => Number(i.productId) !== pid)
-      : cart.map((i) =>
-          Number(i.productId) === pid ? { ...i, quantity: nextQty } : i
-        );
-
-  saveCart(updated);
-  return updated;
-}
-
-export function removeFromCart(productId) {
-  const pid = Number(productId);
-  const updated = getCart().filter((i) => Number(i.productId) !== pid);
-  saveCart(updated);
-  return updated;
-}
-
-export function clearCart() {
-  saveCart([]);
-  return [];
+  return getPetCart(petId);
 }

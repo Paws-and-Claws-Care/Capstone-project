@@ -7,12 +7,8 @@ import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "./style.css";
 
-import { CartProvider } from "./context/CartContext.jsx";
-
 createRoot(document.getElementById("root")).render(
   <BrowserRouter>
-    <CartProvider>
-      <App />
-    </CartProvider>
+    <App />
   </BrowserRouter>
 );

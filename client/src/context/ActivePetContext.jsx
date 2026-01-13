@@ -42,6 +42,7 @@ export function ActivePetProvider({ children }) {
   useEffect(() => {
     if (!loggedInUser) {
       setPets([]);
+      setActivePetId(null);
       localStorage.removeItem("activePetId");
       return;
     }
@@ -51,12 +52,19 @@ export function ActivePetProvider({ children }) {
   }, [loggedInUser?.id]);
 
   // If pets load and activePetId is missing/invalid, default to first pet
+  // Keep activePetId in sync with pets list
   useEffect(() => {
-    if (!pets.length) return;
+    if (!pets.length) {
+      setActivePetId(null);
+      localStorage.removeItem("activePetId");
+      return;
+    }
 
+    // activePetId still valid → do nothing
     const stillValid = activePetId && pets.some((p) => p.id === activePetId);
     if (stillValid) return;
 
+    // otherwise default to first pet
     const firstId = pets[0].id;
     setActivePetId(firstId);
     localStorage.setItem("activePetId", String(firstId));

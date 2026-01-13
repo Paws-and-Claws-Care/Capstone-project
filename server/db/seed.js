@@ -3413,41 +3413,41 @@ export default async function seed() {
 
   //CREATE ORDER SEED
 
-  const order1 = await createOrder({
-    user_id: alyssa.id,
-    date: "2025-12-15",
-    note: "Alyssa's first order",
-  });
-  await Promise.all([
-    addProductToOrder({
-      order_id: order1.id,
-      product_id: products[0].id,
-      quantity: 1,
-      price: 70,
-    }),
-    addProductToOrder({
-      order_id: order1.id,
-      product_id: products[2].id,
-      quantity: 1,
-      price: 70,
-    }),
-    addProductToOrder({
-      order_id: order1.id,
-      product_id: products[3].id,
-      quantity: 2,
-      price: 70,
-    }),
-    addProductToOrder({
-      order_id: order1.id,
-      product_id: products[5].id,
-      quantity: 1,
-      price: 70,
-    }),
-    addProductToOrder({
-      order_id: order1.id,
-      product_id: products[8].id,
-      quantity: 1,
-      price: 70,
-    }),
-  ]);
+  // const order1 = await createOrder({
+  //   user_id: alyssa.id,
+  //   date: "2025-12-15",
+  //   note: "Alyssa's first order",
+  // });
+  // await Promise.all([
+  //   addProductToOrder({
+  //     order_id: order1.id,
+  //     product_id: products[0].id,
+  //     quantity: 1,
+  //     price: 70,
+  //   }),
+  //   addProductToOrder({
+  //     order_id: order1.id,
+  //     product_id: products[2].id,
+  //     quantity: 1,
+  //     price: 70,
+  //   }),
+  //   addProductToOrder({
+  //     order_id: order1.id,
+  //     product_id: products[3].id,
+  //     quantity: 2,
+  //     price: 70,
+  //   }),
+  //   addProductToOrder({
+  //     order_id: order1.id,
+  //     product_id: products[5].id,
+  //     quantity: 1,
+  //     price: 70,
+  //   }),
+  //   addProductToOrder({
+  //     order_id: order1.id,
+  //     product_id: products[8].id,
+  //     quantity: 1,
+  //     price: 70,
+  //   }),
+  // ]);
 }
