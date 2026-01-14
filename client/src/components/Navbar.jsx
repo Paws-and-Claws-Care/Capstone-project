@@ -6,6 +6,9 @@ import logo from "../assets/logo.png";
 import { useActivePet } from "../context/ActivePetContext";
 import { useCart } from "../context/CartContext";
 
+
+
+
 function Navbar() {
   const user = getUser();
   const navigate = useNavigate();
