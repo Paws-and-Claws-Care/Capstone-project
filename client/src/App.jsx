@@ -15,6 +15,7 @@ import Register from "./pages/Register";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import ErrorPage from "./pages/ErrorPage";
+import Forum from "./pages/Forum";
 
 import { ActivePetProvider } from "./context/ActivePetContext";
 import { CartProvider } from "./context/CartContext";
@@ -40,6 +41,8 @@ function App() {
 
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+
+          <Route path="/forum" element={<Forum />} />
 
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
