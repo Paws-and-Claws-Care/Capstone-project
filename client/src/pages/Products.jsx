@@ -43,6 +43,10 @@ export default function Products() {
 
   const petTypeQuery = normalize(searchParams.get("petType"));
   const filterFromUrl = normalize(searchParams.get("filter"));
+
+  // ✅ NEW: search from URL (?search=...)
+  const searchFromUrl = normalize(searchParams.get("search"));
+
   const petType = petTypeQuery || normalize(petTypeParam) || "";
 
   const [baseProducts, setBaseProducts] = useState([]);
@@ -61,6 +65,11 @@ export default function Products() {
     setItemOffset(0);
   }, [filterFromUrl]);
 
+  // ✅ NEW: when search changes, reset pagination too
+  useEffect(() => {
+    setItemOffset(0);
+  }, [searchFromUrl]);
+
   // fetch products when petType changes
   useEffect(() => {
     async function load() {
@@ -78,20 +87,40 @@ export default function Products() {
     load();
   }, [petType]);
 
-  // in-memory filtering
+  // in-memory filtering (category + health + ✅ search)
   const filteredProducts = useMemo(() => {
-    if (activeFilter === "all") return baseProducts;
+    let list = baseProducts;
 
-    if (activeFilter === "health") {
-      return baseProducts.filter((p) =>
-        HEALTH_CATEGORY_SET.has(normalize(p.category))
-      );
+    // ✅ 1) category filter
+    if (activeFilter !== "all") {
+      if (activeFilter === "health") {
+        list = list.filter((p) =>
+          HEALTH_CATEGORY_SET.has(normalize(p.category))
+        );
+      } else {
+        list = list.filter(
+          (p) => normalize(p.category) === normalize(activeFilter)
+        );
+      }
     }
 
-    return baseProducts.filter(
-      (p) => normalize(p.category) === normalize(activeFilter)
-    );
-  }, [baseProducts, activeFilter]);
+    // ✅ 2) search filter
+    if (searchFromUrl) {
+      list = list.filter((p) => {
+        const name = normalize(p.name);
+        const desc = normalize(p.description);
+        const cat = normalize(p.category);
+
+        return (
+          name.includes(searchFromUrl) ||
+          desc.includes(searchFromUrl) ||
+          cat.includes(searchFromUrl)
+        );
+      });
+    }
+
+    return list;
+  }, [baseProducts, activeFilter, searchFromUrl]);
 
   // pagination
   const endOffset = itemOffset + itemsPerPage;
@@ -110,6 +139,10 @@ export default function Products() {
 
     if (petType) next.set("petType", petType);
     else next.delete("petType");
+
+    // ✅ keep search in URL when switching filters
+    if (searchFromUrl) next.set("search", searchFromUrl);
+    else next.delete("search");
 
     setSearchParams(next);
     setItemOffset(0);
@@ -131,11 +164,7 @@ export default function Products() {
 
     try {
       setAddingId(product.id);
-
-      // ✅ this triggers CartContext to refresh the cart
-      // so isInCart(product.id) becomes true immediately
       await addItem(product, 1);
-
       setMsg("Added to cart!");
       setTimeout(() => setMsg(""), 1200);
     } catch (err) {
@@ -160,6 +189,13 @@ export default function Products() {
   return (
     <div className="container py-4">
       <h2 className="mb-2">{title}</h2>
+
+      {/* ✅ Optional: show search term to user */}
+      {searchFromUrl && (
+        <div className="text-muted mb-2">
+          Showing results for: <strong>{searchFromUrl}</strong>
+        </div>
+      )}
 
       <div className="d-flex justify-content-between align-items-start flex-wrap gap-2 mb-3">
         <div className="text-muted">
