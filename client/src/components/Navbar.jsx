@@ -1,5 +1,5 @@
 import { Link, NavLink, useNavigate } from "react-router-dom";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Offcanvas from "bootstrap/js/dist/offcanvas";
 import { getUser, logout } from "../api/auth";
 import logo from "../assets/logo.png";
@@ -10,6 +10,10 @@ function Navbar() {
   const user = getUser();
   const navigate = useNavigate();
   const { pets, activePetId, setActivePet } = useActivePet();
+
+  // ✅ Product search (NO default)
+  const [petType, setPetType] = useState("");
+  const [search, setSearch] = useState("");
 
   // ✅ backend cart context
   const { itemCount, refreshCart } = useCart();
@@ -48,10 +52,8 @@ function Navbar() {
     const el = offcanvasRef.current;
     if (!el) return;
 
-    // If anything got stuck from a previous open, clean it first
     cleanupBackdropAndBody();
 
-    // Ensure we have an instance, then show
     const inst = Offcanvas.getOrCreateInstance(el);
     offcanvasInstanceRef.current = inst;
     inst.show();
@@ -63,14 +65,25 @@ function Navbar() {
 
   function handleLogout() {
     logout();
-
-    // ✅ clear any stale cart badge after logout
-    // (refreshCart will set cartData to null because activePet/user are gone)
     refreshCart?.();
-
     closeOffcanvas();
-    // tiny delay so close starts before navigation
     window.setTimeout(() => navigate("/"), 10);
+  }
+
+  // ✅ Search submit
+  function handleSearchSubmit(e) {
+    e.preventDefault();
+
+    // require both petType + search
+    if (!petType || !search.trim()) return;
+
+    // match your existing routes: /products/pet/dog and /products/pet/cat
+    navigate(
+      `/products/pet/${petType}?search=${encodeURIComponent(search.trim())}`
+    );
+
+    setSearch("");
+    setPetType("");
   }
 
   const showCart = Boolean(user);
@@ -88,7 +101,6 @@ function Navbar() {
             <img src={logo} alt="Paws & Claws" style={{ height: "120px" }} />
           </Link>
 
-          {/* IMPORTANT: no data-bs-toggle/target here */}
           <button
             className="navbar-toggler"
             type="button"
@@ -99,7 +111,7 @@ function Navbar() {
           </button>
         </div>
 
-        {/* RIGHT: Active Pet + Account */}
+        {/* RIGHT: Active Pet + Search + Account */}
         <ul className="navbar-nav ms-auto flex-row gap-3 align-items-center">
           {/* Active Pet Selector (only when logged in) */}
           {user && (
@@ -123,6 +135,42 @@ function Navbar() {
               )}
             </li>
           )}
+
+          {/* ✅ NAVBAR SEARCH BAR (petType + search) */}
+          <li className="nav-item">
+            <form
+              className="d-flex align-items-center"
+              onSubmit={handleSearchSubmit}
+            >
+              <select
+                className="form-select form-select-sm me-2"
+                style={{ width: 90 }}
+                value={petType}
+                onChange={(e) => setPetType(e.target.value)}
+                aria-label="Choose dog or cat"
+                required
+              >
+                <option value="" disabled>
+                  Pet
+                </option>
+                <option value="dog">Dog</option>
+                <option value="cat">Cat</option>
+              </select>
+
+              <input
+                className="form-control form-control-sm me-2"
+                style={{ width: 200 }}
+                type="search"
+                placeholder="Search products"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+              />
+
+              <button className="btn btn-outline-primary btn-sm" type="submit">
+                Search
+              </button>
+            </form>
+          </li>
 
           {!user ? (
             <>
@@ -183,7 +231,6 @@ function Navbar() {
                       )}
                     </NavLink>
 
-                    {/* Optional hint if no active pet */}
                     {cartDisabled && (
                       <div className="dropdown-item-text text-muted small">
                         Select an active pet to view cart
