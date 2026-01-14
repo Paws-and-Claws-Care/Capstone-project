@@ -1,26 +1,38 @@
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { getMyPets, createPet as apiCreatePet } from "../api/pets";
-import { getToken, getUser } from "../api/auth";
+import { getToken, getUser, AUTH_CHANGED_EVENT } from "../api/auth";
 
 const ActivePetContext = createContext(null);
 
 export function ActivePetProvider({ children }) {
   const [pets, setPets] = useState([]);
+
   const [activePetId, setActivePetId] = useState(() => {
     const saved = localStorage.getItem("activePetId");
     return saved ? Number(saved) : null;
   });
 
-  // If you store token elsewhere later, update this one line
+  // ✅ NEW: tick that forces this provider to re-check localStorage auth
+  const [authTick, setAuthTick] = useState(0);
 
-  const loggedInUser = getUser();
+  // ✅ Listen for login/logout so this provider updates immediately
+  useEffect(() => {
+    const onAuthChanged = () => setAuthTick((t) => t + 1);
+    window.addEventListener(AUTH_CHANGED_EVENT, onAuthChanged);
+    return () => window.removeEventListener(AUTH_CHANGED_EVENT, onAuthChanged);
+  }, []);
+
+  // recompute user when auth changes
+  const loggedInUser = useMemo(() => getUser(), [authTick]);
 
   async function refreshPets() {
     const token = getToken();
+
     if (!token) {
       setPets([]);
       return [];
     }
+
     const data = await getMyPets(token);
     setPets(data);
     return data;
@@ -39,6 +51,7 @@ export function ActivePetProvider({ children }) {
     return newPet;
   }
 
+  // ✅ On login/logout change, load/clear pets
   useEffect(() => {
     if (!loggedInUser) {
       setPets([]);
@@ -49,10 +62,9 @@ export function ActivePetProvider({ children }) {
 
     refreshPets().catch(() => setPets([]));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [loggedInUser?.id]);
+  }, [authTick, loggedInUser?.id]);
 
   // If pets load and activePetId is missing/invalid, default to first pet
-  // Keep activePetId in sync with pets list
   useEffect(() => {
     if (!pets.length) {
       setActivePetId(null);
@@ -60,11 +72,9 @@ export function ActivePetProvider({ children }) {
       return;
     }
 
-    // activePetId still valid → do nothing
     const stillValid = activePetId && pets.some((p) => p.id === activePetId);
     if (stillValid) return;
 
-    // otherwise default to first pet
     const firstId = pets[0].id;
     setActivePetId(firstId);
     localStorage.setItem("activePetId", String(firstId));
@@ -78,6 +88,7 @@ export function ActivePetProvider({ children }) {
   function setActivePet(id) {
     const petId = id ? Number(id) : null;
     setActivePetId(petId);
+
     if (petId) localStorage.setItem("activePetId", String(petId));
     else localStorage.removeItem("activePetId");
   }

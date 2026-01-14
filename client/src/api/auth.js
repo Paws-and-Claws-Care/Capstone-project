@@ -2,6 +2,12 @@ const API = "/api";
 
 const TOKEN_KEY = "token";
 const USER_KEY = "user";
+const AUTH_EVENT = "auth-changed";
+
+function emitAuthChanged() {
+  // lets the app react immediately when localStorage auth changes in THIS tab
+  window.dispatchEvent(new Event(AUTH_EVENT));
+}
 
 export async function registerUser({ username, email, password }) {
   const res = await fetch(`${API}/auth/register`, {
@@ -56,6 +62,9 @@ export function saveAuth({ token, user }) {
       localStorage.setItem(USER_KEY, JSON.stringify(user));
     }
   }
+
+  // ✅ NEW: notify app that auth changed
+  emitAuthChanged();
 }
 
 export function getToken() {
@@ -68,7 +77,7 @@ export function getToken() {
 }
 
 export function getUser() {
-  const raw = localStorage.getItem("user");
+  const raw = localStorage.getItem(USER_KEY);
 
   if (!raw || raw === "undefined" || raw === "null") return null;
 
@@ -92,7 +101,7 @@ export function getUser() {
     return parsed && typeof parsed === "object" ? parsed : null;
   } catch {
     // clean up any corrupted values so it doesn't keep crashing
-    localStorage.removeItem("user");
+    localStorage.removeItem(USER_KEY);
     return null;
   }
 }
@@ -100,4 +109,10 @@ export function getUser() {
 export function logout() {
   localStorage.removeItem(TOKEN_KEY);
   localStorage.removeItem(USER_KEY);
+
+  // ✅ NEW: notify app that auth changed
+  emitAuthChanged();
 }
+
+// ✅ OPTIONAL: export event name so contexts can subscribe consistently
+export const AUTH_CHANGED_EVENT = AUTH_EVENT;
