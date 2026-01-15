@@ -17,8 +17,12 @@ import Contact from "./pages/Contact";
 import ErrorPage from "./pages/ErrorPage";
 import Forum from "./pages/Forum";
 
+
+
 import { ActivePetProvider } from "./context/ActivePetContext";
 import { CartProvider } from "./context/CartContext";
+
+
 
 function App() {
   return (
@@ -46,6 +50,8 @@ function App() {
 
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
+
+
           {/* 👇 Catch-all route (404) */}
           <Route path="*" element={<ErrorPage />} />
         </Routes>
