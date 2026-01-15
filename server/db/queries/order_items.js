@@ -1,12 +1,5 @@
-// server/db/queries/order_items.js
 import db from "../client.js";
 
-/**
- * Add a product to an order.
- * - Requires price (snapshot of product price at time of add)
- * - If (order_id, product_id) already exists, increment quantity instead of erroring
- *   (because schema has UNIQUE (order_id, product_id))
- */
 export async function addProductToOrder({
   order_id,
   product_id,
@@ -37,9 +30,6 @@ export async function addProductToOrder({
   return response.rows[0];
 }
 
-/**
- * Get products for an order (order_items joined with products)
- */
 export async function getProductsByOrderId(orderId) {
   const SQL = `
     SELECT
@@ -62,7 +52,6 @@ export async function getProductsByOrderId(orderId) {
   return response.rows;
 }
 
-// Update quantity for a line item in an order
 export async function updateOrderItemQuantity(orderId, productId, quantity) {
   const SQL = `
     UPDATE order_items
@@ -74,7 +63,6 @@ export async function updateOrderItemQuantity(orderId, productId, quantity) {
   return result.rows[0] || null;
 }
 
-// Remove a line item from an order
 export async function deleteOrderItemByProduct(orderId, productId) {
   const SQL = `
     DELETE FROM order_items

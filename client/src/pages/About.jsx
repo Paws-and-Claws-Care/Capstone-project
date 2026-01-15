@@ -1,7 +1,3 @@
-// About.jsx
-// This page explains what the capstone project is, why it was built,
-// and highlights the tech stack (frontend, backend, database) using Bootstrap cards.
-
 import { Link } from "react-router-dom";
 
 export default function About() {
@@ -151,7 +147,7 @@ export default function About() {
         </div>
       </section>
 
-      {/* MEET THE TEAM (white background) */}
+      {/* MEET THE TEAM*/}
       <section className="border-top">
         <div className="container py-5">
           <div className="row g-3 align-items-center">
@@ -166,7 +162,7 @@ export default function About() {
         </div>
       </section>
 
-      {/* FOOTER (grey background like Home) */}
+      {/* FOOTER*/}
       <footer className="bg-light border-top">
         <div className="container py-4">
           <div className="d-flex flex-column flex-md-row justify-content-between gap-2 text-secondary small">

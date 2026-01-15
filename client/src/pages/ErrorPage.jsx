@@ -32,13 +32,11 @@ export default function ErrorPage() {
               moved, deleted, or the link may be incorrect.
             </p>
 
-            {/* Optional debug (helpful for dev + presentations) */}
             <div className="alert alert-secondary text-start small mb-4">
               <div className="fw-semibold mb-1">Requested path:</div>
               <code className="text-break">{location.pathname}</code>
             </div>
 
-            {/* Actions */}
             <div className="d-flex flex-column flex-sm-row gap-2 justify-content-center">
               <Link to="/" className="btn btn-primary px-4">
                 Go Home
@@ -57,7 +55,6 @@ export default function ErrorPage() {
               </button>
             </div>
 
-            {/* Extra help links */}
             <div className="mt-4 pt-3 border-top text-muted small">
               If you believe this is an error, try refreshing the page or going
               back to a known section of the site.

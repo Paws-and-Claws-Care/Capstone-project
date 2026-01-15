@@ -27,7 +27,7 @@ export async function deletePet(token, petId) {
     throw new Error(
       typeof data === "string" ? data : data?.error || "Failed to delete pet"
     );
-  return data; // { deleted: true, petId }
+  return data;
 }
 
 export async function getMyPets(token) {

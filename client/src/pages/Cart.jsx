@@ -19,20 +19,17 @@ export default function Cart() {
     refreshCart,
   } = useCart();
 
-  // Track per-item button loading so UI doesn't feel glitchy
   const [busyByProductId, setBusyByProductId] = useState({});
 
   const displayTotal = useMemo(() => Number(orderTotal || 0), [orderTotal]);
 
   const needsPet = !activePet?.id;
 
-  // ✅ Key fix: whenever we NAVIGATE to /cart (and have an active pet), re-fetch.
   useEffect(() => {
     if (location.pathname !== "/cart") return;
     if (needsPet) return;
 
     refreshCart?.();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.pathname, activePet?.id]);
 
   async function changeQty(productId, nextQty) {
@@ -40,7 +37,6 @@ export default function Cart() {
       setBusyByProductId((m) => ({ ...m, [productId]: true }));
       await updateItemQty(productId, nextQty);
 
-      // optional safety refresh (keeps totals accurate)
       await refreshCart();
     } catch (err) {
       alert(err?.message || "Failed to update quantity");

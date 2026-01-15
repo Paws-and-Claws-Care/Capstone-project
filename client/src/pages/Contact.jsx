@@ -1,13 +1,7 @@
-// Contact.jsx
-// This page shows a contact form (demo UI) and a sidebar with contact info.
-// When the user submits the form, we show a Bootstrap success message in the UI.
-// (No backend/email sending yet — this is a frontend-only demo.)
-
-import { Link } from "react-router-dom"; // Link lets us navigate without reloading the page
-import { useState } from "react"; // useState lets us store form data + UI state
+import { Link } from "react-router-dom";
+import { useState } from "react";
 
 export default function Contact() {
-  // form state holds the values typed into the inputs
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -15,29 +9,21 @@ export default function Contact() {
     message: "",
   });
 
-  // success controls whether we show the green “message sent” alert
   const [success, setSuccess] = useState(false);
 
-  // handleChange runs every time the user types in any input
   function handleChange(e) {
-    const { name, value } = e.target; // "name" matches the input name attr, "value" is what user typed
+    const { name, value } = e.target;
 
-    // update just the one field the user changed
     setForm((prev) => ({ ...prev, [name]: value }));
 
-    // if the user starts typing again after submitting, hide the success alert
     setSuccess(false);
   }
 
-  // handleSubmit runs when the user clicks "Send message"
   function handleSubmit(e) {
-    e.preventDefault(); // prevents the browser from refreshing the page
+    e.preventDefault();
 
-    // In a real app, we'd POST this form to the backend here.
-    // For now, we show a success message to demonstrate UI behavior.
     setSuccess(true);
 
-    // clear the form after “sending”
     setForm({ name: "", email: "", subject: "", message: "" });
   }
 
@@ -59,7 +45,7 @@ export default function Contact() {
 
       {/* MAIN CONTENT */}
       <section className="container py-5">
-        {/* Bootstrap grid: form on left, info card on right */}
+        {/* Bootstrap grid*/}
         <div className="row g-4">
           {/* LEFT: FORM CARD */}
           <div className="col-12 col-lg-7">
@@ -67,12 +53,11 @@ export default function Contact() {
               <div className="card-body p-4">
                 <h2 className="h4 fw-bold mb-1">Send a message</h2>
 
-                {/* Small note to clarify this is demo-only */}
                 <p className="text-secondary mb-3">
                   This form is currently a demo UI.
                 </p>
 
-                {/* Success alert: only shows after user submits */}
+                {/* Success alert when user submits */}
                 {success && (
                   <div className="alert alert-success">
                     <i className="bi bi-check-circle me-2" />
@@ -88,11 +73,11 @@ export default function Contact() {
                       <label className="form-label">Name</label>
                       <input
                         className="form-control"
-                        name="name" // IMPORTANT: must match key in form state
-                        value={form.name} // controlled value from state
-                        onChange={handleChange} // updates state on typing
+                        name="name"
+                        value={form.name}
+                        onChange={handleChange}
                         placeholder="Your name"
-                        required // browser validation
+                        required
                       />
                     </div>
 
@@ -101,7 +86,7 @@ export default function Contact() {
                       <label className="form-label">Email</label>
                       <input
                         className="form-control"
-                        type="email" // helps browser validate email format
+                        type="email"
                         name="email"
                         value={form.email}
                         onChange={handleChange}
@@ -145,7 +130,7 @@ export default function Contact() {
                         Send message
                       </button>
 
-                      {/* Link back home (client-side navigation, no refresh) */}
+                      {/* Link back home*/}
                       <Link className="btn btn-outline-secondary" to="/">
                         <i className="bi bi-house me-2" />
                         Back to home

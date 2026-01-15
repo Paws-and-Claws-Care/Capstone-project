@@ -5,7 +5,6 @@ const USER_KEY = "user";
 const AUTH_EVENT = "auth-changed";
 
 function emitAuthChanged() {
-  // lets the app react immediately when localStorage auth changes in THIS tab
   window.dispatchEvent(new Event(AUTH_EVENT));
 }
 
@@ -18,7 +17,7 @@ export async function registerUser({ username, email, password }) {
 
   const data = await res.json();
   if (!res.ok) throw new Error(data.error || "Register failed");
-  return data; // { token }
+  return data;
 }
 
 export async function loginUser({ username, password }) {
@@ -30,7 +29,7 @@ export async function loginUser({ username, password }) {
 
   const data = await res.json();
   if (!res.ok) throw new Error(data.error || "Login failed");
-  return data; // { token }
+  return data;
 }
 
 export async function fetchMe(token) {
@@ -49,9 +48,7 @@ export function saveAuth({ token, user }) {
   }
 
   if (user != null) {
-    // If someone accidentally passes a string user, try to store it safely
     if (typeof user === "string") {
-      // If it's already JSON, keep it; otherwise wrap it (still valid JSON)
       try {
         JSON.parse(user);
         localStorage.setItem(USER_KEY, user);
@@ -63,14 +60,12 @@ export function saveAuth({ token, user }) {
     }
   }
 
-  // ✅ NEW: notify app that auth changed
   emitAuthChanged();
 }
 
 export function getToken() {
   const token = localStorage.getItem(TOKEN_KEY);
 
-  // handle null, empty, and the literal strings "undefined"/"null"
   if (!token || token === "undefined" || token === "null") return null;
 
   return token;
@@ -84,7 +79,6 @@ export function getUser() {
   try {
     const parsed = JSON.parse(raw);
 
-    // If something stored a string inside JSON (double-encoded)
     if (typeof parsed === "string") {
       if (!parsed || parsed === "undefined" || parsed === "null") return null;
 
@@ -100,7 +94,6 @@ export function getUser() {
 
     return parsed && typeof parsed === "object" ? parsed : null;
   } catch {
-    // clean up any corrupted values so it doesn't keep crashing
     localStorage.removeItem(USER_KEY);
     return null;
   }
@@ -110,9 +103,7 @@ export function logout() {
   localStorage.removeItem(TOKEN_KEY);
   localStorage.removeItem(USER_KEY);
 
-  // ✅ NEW: notify app that auth changed
   emitAuthChanged();
 }
 
-// ✅ OPTIONAL: export event name so contexts can subscribe consistently
 export const AUTH_CHANGED_EVENT = AUTH_EVENT;

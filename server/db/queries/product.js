@@ -46,8 +46,6 @@ export async function getProductById(id) {
   return response.rows[0];
 }
 
-//getProductsByCategory
-
 export async function getProductsByCategory(category) {
   const SQL = `
   SELECT * 

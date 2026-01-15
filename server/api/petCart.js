@@ -14,22 +14,16 @@ import {
   deleteOrderItemByProduct,
 } from "../db/queries/order_items.js";
 
-import { getProductById } from "../db/queries/products.js"; // you already use this elsewhere
+import { getProductById } from "../db/queries/products.js";
 
 const router = express.Router();
 
-/**
- * Helper: always return the user's cart order for this pet (create if missing)
- */
 async function getOrCreateCartOrder(userId, petId) {
   let cart = await getCartOrderByPet(userId, petId);
   if (!cart) cart = await createCartOrderForPet(userId, petId);
   return cart;
 }
 
-/**
- * Helper: format response with totals
- */
 function buildCartResponse(order, items) {
   const normalized = (items || []).map((i) => {
     const qty = Number(i.quantity || 0);
@@ -57,10 +51,6 @@ function buildCartResponse(order, items) {
   };
 }
 
-/**
- * GET /api/pets/:petId/cart
- * Returns the open cart (creates if missing)
- */
 router.get(
   "/pets/:petId/cart",
   getUserFromToken,
@@ -82,11 +72,6 @@ router.get(
   }
 );
 
-/**
- * POST /api/pets/:petId/cart/items
- * Body: { productId, quantity }
- * Adds/increments product in cart
- */
 router.post(
   "/pets/:petId/cart/items",
   getUserFromToken,
@@ -108,7 +93,6 @@ router.post(
 
       const cartOrder = await getOrCreateCartOrder(userId, petId);
 
-      // snapshot price from products table
       const product = await getProductById(productId);
       if (!product)
         return res.status(404).json({ message: "Product not found" });
@@ -128,11 +112,6 @@ router.post(
   }
 );
 
-/**
- * PATCH /api/pets/:petId/cart/items/:productId
- * Body: { quantity }
- * Sets exact quantity (0 => removes)
- */
 router.patch(
   "/pets/:petId/cart/items/:productId",
   getUserFromToken,
@@ -168,10 +147,6 @@ router.patch(
   }
 );
 
-/**
- * DELETE /api/pets/:petId/cart/items/:productId
- * Removes item entirely
- */
 router.delete(
   "/pets/:petId/cart/items/:productId",
   getUserFromToken,

@@ -1,4 +1,3 @@
-// src/context/CartContext.jsx
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { useActivePet } from "./ActivePetContext";
 import {
@@ -38,17 +37,14 @@ export function CartProvider({ children }) {
     }
   }
 
-  // reload cart when active pet changes
   useEffect(() => {
     refreshCart();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activePet?.id]);
 
   const items = useMemo(() => {
     return Array.isArray(cartData?.items) ? cartData.items : [];
   }, [cartData]);
 
-  // Map productId -> item (so qty lookups are easy)
   const itemById = useMemo(() => {
     const m = new Map();
     for (const i of items) {
@@ -79,7 +75,6 @@ export function CartProvider({ children }) {
     return Number(itemById.get(pid)?.quantity || 0);
   }
 
-  // ✅ Actions (now use the returned updated cart)
   async function addItem(product, qty = 1) {
     if (!activePet?.id) throw new Error("Select an active pet first.");
     const nextCart = await addToCart(activePet.id, product, qty);
@@ -123,7 +118,6 @@ export function CartProvider({ children }) {
 
   const value = useMemo(
     () => ({
-      // data
       cartData,
       items,
       ids,
@@ -132,12 +126,10 @@ export function CartProvider({ children }) {
       loading,
       error,
 
-      // helpers
       isInCart: (productId) => ids.has(Number(productId)),
       getQty,
       refreshCart,
 
-      // actions
       addItem,
       removeItem,
       updateItemQty,

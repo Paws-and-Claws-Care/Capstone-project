@@ -1,6 +1,4 @@
-/* =========================
-   App Layout (sticky footer)
-   ========================= */
+/* App Layout */
 html,
 body,
 #root {
@@ -17,34 +15,23 @@ body,
   flex: 1;
 }
 
-/* =========================
-   Navbar sizing / spacing
-   ========================= */
+/* Navbar */
 :root {
-  --navbar-height: 140px; /* adjust based on your logo height */
+  --navbar-height: 140px;
 }
 
-/* If you want the navbar to have a consistent height */
 .navbar {
   min-height: var(--navbar-height);
 }
 
-/* Push page content down so navbar doesn't overlap it */
 .app-main {
   padding-top: var(--navbar-height);
 }
 
-/* Keep hamburger visible on all screen sizes */
 .navbar .navbar-toggler {
   display: inline-block !important;
 }
 
-/* (Optional) Make sure toggler icon is visible if BS styles are weird */
 .navbar .navbar-toggler-icon {
   display: inline-block;
 }
-
-/* =========================
-   Offcanvas (sidebar) tweaks
-   ========================= */
-/* Optional: set a consist*
