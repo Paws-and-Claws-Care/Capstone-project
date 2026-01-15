@@ -1,6 +1,5 @@
 const API = "/api";
 
-// Small helper so all functions handle errors the same way
 async function parseResponse(res, defaultMsg) {
   const text = await res.text();
   let data = null;
@@ -20,13 +19,11 @@ async function parseResponse(res, defaultMsg) {
   return data;
 }
 
-// Used by Products.jsx when there is no petType param
 export async function fetchAllProducts() {
   const res = await fetch(`${API}/products`);
   return parseResponse(res, "Failed to fetch products");
 }
 
-// Used by Products.jsx for /products/dog and /products/cat
 export async function fetchProductsByPetType(petType) {
   const res = await fetch(
     `${API}/products?pet_type=${encodeURIComponent(petType)}`

@@ -6,7 +6,6 @@ import db from "../db/client.js";
 
 const router = express.Router();
 
-// GET /api/pets  (my pets)
 router.get("/", getUserFromToken, requireUser, async (req, res, next) => {
   try {
     const pets = await getPetsByUserId(req.user.id);
@@ -16,7 +15,6 @@ router.get("/", getUserFromToken, requireUser, async (req, res, next) => {
   }
 });
 
-// POST /api/pets  (create pet)
 router.post("/", getUserFromToken, requireUser, async (req, res, next) => {
   try {
     const { name, pet_type, breed } = req.body;
@@ -37,19 +35,16 @@ router.post("/", getUserFromToken, requireUser, async (req, res, next) => {
   }
 });
 
-// DELETE /api/pets/:id
 router.delete("/:id", getUserFromToken, requireUser, async (req, res, next) => {
   try {
     const petId = Number(req.params.id);
 
-    // make sure pet belongs to user
     const petCheck = await db.query(
       `SELECT id FROM pets WHERE id = $1 AND user_id = $2`,
       [petId, req.user.id]
     );
     if (!petCheck.rows[0]) return res.status(404).send("Pet not found.");
 
-    // ✅ If orders reference this pet, delete those first (prevents foreign key errors)
     await db.query(
       `DELETE FROM order_items
        WHERE order_id IN (SELECT id FROM orders WHERE pet_id = $1 AND user_id = $2)`,
@@ -61,7 +56,6 @@ router.delete("/:id", getUserFromToken, requireUser, async (req, res, next) => {
       req.user.id,
     ]);
 
-    // delete pet
     await db.query(`DELETE FROM pets WHERE id = $1 AND user_id = $2`, [
       petId,
       req.user.id,

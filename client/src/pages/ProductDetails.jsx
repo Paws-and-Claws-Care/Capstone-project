@@ -14,7 +14,7 @@ export default function ProductDetails() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [msg, setMsg] = useState("");
-  const [busy, setBusy] = useState(""); // "add" | "inc" | "dec" | ""
+  const [busy, setBusy] = useState("");
 
   const qty = product ? getQty(product.id) : 0;
   const inCart = qty > 0;

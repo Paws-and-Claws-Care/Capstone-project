@@ -2,6 +2,8 @@ import { createProduct } from "./queries/product.js";
 import { createUser } from "./queries/users.js";
 import { createOrder } from "./queries/orders.js";
 import { addProductToOrder } from "./queries/order_items.js";
+import { addReplyToPost } from "./queries/forum_replies.js";
+import { createForumPost } from "./queries/forum_posts.js";
 
 export default async function seed() {
   // CREATE USER SEED
@@ -3450,4 +3452,73 @@ export default async function seed() {
   //     price: 70,
   //   }),
   // ]);
+
+  // ======== FORUM SEED ========
+
+  // imports at top of seed.js:
+  // import { createForumPost } from "./queries/forum_posts.js";
+  // import { addReplyToPost } from "./queries/forum_replies.js";
+
+  // ---- Create forum posts ----
+  const [post1, post2, post3] = await Promise.all([
+    createForumPost({
+      user_id: shikha.id,
+      title: "Best food for senior dogs?",
+      category: "Dog",
+      body: "My dog is 10 years old. What food brands or ingredients do you recommend for senior dogs?",
+    }),
+
+    createForumPost({
+      user_id: alyssa.id,
+      title: "Cat not drinking enough water",
+      category: "Cat",
+      body: "My cat avoids the water bowl. How can I increase water intake?",
+    }),
+
+    createForumPost({
+      user_id: teranae.id,
+      title: "Tips for training a new puppy",
+      category: "Training",
+      body: "We just brought home an 8-week-old puppy. Any advice for potty training and basic commands?",
+    }),
+  ]);
+
+  // ---- Create forum replies ----
+  await Promise.all([
+    addReplyToPost({
+      post_id: post1.id,
+      user_id: alyssa.id,
+      body: "We switched to a senior formula with joint supplements and noticed a big improvement.",
+    }),
+
+    addReplyToPost({
+      post_id: post1.id,
+      user_id: katelyn.id,
+      body: "Our vet recommended food with glucosamine and lower calories to help with joints and weight.",
+    }),
+
+    addReplyToPost({
+      post_id: post2.id,
+      user_id: shikha.id,
+      body: "A water fountain worked immediately for us — cats love moving water!",
+    }),
+
+    addReplyToPost({
+      post_id: post2.id,
+      user_id: katelyn.id,
+      body: "Adding wet food and multiple water bowls around the house helped a lot.",
+    }),
+
+    addReplyToPost({
+      post_id: post3.id,
+      user_id: shikha.id,
+      body: "Consistency is key. Take them out often and reward immediately when they go outside.",
+    }),
+
+    addReplyToPost({
+      post_id: post3.id,
+      user_id: alyssa.id,
+      body: "Start with basic commands like sit and stay, and keep training sessions short and positive.",
+    }),
+  ]);
 }

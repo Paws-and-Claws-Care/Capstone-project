@@ -44,10 +44,6 @@ export async function getOrdersByProductIdForUser(productId, userId) {
   return response.rows;
 }
 
-// ===============================
-// CART HELPERS (PER PET)
-// ===============================
-
 export async function getCartOrderByPet(userId, petId) {
   const SQL = `
     SELECT *

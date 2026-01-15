@@ -1,4 +1,3 @@
-// server/api/orders.js
 import express from "express";
 import getUserFromToken from "../middleware/getUserFromToken.js";
 import requireUser from "../middleware/requireUser.js";
@@ -19,18 +18,12 @@ import {
   deleteOrderItemByProduct,
 } from "../db/queries/order_items.js";
 
-// ✅ IMPORTANT: make sure this path matches your actual file name
-// If your file is product.js, change it back.
 import { getProductById } from "../db/queries/product.js";
 
 import db from "../db/client.js";
 
 const router = express.Router();
 
-/**
- * GET /api/orders
- * Return all orders for logged-in user
- */
 router.get("/", getUserFromToken, requireUser, async (req, res, next) => {
   try {
     const orders = await getOrdersByUserId(req.user.id);
@@ -40,11 +33,6 @@ router.get("/", getUserFromToken, requireUser, async (req, res, next) => {
   }
 });
 
-/**
- * GET /api/orders/:id/products
- * Return order items joined with products + computed totals
- * Shape: { order_id, items, order_total }
- */
 router.get(
   "/:id/products",
   getUserFromToken,
@@ -63,7 +51,7 @@ router.get(
 
       const itemsWithLineTotals = (items || []).map((item) => {
         const qty = Number(item.quantity || 0);
-        const price = Number(item.item_price ?? 0); // snapshot price from order_items
+        const price = Number(item.item_price ?? 0);
         return {
           ...item,
           line_total: qty * price,
@@ -86,19 +74,12 @@ router.get(
   }
 );
 
-/**
- * POST /api/orders
- * Create an order (generic)
- * Body: { date, pet_id, is_cart }
- */
 router.post("/", getUserFromToken, requireUser, async (req, res, next) => {
   try {
     const { date, pet_id, is_cart } = req.body;
 
     if (!pet_id) return res.status(400).send("pet_id is required.");
 
-    // If you want to require date, keep this check.
-    // Otherwise, default it.
     const safeDate = date || new Date().toISOString().slice(0, 10);
 
     const order = await createOrder({
@@ -114,11 +95,6 @@ router.post("/", getUserFromToken, requireUser, async (req, res, next) => {
   }
 });
 
-/**
- * POST /api/orders/:id/products
- * Add product to a specific order (generic)
- * Body: { productId, quantity }
- */
 router.post(
   "/:id/products",
   getUserFromToken,
@@ -145,7 +121,7 @@ router.post(
         order_id: orderId,
         product_id: productId,
         quantity,
-        price: product.price, // snapshot
+        price: product.price,
       });
 
       res.status(201).send(row);
@@ -155,11 +131,6 @@ router.post(
   }
 );
 
-/**
- * POST /api/orders/pets/:petId/cart/items
- * Add item to the active cart for a pet (find-or-create cart order)
- * Body: { productId, quantity }
- */
 router.post(
   "/pets/:petId/cart/items",
   getUserFromToken,
@@ -173,24 +144,20 @@ router.post(
         return res.status(400).send("Product ID and quantity are required.");
       }
 
-      // ensure pet belongs to user
       const petCheck = await db.query(
         `SELECT id FROM pets WHERE id = $1 AND user_id = $2`,
         [petId, req.user.id]
       );
       if (!petCheck.rows[0]) return res.status(404).send("Pet not found.");
 
-      // validate product exists
       const product = await getProductById(productId);
       if (!product) return res.status(400).send("Product does not exist");
 
-      // find-or-create cart order for this pet
       let cart = await getCartOrderByPet(req.user.id, petId);
       if (!cart) {
         cart = await createCartOrderForPet(req.user.id, petId);
       }
 
-      // add product to cart (upsert/increment)
       const row = await addProductToOrder({
         order_id: cart.id,
         product_id: productId,
@@ -205,11 +172,6 @@ router.post(
   }
 );
 
-/**
- * PATCH /api/orders/pets/:petId/cart/items/:productId
- * Update quantity for a cart item (quantity 0 deletes)
- * Body: { quantity }
- */
 router.patch(
   "/pets/:petId/cart/items/:productId",
   getUserFromToken,
@@ -253,10 +215,6 @@ router.patch(
   }
 );
 
-/**
- * DELETE /api/orders/pets/:petId/cart/items/:productId
- * Remove an item from pet cart
- */
 router.delete(
   "/pets/:petId/cart/items/:productId",
   getUserFromToken,
@@ -283,10 +241,6 @@ router.delete(
   }
 );
 
-/**
- * POST /api/orders/pets/:petId/cart/checkout
- * Convert cart -> placed order (is_cart false, set date)
- */
 router.post(
   "/pets/:petId/cart/checkout",
   getUserFromToken,
@@ -319,10 +273,6 @@ router.post(
   }
 );
 
-/**
- * GET /api/orders/pets/:petId/history
- * Return completed orders for a pet, grouped for frontend
- */
 router.get(
   "/pets/:petId/history",
   getUserFromToken,

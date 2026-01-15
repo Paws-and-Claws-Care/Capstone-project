@@ -36,13 +36,11 @@ export default function Orders() {
         const ordersData = await getMyOrders(token);
         const safeOrders = Array.isArray(ordersData) ? ordersData : [];
 
-        // ✅ ONLY placed orders here (cart lives on /cart now)
         const placedOnly = safeOrders.filter((o) => !isCartOrder(o));
 
         const withProductsAndTotals = await Promise.all(
           placedOnly.map(async (o) => {
             try {
-              // backend returns: { order_id, items, order_total }
               const data = await getOrderProducts(token, o.id);
 
               return {
@@ -57,7 +55,6 @@ export default function Orders() {
           })
         );
 
-        // Optional: sort newest first
         withProductsAndTotals.sort((a, b) => {
           const ad = a.date ? new Date(a.date).getTime() : 0;
           const bd = b.date ? new Date(b.date).getTime() : 0;
@@ -88,7 +85,6 @@ export default function Orders() {
       <div className="d-flex justify-content-between align-items-center mb-3">
         <h2 className="mb-0">My Orders</h2>
 
-        {/* ✅ Cart is handled on its own page now */}
         <Link to="/cart" className="btn btn-outline-primary btn-sm">
           View Cart
         </Link>

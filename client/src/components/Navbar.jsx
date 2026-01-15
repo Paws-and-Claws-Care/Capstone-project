@@ -6,25 +6,19 @@ import logo from "../assets/logo.png";
 import { useActivePet } from "../context/ActivePetContext";
 import { useCart } from "../context/CartContext";
 
-
-
-
 function Navbar() {
   const user = getUser();
   const navigate = useNavigate();
   const { pets, activePetId, setActivePet } = useActivePet();
 
-  // ✅ Product search (NO default)
   const [petType, setPetType] = useState("");
   const [search, setSearch] = useState("");
 
-  // ✅ backend cart context
   const { itemCount, refreshCart } = useCart();
 
   const offcanvasRef = useRef(null);
   const offcanvasInstanceRef = useRef(null);
 
-  // Strong cleanup if Bootstrap leaves backdrop/body in a weird state
   function cleanupBackdropAndBody() {
     document.querySelectorAll(".offcanvas-backdrop").forEach((b) => b.remove());
     document.body.classList.remove("modal-open");
@@ -38,7 +32,6 @@ function Navbar() {
 
     offcanvasInstanceRef.current = Offcanvas.getOrCreateInstance(el);
 
-    // When Bootstrap says it's fully hidden, clean up any leftovers
     const onHidden = () => cleanupBackdropAndBody();
 
     el.addEventListener("hidden.bs.offcanvas", onHidden);
@@ -73,14 +66,11 @@ function Navbar() {
     window.setTimeout(() => navigate("/"), 10);
   }
 
-  // ✅ Search submit
   function handleSearchSubmit(e) {
     e.preventDefault();
 
-    // require both petType + search
     if (!petType || !search.trim()) return;
 
-    // match your existing routes: /products/pet/dog and /products/pet/cat
     navigate(
       `/products/pet/${petType}?search=${encodeURIComponent(search.trim())}`
     );
@@ -116,7 +106,7 @@ function Navbar() {
 
         {/* RIGHT: Active Pet + Search + Account */}
         <ul className="navbar-nav ms-auto flex-row gap-3 align-items-center">
-          {/* Active Pet Selector (only when logged in) */}
+          {/* Active Pet Selector (when logged in) */}
           {user && (
             <li className="nav-item">
               {pets.length ? (
@@ -139,7 +129,7 @@ function Navbar() {
             </li>
           )}
 
-          {/* ✅ NAVBAR SEARCH BAR (petType + search) */}
+          {/* NAVBAR SEARCH BAR */}
           <li className="nav-item">
             <form
               className="d-flex align-items-center"
@@ -211,7 +201,7 @@ function Navbar() {
                   <hr className="dropdown-divider" />
                 </li>
 
-                {/* ✅ Cart (backend) + badge */}
+                {/*Cart*/}
                 {showCart && (
                   <li>
                     <NavLink
@@ -249,6 +239,15 @@ function Navbar() {
                 <li>
                   <NavLink className="dropdown-item" to="/pets">
                     My Pets
+                  </NavLink>
+                </li>
+
+                <li>
+                  <hr className="dropdown-divider" />
+                </li>
+                <li>
+                  <NavLink className="dropdown-item" to="/forum">
+                    Discussion Forum
                   </NavLink>
                 </li>
 
@@ -346,7 +345,7 @@ function Navbar() {
               </div>
             </li>
 
-            {/* (Optional) Add Cart link inside offcanvas too */}
+            {/* Add Cart link inside offcanvas */}
             {user && (
               <li className="nav-item mt-2">
                 <NavLink

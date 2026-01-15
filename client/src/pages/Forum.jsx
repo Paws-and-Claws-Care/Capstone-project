@@ -1,88 +1,144 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import {
+  getForumPosts,
+  getForumPostById,
+  createForumPost,
+  addForumReply,
+} from "../api/forum";
+import { getToken } from "../api/auth";
 
-const seedPosts = [
-  {
-    id: 1,
-    title: "Best food for senior dogs?",
-    category: "Dog",
-    author: "Shikha",
-    createdAt: "Jan 10, 2026",
-    body:
-      "My dog is 10 years old. What food brands or ingredients do you recommend for senior dogs?",
-    replies: [
-      {
-        id: "r1",
-        author: "Sumit",
-        createdAt: "Jan 10, 2026",
-        message:
-          "Look for senior formulas with joint support and moderate calories. Ask your vet if there are health issues."
-      }
-    ]
-  },
-  {
-    id: 2,
-    title: "Cat not drinking enough water",
-    category: "Cat",
-    author: "Avir",
-    createdAt: "Jan 9, 2026",
-    body: "My cat avoids the water bowl. How can I increase water intake?",
-    replies: [
-      {
-        id: "r2",
-        author: "Shikha",
-        createdAt: "Jan 9, 2026",
-        message: "Try a water fountain + wet food. Keep bowls away from litter."
-      }
-    ]
-  }
-];
+function formatDate(d) {
+  if (!d) return "";
+  const date = typeof d === "string" || typeof d === "number" ? new Date(d) : d;
+  if (Number.isNaN(date.getTime())) return "";
+  return date.toLocaleDateString();
+}
 
 export default function Forum() {
-  const [posts, setPosts] = useState(seedPosts);
-  const [selectedId, setSelectedId] = useState(seedPosts[0]?.id || null);
+  const [posts, setPosts] = useState([]);
+  const [selectedId, setSelectedId] = useState(null);
 
-  const selectedPost = useMemo(
-    () => posts.find((p) => p.id === selectedId),
-    [posts, selectedId]
-  );
+  const [selectedPost, setSelectedPost] = useState(null);
 
-  function createPost({ title, category, body, author }) {
-    if (!title.trim() || !body.trim()) return;
+  const [loadingPosts, setLoadingPosts] = useState(true);
+  const [loadingDetail, setLoadingDetail] = useState(false);
+  const [error, setError] = useState("");
 
-    const newPost = {
-      id: Date.now(),
-      title: title.trim(),
-      category: category || "General",
-      author: author?.trim() || "Guest",
-      createdAt: new Date().toLocaleDateString(),
-      body: body.trim(),
-      replies: []
+  const selectedIdMemo = useMemo(() => selectedId, [selectedId]);
+
+  useEffect(() => {
+    let ignore = false;
+
+    async function load() {
+      try {
+        setError("");
+        setLoadingPosts(true);
+
+        const data = await getForumPosts();
+        if (ignore) return;
+
+        setPosts(data);
+
+        if (data?.length && selectedId == null) {
+          setSelectedId(data[0].id);
+        }
+      } catch (err) {
+        if (!ignore) setError(err?.message || "Failed to load forum posts");
+      } finally {
+        if (!ignore) setLoadingPosts(false);
+      }
+    }
+
+    load();
+    return () => {
+      ignore = true;
     };
+  }, []);
 
-    setPosts((prev) => [newPost, ...prev]);
-    setSelectedId(newPost.id);
+  useEffect(() => {
+    let ignore = false;
+
+    async function loadDetail() {
+      if (selectedId == null) {
+        setSelectedPost(null);
+        return;
+      }
+
+      try {
+        setError("");
+        setLoadingDetail(true);
+
+        const detail = await getForumPostById(selectedId);
+        if (ignore) return;
+
+        setSelectedPost(detail);
+      } catch (err) {
+        if (!ignore)
+          setError(err?.message || "Failed to load discussion detail");
+      } finally {
+        if (!ignore) setLoadingDetail(false);
+      }
+    }
+
+    loadDetail();
+    return () => {
+      ignore = true;
+    };
+  }, [selectedId]);
+
+  async function handleCreatePost({ title, category, body }) {
+    const token = getToken?.();
+    if (!token) {
+      setError("You must be logged in to create a post.");
+      return;
+    }
+
+    if (!title?.trim() || !body?.trim()) return;
+
+    try {
+      setError("");
+      const newPost = await createForumPost(token, {
+        title: title.trim(),
+        category: category?.trim() || "General",
+        body: body.trim(),
+      });
+
+      const refreshed = await getForumPosts();
+      setPosts(refreshed);
+
+      setSelectedId(newPost.id);
+    } catch (err) {
+      setError(err?.message || "Failed to create post");
+    }
   }
 
-  function addReply(postId, { author, message }) {
-    if (!message.trim()) return;
+  async function handleAddReply(postId, { body }) {
+    const token = getToken?.();
+    if (!token) {
+      setError("You must be logged in to reply.");
+      return;
+    }
 
-    setPosts((prev) =>
-      prev.map((p) => {
-        if (p.id !== postId) return p;
-        return {
-          ...p,
-          replies: [
-            ...p.replies,
-            {
-              id: crypto.randomUUID(),
-              author: author?.trim() || "Guest",
-              createdAt: new Date().toLocaleDateString(),
-              message: message.trim()
-            }
-          ]
-        };
-      })
-    );
+    if (!body?.trim()) return;
+
+    try {
+      setError("");
+
+      const result = await addForumReply(token, postId, { body: body.trim() });
+
+      setSelectedPost((prev) => {
+        if (!prev || prev.id !== postId) return prev;
+        return { ...prev, replies: result.replies };
+      });
+
+      setPosts((prev) =>
+        prev.map((p) =>
+          p.id === postId ? { ...p, reply_count: (p.reply_count ?? 0) + 1 } : p
+        )
+      );
+    } catch (err) {
+      setError(err?.message || "Failed to add reply");
+    }
   }
 
   return (
@@ -92,58 +148,79 @@ export default function Forum() {
         <p className="text-muted">
           Ask questions, share experiences, and help fellow pet parents.
         </p>
+
+        {error ? (
+          <div className="alert alert-danger py-2 mb-0">{error}</div>
+        ) : null}
       </div>
 
-      <CreatePostForm onCreate={createPost} />
+      <CreatePostForm onCreate={handleCreatePost} />
 
       <div className="row g-3 mt-1">
-        {/* LEFT COLUMN = discussions box */}
+        {/* LEFT COLUMN */}
         <div className="col-12 col-lg-6">
           <div className="card shadow-sm">
             <div className="card-header fw-bold">Discussions</div>
 
             <div className="list-group list-group-flush">
-              {posts.map((post) => {
-                const active = post.id === selectedId;
-                return (
-                  <button
-                    key={post.id}
-                    className={`list-group-item list-group-item-action ${
-                      active ? "active" : ""
-                    }`}
-                    onClick={() => setSelectedId(post.id)}
-                    type="button"
-                  >
-                    <div className="d-flex justify-content-between">
-                      <div>
-                        <div className="fw-semibold">{post.title}</div>
-                        <small className={active ? "text-white-50" : "text-muted"}>
-                          {post.category} • by {post.author} • {post.createdAt}
-                        </small>
+              {loadingPosts ? (
+                <div className="p-3 text-muted">Loading discussions…</div>
+              ) : posts.length === 0 ? (
+                <div className="p-3 text-muted">No discussions yet.</div>
+              ) : (
+                posts.map((post) => {
+                  const active = post.id === selectedIdMemo;
+
+                  return (
+                    <button
+                      key={post.id}
+                      className={`list-group-item list-group-item-action ${
+                        active ? "active" : ""
+                      }`}
+                      onClick={() => setSelectedId(post.id)}
+                      type="button"
+                    >
+                      <div className="d-flex justify-content-between">
+                        <div>
+                          <div className="fw-semibold">{post.title}</div>
+                          <small
+                            className={active ? "text-white-50" : "text-muted"}
+                          >
+                            {post.category} • by {post.username} •{" "}
+                            {formatDate(post.created_at)}
+                          </small>
+                        </div>
+
+                        <span
+                          className={`badge d-flex align-items-center gap-1 ${
+                            active ? "bg-light text-dark" : "bg-primary"
+                          }`}
+                        >
+                          💬 {post.reply_count ?? 0}
+                        </span>
                       </div>
-                      <span className={`badge ${active ? "bg-light text-dark" : "bg-primary"}`}>
-                        {post.replies.length}
-                      </span>
-                    </div>
-                  </button>
-                );
-              })}
+                    </button>
+                  );
+                })
+              )}
             </div>
           </div>
         </div>
 
-        {/* RIGHT COLUMN = discussion detail */}
+        {/* RIGHT COLUMN */}
         <div className="col-12 col-lg-6">
           <div className="card shadow-sm">
             <div className="card-header fw-bold">Discussion Detail</div>
 
             <div className="card-body">
-              {!selectedPost ? (
+              {loadingDetail ? (
+                <p className="text-muted mb-0">Loading discussion…</p>
+              ) : !selectedPost ? (
                 <p className="text-muted mb-0">
                   Click a discussion from the left column.
                 </p>
               ) : (
-                <PostDetail post={selectedPost} onAddReply={addReply} />
+                <PostDetail post={selectedPost} onAddReply={handleAddReply} />
               )}
             </div>
           </div>
@@ -153,18 +230,16 @@ export default function Forum() {
   );
 }
 
-/* ---------------- Components ---------------- */
+/*Components*/
 
 function CreatePostForm({ onCreate }) {
-  const [author, setAuthor] = useState("");
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("Dog");
   const [body, setBody] = useState("");
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
-    onCreate({ author, title, category, body });
-    setAuthor("");
+    await onCreate({ title, category, body });
     setTitle("");
     setCategory("Dog");
     setBody("");
@@ -175,16 +250,6 @@ function CreatePostForm({ onCreate }) {
       <div className="card-header fw-bold">Start a New Discussion</div>
       <div className="card-body">
         <form onSubmit={handleSubmit} className="row g-3">
-          <div className="col-md-4">
-            <label className="form-label">Your Name</label>
-            <input
-              className="form-control"
-              value={author}
-              onChange={(e) => setAuthor(e.target.value)}
-              placeholder="e.g., Shikha"
-            />
-          </div>
-
           <div className="col-md-4">
             <label className="form-label">Category</label>
             <select
@@ -201,7 +266,7 @@ function CreatePostForm({ onCreate }) {
             </select>
           </div>
 
-          <div className="col-md-4">
+          <div className="col-md-8">
             <label className="form-label">Title</label>
             <input
               className="form-control"
@@ -236,60 +301,57 @@ function CreatePostForm({ onCreate }) {
 }
 
 function PostDetail({ post, onAddReply }) {
-  const [author, setAuthor] = useState("");
-  const [message, setMessage] = useState("");
+  const [replyBody, setReplyBody] = useState("");
 
-  function handleReply(e) {
+  async function handleReply(e) {
     e.preventDefault();
-    onAddReply(post.id, { author, message });
-    setMessage("");
+    await onAddReply(post.id, { body: replyBody });
+    setReplyBody("");
   }
+
+  const replies = post.replies ?? [];
 
   return (
     <>
       <h5 className="fw-bold">{post.title}</h5>
       <p className="text-muted mb-2">
-        {post.category} • by {post.author} • {post.createdAt}
+        {post.category} • by {post.username} • {formatDate(post.created_at)}
       </p>
       <p>{post.body}</p>
 
       <hr />
 
-      <h6 className="fw-bold">Replies ({post.replies.length})</h6>
+      <h6 className="fw-bold">Replies ({replies.length})</h6>
 
-      {post.replies.length === 0 ? (
+      {replies.length === 0 ? (
         <p className="text-muted">No replies yet. Be the first to reply!</p>
       ) : (
         <div className="mb-3">
-          {post.replies.map((r) => (
+          {replies.map((r) => (
             <div key={r.id} className="border rounded p-2 mb-2">
               <div className="fw-semibold">
-                {r.author} <span className="text-muted fw-normal">• {r.createdAt}</span>
+                {r.username}{" "}
+                <span className="text-muted fw-normal">
+                  • {formatDate(r.created_at)}
+                </span>
               </div>
-              <div>{r.message}</div>
+              <div>{r.body}</div>
             </div>
           ))}
         </div>
       )}
 
       <form onSubmit={handleReply} className="row g-2">
-        <div className="col-md-4">
+        <div className="col-12">
           <input
             className="form-control"
-            value={author}
-            onChange={(e) => setAuthor(e.target.value)}
-            placeholder="Your name"
-          />
-        </div>
-        <div className="col-md-8">
-          <input
-            className="form-control"
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
+            value={replyBody}
+            onChange={(e) => setReplyBody(e.target.value)}
             placeholder="Write a reply..."
             required
           />
         </div>
+
         <div className="col-12">
           <button className="btn btn-success" type="submit">
             Submit Reply

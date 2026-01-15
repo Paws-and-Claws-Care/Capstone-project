@@ -12,17 +12,14 @@ export function ActivePetProvider({ children }) {
     return saved ? Number(saved) : null;
   });
 
-  // ✅ NEW: tick that forces this provider to re-check localStorage auth
   const [authTick, setAuthTick] = useState(0);
 
-  // ✅ Listen for login/logout so this provider updates immediately
   useEffect(() => {
     const onAuthChanged = () => setAuthTick((t) => t + 1);
     window.addEventListener(AUTH_CHANGED_EVENT, onAuthChanged);
     return () => window.removeEventListener(AUTH_CHANGED_EVENT, onAuthChanged);
   }, []);
 
-  // recompute user when auth changes
   const loggedInUser = useMemo(() => getUser(), [authTick]);
 
   async function refreshPets() {
@@ -44,14 +41,12 @@ export function ActivePetProvider({ children }) {
 
     const newPet = await apiCreatePet(token, { name, pet_type, breed });
 
-    // refresh list + auto-select
     await refreshPets();
     setActivePet(newPet.id);
 
     return newPet;
   }
 
-  // ✅ On login/logout change, load/clear pets
   useEffect(() => {
     if (!loggedInUser) {
       setPets([]);
@@ -61,10 +56,8 @@ export function ActivePetProvider({ children }) {
     }
 
     refreshPets().catch(() => setPets([]));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [authTick, loggedInUser?.id]);
 
-  // If pets load and activePetId is missing/invalid, default to first pet
   useEffect(() => {
     if (!pets.length) {
       setActivePetId(null);
