@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   getForumPosts,
   getForumPostById,
@@ -17,14 +17,11 @@ function formatDate(d) {
 export default function Forum() {
   const [posts, setPosts] = useState([]);
   const [selectedId, setSelectedId] = useState(null);
-
   const [selectedPost, setSelectedPost] = useState(null);
 
   const [loadingPosts, setLoadingPosts] = useState(true);
   const [loadingDetail, setLoadingDetail] = useState(false);
   const [error, setError] = useState("");
-
-  const selectedIdMemo = useMemo(() => selectedId, [selectedId]);
 
   useEffect(() => {
     let ignore = false;
@@ -37,9 +34,9 @@ export default function Forum() {
         const data = await getForumPosts();
         if (ignore) return;
 
-        setPosts(data);
+        setPosts(Array.isArray(data) ? data : []);
 
-        if (data?.length && selectedId == null) {
+        if (Array.isArray(data) && data.length && selectedId == null) {
           setSelectedId(data[0].id);
         }
       } catch (err) {
@@ -97,6 +94,7 @@ export default function Forum() {
 
     try {
       setError("");
+
       const newPost = await createForumPost(token, {
         title: title.trim(),
         category: category?.trim() || "General",
@@ -104,7 +102,7 @@ export default function Forum() {
       });
 
       const refreshed = await getForumPosts();
-      setPosts(refreshed);
+      setPosts(Array.isArray(refreshed) ? refreshed : []);
 
       setSelectedId(newPost.id);
     } catch (err) {
@@ -124,20 +122,18 @@ export default function Forum() {
     try {
       setError("");
 
-      const result = await addForumReply(token, postId, { body: body.trim() });
+      await addForumReply(token, postId, { body: body.trim() });
 
-      setSelectedPost((prev) => {
-        if (!prev || prev.id !== postId) return prev;
-        return { ...prev, replies: result.replies };
-      });
+      setLoadingDetail(true);
+      const detail = await getForumPostById(postId);
+      setSelectedPost(detail);
 
-      setPosts((prev) =>
-        prev.map((p) =>
-          p.id === postId ? { ...p, reply_count: (p.reply_count ?? 0) + 1 } : p
-        )
-      );
+      const refreshed = await getForumPosts();
+      setPosts(Array.isArray(refreshed) ? refreshed : []);
     } catch (err) {
       setError(err?.message || "Failed to add reply");
+    } finally {
+      setLoadingDetail(false);
     }
   }
 
@@ -169,7 +165,7 @@ export default function Forum() {
                 <div className="p-3 text-muted">No discussions yet.</div>
               ) : (
                 posts.map((post) => {
-                  const active = post.id === selectedIdMemo;
+                  const active = post.id === selectedId;
 
                   return (
                     <button
@@ -180,8 +176,8 @@ export default function Forum() {
                       onClick={() => setSelectedId(post.id)}
                       type="button"
                     >
-                      <div className="d-flex justify-content-between">
-                        <div>
+                      <div className="d-flex justify-content-between align-items-start">
+                        <div className="me-2">
                           <div className="fw-semibold">{post.title}</div>
                           <small
                             className={active ? "text-white-50" : "text-muted"}
@@ -192,11 +188,12 @@ export default function Forum() {
                         </div>
 
                         <span
-                          className={`badge d-flex align-items-center gap-1 ${
+                          className={`badge d-flex align-items-center ${
                             active ? "bg-light text-dark" : "bg-primary"
                           }`}
+                          title="Replies"
                         >
-                          💬 {post.reply_count ?? 0}
+                          💬 Replies: {post.reply_count ?? 0}
                         </span>
                       </div>
                     </button>
@@ -230,7 +227,7 @@ export default function Forum() {
   );
 }
 
-/*Components*/
+/*  Components  */
 
 function CreatePostForm({ onCreate }) {
   const [title, setTitle] = useState("");

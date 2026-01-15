@@ -5,19 +5,38 @@ export async function addReplyToPost({ post_id, user_id, body }) {
     `
     INSERT INTO forum_replies (post_id, user_id, body)
     VALUES ($1, $2, $3)
-    RETURNING *;
+    RETURNING id, post_id, user_id, body, created_at;
     `,
     [post_id, user_id, body]
   );
 
-  return rows[0];
+  // now join to include username so frontend can render immediately
+  const reply = rows[0];
+
+  const { rows: joined } = await client.query(
+    `
+    SELECT
+      fr.*,
+      u.username
+    FROM forum_replies fr
+    JOIN users u ON fr.user_id = u.id
+    WHERE fr.id = $1;
+    `,
+    [reply.id]
+  );
+
+  return joined[0];
 }
 
 export async function getRepliesByPostId(post_id) {
   const { rows } = await client.query(
     `
     SELECT
-      fr.*,
+      fr.id,
+      fr.post_id,
+      fr.user_id,
+      fr.body,
+      fr.created_at,
       u.username
     FROM forum_replies fr
     JOIN users u ON fr.user_id = u.id
