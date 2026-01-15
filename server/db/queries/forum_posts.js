@@ -17,13 +17,18 @@ export async function getAllForumPosts() {
   const { rows } = await client.query(
     `
     SELECT
-      fp.*,
+      fp.id,
+      fp.title,
+      fp.category,
+      fp.body,
+      fp.user_id,
+      fp.created_at,
       u.username,
       COUNT(fr.id)::int AS reply_count
     FROM forum_posts fp
     JOIN users u ON fp.user_id = u.id
     LEFT JOIN forum_replies fr ON fr.post_id = fp.id
-    GROUP BY fp.id, u.username
+    GROUP BY fp.id, u.id
     ORDER BY fp.created_at DESC;
     `
   );
@@ -35,7 +40,12 @@ export async function getForumPostById(post_id) {
   const { rows } = await client.query(
     `
     SELECT
-      fp.*,
+      fp.id,
+      fp.title,
+      fp.category,
+      fp.body,
+      fp.user_id,
+      fp.created_at,
       u.username
     FROM forum_posts fp
     JOIN users u ON fp.user_id = u.id
