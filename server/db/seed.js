@@ -988,7 +988,7 @@ export default async function seed() {
       name: "Bolster Beds",
       description:
         "Cozy beds with raised edges that provide comfort, support, and a secure place to rest.",
-      price: 65,
+      price: 42,
       category: "Supplies",
       pet_type: "dog",
       image_url:
@@ -999,7 +999,7 @@ export default async function seed() {
       name: "Elevated Beds",
       description:
         "Raised, breathable beds that keep dogs cool, supported, and off the ground.",
-      price: 65,
+      price: 38,
       category: "Supplies",
       pet_type: "dog",
       image_url:
@@ -1010,7 +1010,7 @@ export default async function seed() {
       name: "Pillow Beds",
       description:
         "Soft, cushion-style beds that provide cozy comfort for dogs who love to sprawl.",
-      price: 65,
+      price: 26,
       category: "Supplies",
       pet_type: "dog",
       image_url:
@@ -1021,7 +1021,7 @@ export default async function seed() {
       name: "Covered Beds",
       description:
         "Cozy, enclosed beds that provide warmth and a secure space dogs love.",
-      price: 65,
+      price: 52,
       category: "Supplies",
       pet_type: "dog",
       image_url:
@@ -1032,7 +1032,7 @@ export default async function seed() {
       name: "Fun & Trendy",
       description:
         "Stylish, playful beds that add personality while keeping dogs cozy.",
-      price: 65,
+      price: 30,
       category: "Supplies",
       pet_type: "dog",
       image_url:
@@ -1043,7 +1043,7 @@ export default async function seed() {
       name: "Sofa Beds",
       description:
         "Sofa-style beds that offer plush comfort and a cozy place to lounge.",
-      price: 65,
+      price: 34,
       category: "Supplies",
       pet_type: "dog",
       image_url:
@@ -1056,7 +1056,7 @@ export default async function seed() {
       name: "Bowls",
       description:
         "Practical, sturdy bowls designed for easy, mess-free mealtime.",
-      price: 45,
+      price: 25,
       category: "Supplies",
       pet_type: "dog",
       image_url:
@@ -1067,7 +1067,7 @@ export default async function seed() {
       name: "Slow & Puzzle Feeders",
       description:
         "Interactive feeders that slow eating, improve digestion, and turn mealtime into a fun challenge.",
-      price: 45,
+      price: 18,
       category: "Supplies",
       pet_type: "dog",
       image_url:
@@ -1078,7 +1078,7 @@ export default async function seed() {
       name: "Fountains & Waterers",
       description:
         "Keep dogs hydrated with fresh, flowing water in easy-to-use, hygienic designs.",
-      price: 45,
+      price: 42,
       category: "Supplies",
       pet_type: "dog",
       image_url:
@@ -1089,7 +1089,7 @@ export default async function seed() {
       name: "Elevated Bowls",
       description:
         "Raised, stable bowls that support healthy posture and easier mealtime for dogs.",
-      price: 45,
+      price: 36,
       category: "Supplies",
       pet_type: "dog",
       image_url:
@@ -1100,7 +1100,7 @@ export default async function seed() {
       name: "Feeders",
       description:
         "Convenient, sturdy feeders designed for easy, healthy mealtime.",
-      price: 45,
+      price: 52,
       category: "Supplies",
       pet_type: "dog",
       image_url:
@@ -1111,7 +1111,7 @@ export default async function seed() {
       name: "Travel Bowls",
       description:
         "Portable, collapsible bowls for on-the-go hydration and feeding.",
-      price: 45,
+      price: 40,
       category: "Supplies",
       pet_type: "dog",
       image_url:
@@ -1124,7 +1124,7 @@ export default async function seed() {
       name: "Collars",
       description:
         "Comfortable, durable collars that keep dogs safe and stylish for everyday wear.",
-      price: 54,
+      price: 24,
       category: "Supplies",
       pet_type: "dog",
       image_url:
@@ -1135,7 +1135,7 @@ export default async function seed() {
       name: "Harnesses",
       description:
         "Supportive, secure harnesses for comfortable walks and better control.",
-      price: 54,
+      price: 15,
       category: "Supplies",
       pet_type: "dog",
       image_url:
@@ -1146,7 +1146,7 @@ export default async function seed() {
       name: "Leashes",
       description:
         "Strong, reliable leashes for safe and enjoyable walks every day.",
-      price: 54,
+      price: 18,
       category: "Supplies",
       pet_type: "dog",
       image_url:
@@ -1157,7 +1157,7 @@ export default async function seed() {
       name: "ID tags & Accessories",
       description:
         "Personalized ID tags and handy accessories to keep dogs safe and organized.",
-      price: 54,
+      price: 32,
       category: "Supplies",
       pet_type: "dog",
       image_url:
@@ -1168,7 +1168,7 @@ export default async function seed() {
       name: "Headcollar",
       description:
         "Gentle, effective head collars for training and better control on walks.",
-      price: 54,
+      price: 24,
       category: "Supplies",
       pet_type: "dog",
       image_url:
@@ -1179,7 +1179,7 @@ export default async function seed() {
       name: "Service Dog",
       description:
         "Specialized gear designed for working dogs to perform tasks safely and efficiently.",
-      price: 54,
+      price: 36,
       category: "Supplies",
       pet_type: "dog",
       image_url:
@@ -1201,7 +1201,7 @@ export default async function seed() {
       name: "Tie Outs",
       description:
         "Secure tie-outs that give dogs freedom while keeping them safely contained.",
-      price: 54,
+      price: 9,
       category: "Supplies",
       pet_type: "dog",
       image_url:
@@ -1212,7 +1212,7 @@ export default async function seed() {
       name: "Muzzles",
       description:
         "Comfortable, secure muzzles for safe handling and controlled outings.",
-      price: 54,
+      price: 15,
       category: "Supplies",
       pet_type: "dog",
       image_url:
@@ -1226,7 +1226,7 @@ export default async function seed() {
       name: "Crates & Kennels",
       description:
         "Secure and comfortable spaces for safe travel, training, or home rest.",
-      price: 30,
+      price: 43,
       category: "Supplies",
       pet_type: "dog",
       image_url:
@@ -1237,7 +1237,7 @@ export default async function seed() {
       name: "Pens & Accessories",
       description:
         "Flexible, secure solutions for safe play, training, and everyday containment.",
-      price: 30,
+      price: 67,
       category: "Supplies",
       pet_type: "dog",
       image_url:
@@ -1248,7 +1248,7 @@ export default async function seed() {
       name: "Dog Houses",
       description:
         "Durable, weather-resistant shelters that provide cozy outdoor protection.",
-      price: 30,
+      price: 80,
       category: "Supplies",
       pet_type: "dog",
       image_url:
@@ -1259,7 +1259,7 @@ export default async function seed() {
       name: "Stair & Steps",
       description:
         "Safe, supportive steps that help dogs reach higher places with ease.",
-      price: 30,
+      price: 56,
       category: "Supplies",
       pet_type: "dog",
       image_url:
@@ -1271,7 +1271,7 @@ export default async function seed() {
       name: "Ramp & Gates",
       description:
         "Practical ramps and gates for safety, accessibility, and home boundaries.",
-      price: 30,
+      price: 38,
       category: "Supplies",
       pet_type: "dog",
       image_url:
@@ -1282,7 +1282,7 @@ export default async function seed() {
       name: "Crate Mats & Pads",
       description:
         "Soft, supportive bedding that adds comfort to crates and kennels.",
-      price: 30,
+      price: 45,
       category: "Supplies",
       pet_type: "dog",
       image_url:
@@ -1293,7 +1293,7 @@ export default async function seed() {
       name: "Fence Systems",
       description:
         "Reliable fencing solutions to keep dogs safe and contained, indoors or outdoors.",
-      price: 30,
+      price: 68,
       category: "Supplies",
       pet_type: "dog",
       image_url:
@@ -1304,7 +1304,7 @@ export default async function seed() {
       name: "Doors & Accessories",
       description:
         "Reliable solutions for secure access and containment, indoors or outdoors.",
-      price: 30,
+      price: 56,
       category: "Supplies",
       pet_type: "dog",
       image_url:
@@ -1317,7 +1317,7 @@ export default async function seed() {
     createProduct({
       name: "Plush Toys",
       description: "Soft, cuddly toys perfect for snuggling and gentle play.",
-      price: 32,
+      price: 14,
       category: "Supplies",
       pet_type: "dog",
       image_url:
@@ -1328,7 +1328,7 @@ export default async function seed() {
       name: "Chew Toys",
       description:
         "Durable toys designed to satisfy chewing instincts and keep teeth healthy.",
-      price: 32,
+      price: 8,
       category: "Supplies",
       pet_type: "dog",
       image_url:
@@ -1339,7 +1339,7 @@ export default async function seed() {
       name: "Fetch Toys",
       description:
         "Fun, interactive toys built for chasing, retrieving, and active play.",
-      price: 32,
+      price: 12,
       category: "Supplies",
       pet_type: "dog",
       image_url:
@@ -1350,18 +1350,7 @@ export default async function seed() {
       name: "Puzzle Toys",
       description:
         "Mental stimulation and problem-solving fun to challenge curious dogs.",
-      price: 32,
-      category: "Supplies",
-      pet_type: "dog",
-      image_url:
-        "https://image.chewy.com/catalog/general/images/moe/068bf322-7623-7f5c-8000-fc523a720a0e._AC_SL496_V1_.jpg",
-      quantity: 1,
-    }),
-    createProduct({
-      name: "Puzzle Toys",
-      description:
-        "Mental stimulation and problem-solving fun to challenge curious dogs.",
-      price: 32,
+      price: 22,
       category: "Supplies",
       pet_type: "dog",
       image_url:
@@ -1383,7 +1372,7 @@ export default async function seed() {
       name: "Treat Dispensing Toys",
       description:
         "Interactive toys that reward play while keeping dogs engaged.",
-      price: 32,
+      price: 24,
       category: "Supplies",
       pet_type: "dog",
       image_url:
@@ -1393,7 +1382,7 @@ export default async function seed() {
     createProduct({
       name: "Puppy Toys",
       description: "Gentle, durable toys designed for teething and early play.",
-      price: 32,
+      price: 28,
       category: "Supplies",
       pet_type: "dog",
       image_url:
@@ -1403,7 +1392,7 @@ export default async function seed() {
     createProduct({
       name: "Variety Packs",
       description: "A mix of toys for chewing, fetching, and endless fun.",
-      price: 32,
+      price: 42,
       category: "Supplies",
       pet_type: "dog",
       image_url:
@@ -1416,7 +1405,7 @@ export default async function seed() {
       name: "Covered Beds",
       description:
         "Cozy, enclosed beds that give cats a warm and secure place to rest.",
-      price: 65,
+      price: 29,
       category: "Supplies",
       pet_type: "cat",
       image_url:
@@ -1426,18 +1415,18 @@ export default async function seed() {
     createProduct({
       name: "Bolster Beds",
       description: "Cozy beds with raised edges for head and neck support.",
-      price: 65,
+      price: 32,
       category: "Supplies",
       pet_type: "cat",
       image_url:
-        "https://image.chewy.com/catalog/general/images/moe/068d6acf-e334-7b4a-8000-f3377211967d._AC_SL496_V1_.jpg",
+        "https://image.chewy.com/catalog/general/images/moe/0685d95f-377a-7937-8000-af0829ba1d9c._AC_SL248_V1_.jpg",
       quantity: 1,
     }),
     createProduct({
       name: "Orthopedic Beds",
       description:
         "Supportive beds designed to relieve joints and provide comfort for senior cats.",
-      price: 65,
+      price: 45,
       category: "Supplies",
       pet_type: "cat",
       image_url:
@@ -1448,7 +1437,7 @@ export default async function seed() {
       name: "Pillow Beds & Mats",
       description:
         "Soft, cushioned beds and mats perfect for lounging and naps.",
-      price: 65,
+      price: 28,
       category: "Supplies",
       pet_type: "cat",
       image_url:
@@ -1469,7 +1458,7 @@ export default async function seed() {
       name: "Fun & Trendy Beds",
       description:
         "Stylish and playful beds that double as a cozy retreat and décor piece.",
-      price: 65,
+      price: 52,
       category: "Supplies",
       pet_type: "dog",
       image_url:
@@ -1492,7 +1481,7 @@ export default async function seed() {
     createProduct({
       name: "Fountains & Waterers",
       description: "Fresh, flowing water to keep cats hydrated and healthy.",
-      price: 16,
+      price: 34,
       category: "Supplies",
       pet_type: "cat",
       image_url:
@@ -1503,7 +1492,7 @@ export default async function seed() {
       name: "Elevated Bowls & Diners",
       description:
         "Raised bowls that promote better posture and easier eating.",
-      price: 16,
+      price: 29,
       category: "Supplies",
       pet_type: "cat",
       image_url:
@@ -1513,7 +1502,7 @@ export default async function seed() {
     createProduct({
       name: "Feeders",
       description: "Convenient feeders for controlled, mess-free mealtime.",
-      price: 16,
+      price: 49,
       category: "Supplies",
       pet_type: "cat",
       image_url:
@@ -1524,7 +1513,7 @@ export default async function seed() {
       name: "Double Diners",
       description:
         "Dual bowls for food and water, perfect for multi-cat households.",
-      price: 16,
+      price: 34,
       category: "Supplies",
       pet_type: "cat",
       image_url:
@@ -1546,7 +1535,7 @@ export default async function seed() {
     createProduct({
       name: "Kennels",
       description: "Durable, cozy spaces for cats at home or on the go.",
-      price: 45,
+      price: 53,
       category: "Supplies",
       pet_type: "cat",
       image_url:
@@ -1557,7 +1546,7 @@ export default async function seed() {
       name: "Car Accessories",
       description:
         "Essential travel gear that keeps cats safe and comfortable on the road.",
-      price: 45,
+      price: 48,
       category: "Supplies",
       pet_type: "cat",
       image_url:
@@ -1568,7 +1557,7 @@ export default async function seed() {
       name: "Strollers",
       description:
         "Convenient strollers for safe, stress-free outdoor adventures.",
-      price: 45,
+      price: 75,
       category: "Supplies",
       pet_type: "cat",
       image_url:
@@ -1579,7 +1568,7 @@ export default async function seed() {
       name: "Travel Bowls & Water Bottles",
       description:
         "Portable bowls and bottles to keep cats hydrated on the move.",
-      price: 45,
+      price: 27,
       category: "Supplies",
       pet_type: "cat",
       image_url:
@@ -1592,7 +1581,7 @@ export default async function seed() {
       name: "Collars",
       description:
         "Comfortable, adjustable collars for everyday wear and style.",
-      price: 42,
+      price: 10,
       category: "Supplies",
       pet_type: "cat",
       image_url:
@@ -1603,7 +1592,7 @@ export default async function seed() {
       name: "Leashes",
       description:
         "Lightweight, secure leashes for safe walks and outdoor adventures.",
-      price: 42,
+      price: 12,
       category: "Supplies",
       pet_type: "cat",
       image_url:
@@ -1614,7 +1603,7 @@ export default async function seed() {
       name: "Harnesses",
       description:
         "Supportive harnesses that keep cats secure while exploring.",
-      price: 42,
+      price: 29,
       category: "Supplies",
       pet_type: "cat",
       image_url:
@@ -1624,7 +1613,7 @@ export default async function seed() {
     createProduct({
       name: "Collar ID Tag",
       description: "Personalized ID tags to keep cats safe and identifiable.",
-      price: 42,
+      price: 16,
       category: "Supplies",
       pet_type: "cat",
       image_url:
@@ -1646,7 +1635,7 @@ export default async function seed() {
     createProduct({
       name: "Teasers Wands",
       description: "Fun, dangling wands to encourage chasing and pouncing.",
-      price: 42,
+      price: 18,
       category: "Supplies",
       pet_type: "cat",
       image_url:
@@ -1656,7 +1645,7 @@ export default async function seed() {
     createProduct({
       name: "Balls & Chasers",
       description: "Rollable toys that keep cats active and entertained.",
-      price: 42,
+      price: 10,
       category: "Supplies",
       pet_type: "cat",
       image_url:
@@ -1666,7 +1655,7 @@ export default async function seed() {
     createProduct({
       name: "Catnip Toys",
       description: "Catnip-infused toys that excite and delight playful cats.",
-      price: 42,
+      price: 34,
       category: "Supplies",
       pet_type: "cat",
       image_url:
@@ -1676,7 +1665,7 @@ export default async function seed() {
     createProduct({
       name: "Plush & Mice Toys",
       description: "Soft, small toys perfect for cuddling and solo play.",
-      price: 42,
+      price: 23,
       category: "Supplies",
       pet_type: "cat",
       image_url:
@@ -1687,7 +1676,7 @@ export default async function seed() {
       name: "Scratchers Toys",
       description:
         "Durable scratchers that satisfy your cat's natural urge to scratch.",
-      price: 42,
+      price: 12,
       category: "Supplies",
       pet_type: "cat",
       image_url:
