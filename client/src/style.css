@@ -35,3 +35,61 @@ body,
 .navbar .navbar-toggler-icon {
   display: inline-block;
 }
+
+/* Simple profile dropdown (doesn't move the navbar) */
+.profileDropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.profileBtn {
+  white-space: nowrap;
+}
+
+.profileMenu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  left: auto;
+  margin-top: 8px;
+  min-width: 220px;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+  z-index: 3000;
+  overflow: hidden;
+}
+
+.profileMenu button {
+  width: 100%;
+  padding: 10px 12px;
+  text-align: left;
+  border: none;
+  background: #fff;
+  cursor: pointer;
+}
+
+.profileMenu button:hover {
+  background: #f5f5f5;
+}
+
+.profileDivider {
+  height: 1px;
+  background: #e9ecef;
+}
+
+.profileHint {
+  padding: 6px 12px 10px;
+  font-size: 12px;
+  color: #6c757d;
+}
+
+.logoutBtn {
+  color: #d11a2a;
+}
+
+.disabledItem {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
