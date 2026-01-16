@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { useActivePet } from "../context/ActivePetContext";
 import { useCart } from "../context/CartContext";
 import { deletePet } from "../api/pets";
@@ -20,7 +21,6 @@ export default function Pets() {
 
     const pet = pets.find((p) => Number(p.id) === Number(petId));
 
-    // NOTE: Only keep the "orders/cart history" line if your backend truly cascades deletes.
     const ok = window.confirm(
       `Delete ${pet?.name || "this pet"}?\nThis cannot be undone.`
     );
@@ -41,7 +41,7 @@ export default function Pets() {
         setActivePet(next);
       }
 
-      // ✅ keep backend cart cache + navbar badge in sync
+      // keep backend cart cache + navbar badge in sync
       await refreshCart();
 
       setMsg("Pet deleted.");
@@ -54,67 +54,101 @@ export default function Pets() {
   }
 
   return (
-    <div className="container py-4" style={{ maxWidth: 900 }}>
-      <h2 className="mb-3">My Pets</h2>
+    <div className="d-flex flex-column min-vh-100">
+      {/* PAGE CONTENT */}
+      <div className="flex-grow-1">
+        <div className="container py-4" style={{ maxWidth: 900 }}>
+          <h2 className="mb-3">My Pets</h2>
 
-      {msg && (
-        <div
-          className={`alert ${
-            msg.toLowerCase().includes("deleted")
-              ? "alert-success"
-              : "alert-warning"
-          }`}
-        >
-          {msg}
-        </div>
-      )}
-
-      {pets.length === 0 ? (
-        <div className="alert alert-info">
-          No pets yet. Add one first, then you can shop per pet.
-        </div>
-      ) : (
-        <div className="list-group">
-          {pets.map((p) => (
+          {msg && (
             <div
-              key={p.id}
-              className="list-group-item d-flex justify-content-between align-items-center"
+              className={`alert ${
+                msg.toLowerCase().includes("deleted")
+                  ? "alert-success"
+                  : "alert-warning"
+              }`}
             >
-              <div>
-                <div className="fw-semibold">
-                  {p.name}{" "}
-                  {Number(activePetId) === Number(p.id) && (
-                    <span className="badge bg-primary ms-2">Active</span>
-                  )}
-                </div>
-                <div className="text-muted small">
-                  {p.pet_type} {p.breed ? `• ${p.breed}` : ""}
-                </div>
-              </div>
-
-              <div className="d-flex gap-2">
-                <button
-                  className="btn btn-outline-primary btn-sm"
-                  type="button"
-                  onClick={() => setActivePet(p.id)}
-                  disabled={Number(activePetId) === Number(p.id)}
-                >
-                  Set Active
-                </button>
-
-                <button
-                  className="btn btn-outline-danger btn-sm"
-                  type="button"
-                  onClick={() => handleDelete(p.id)}
-                  disabled={busyId === p.id}
-                >
-                  {busyId === p.id ? "Deleting..." : "Delete"}
-                </button>
-              </div>
+              {msg}
             </div>
-          ))}
+          )}
+
+          {pets.length === 0 ? (
+            <div className="alert alert-info">
+              No pets yet. Add one first, then you can shop per pet.
+            </div>
+          ) : (
+            <div className="list-group">
+              {pets.map((p) => (
+                <div
+                  key={p.id}
+                  className="list-group-item d-flex justify-content-between align-items-center"
+                >
+                  <div>
+                    <div className="fw-semibold">
+                      {p.name}{" "}
+                      {Number(activePetId) === Number(p.id) && (
+                        <span className="badge bg-primary ms-2">Active</span>
+                      )}
+                    </div>
+                    <div className="text-muted small">
+                      {p.pet_type} {p.breed ? `• ${p.breed}` : ""}
+                    </div>
+                  </div>
+
+                  <div className="d-flex gap-2">
+                    <button
+                      className="btn btn-outline-primary btn-sm"
+                      type="button"
+                      onClick={() => setActivePet(p.id)}
+                      disabled={Number(activePetId) === Number(p.id)}
+                    >
+                      Set Active
+                    </button>
+
+                    <button
+                      className="btn btn-outline-danger btn-sm"
+                      type="button"
+                      onClick={() => handleDelete(p.id)}
+                      disabled={busyId === p.id}
+                    >
+                      {busyId === p.id ? "Deleting..." : "Delete"}
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
-      )}
+      </div>
+
+      {/* FOOTER (FULL WIDTH) */}
+      <footer className="w-100 bg-light border-top mt-5">
+        <div className="container-fluid px-4 py-4">
+          <div className="d-flex flex-column flex-md-row justify-content-between gap-2 text-secondary small">
+            <div>© {new Date().getFullYear()} Paws & Claws Care</div>
+
+            <div className="d-flex gap-3">
+              <Link className="text-secondary text-decoration-none" to="/">
+                Home
+              </Link>
+
+              <Link className="text-secondary text-decoration-none" to="/forum">
+                Forum
+              </Link>
+
+              <Link className="text-secondary text-decoration-none" to="/about">
+                About
+              </Link>
+              <Link
+                className="text-secondary text-decoration-none"
+                to="/contact"
+              >
+                Contact
+              </Link>
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }
