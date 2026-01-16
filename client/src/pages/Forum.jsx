@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react";
+import { getUser, getToken } from "../api/auth";
+
 import {
   getForumPosts,
   getForumPostById,
   createForumPost,
   addForumReply,
+  deleteForumPost,
+  deleteForumReply,
 } from "../api/forum";
-import { getToken } from "../api/auth";
 
 function formatDate(d) {
   if (!d) return "";
@@ -137,6 +140,60 @@ export default function Forum() {
     }
   }
 
+  async function handleDeletePost(postId) {
+    const token = getToken?.();
+    if (!token) {
+      setError("You must be logged in to delete.");
+      return;
+    }
+
+    try {
+      setError("");
+      await deleteForumPost(token, postId);
+
+      const refreshed = await getForumPosts();
+      const list = Array.isArray(refreshed) ? refreshed : [];
+      setPosts(list);
+
+      if (selectedId === postId) {
+        const nextId = list.length ? list[0].id : null;
+        setSelectedId(nextId);
+        setSelectedPost(null);
+      } else if (selectedId != null) {
+        const detail = await getForumPostById(selectedId);
+        setSelectedPost(detail);
+      }
+    } catch (err) {
+      setError(err?.message || "Failed to delete post");
+    }
+  }
+
+  async function handleDeleteReply(replyId) {
+    const token = getToken?.();
+    if (!token) {
+      setError("You must be logged in to delete.");
+      return;
+    }
+
+    try {
+      setError("");
+      await deleteForumReply(token, replyId);
+
+      setLoadingDetail(true);
+      if (selectedId != null) {
+        const detail = await getForumPostById(selectedId);
+        setSelectedPost(detail);
+      }
+
+      const refreshed = await getForumPosts();
+      setPosts(Array.isArray(refreshed) ? refreshed : []);
+    } catch (err) {
+      setError(err?.message || "Failed to delete reply");
+    } finally {
+      setLoadingDetail(false);
+    }
+  }
+
   return (
     <div className="container my-4">
       <div className="mb-3">
@@ -153,7 +210,6 @@ export default function Forum() {
       <CreatePostForm onCreate={handleCreatePost} />
 
       <div className="row g-3 mt-1">
-        {/* LEFT COLUMN */}
         <div className="col-12 col-lg-6">
           <div className="card shadow-sm">
             <div className="card-header fw-bold">Discussions</div>
@@ -191,7 +247,6 @@ export default function Forum() {
                           className={`badge d-flex align-items-center ${
                             active ? "bg-light text-dark" : "bg-primary"
                           }`}
-                          title="Replies"
                         >
                           💬 Replies: {post.reply_count ?? 0}
                         </span>
@@ -204,7 +259,6 @@ export default function Forum() {
           </div>
         </div>
 
-        {/* RIGHT COLUMN */}
         <div className="col-12 col-lg-6">
           <div className="card shadow-sm">
             <div className="card-header fw-bold">Discussion Detail</div>
@@ -217,7 +271,12 @@ export default function Forum() {
                   Click a discussion from the left column.
                 </p>
               ) : (
-                <PostDetail post={selectedPost} onAddReply={handleAddReply} />
+                <PostDetail
+                  post={selectedPost}
+                  onAddReply={handleAddReply}
+                  onDeletePost={handleDeletePost}
+                  onDeleteReply={handleDeleteReply}
+                />
               )}
             </div>
           </div>
@@ -226,8 +285,6 @@ export default function Forum() {
     </div>
   );
 }
-
-/*  Components  */
 
 function CreatePostForm({ onCreate }) {
   const [title, setTitle] = useState("");
@@ -269,7 +326,6 @@ function CreatePostForm({ onCreate }) {
               className="form-control"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              placeholder="e.g., Best treats for puppies?"
               required
             />
           </div>
@@ -281,7 +337,6 @@ function CreatePostForm({ onCreate }) {
               rows="3"
               value={body}
               onChange={(e) => setBody(e.target.value)}
-              placeholder="Write your question or share your experience..."
               required
             />
           </div>
@@ -297,8 +352,11 @@ function CreatePostForm({ onCreate }) {
   );
 }
 
-function PostDetail({ post, onAddReply }) {
+function PostDetail({ post, onAddReply, onDeletePost, onDeleteReply }) {
   const [replyBody, setReplyBody] = useState("");
+
+  const me = getUser?.();
+  const canDeletePost = me && me.id === post.user_id;
 
   async function handleReply(e) {
     e.preventDefault();
@@ -310,10 +368,25 @@ function PostDetail({ post, onAddReply }) {
 
   return (
     <>
-      <h5 className="fw-bold">{post.title}</h5>
-      <p className="text-muted mb-2">
-        {post.category} • by {post.username} • {formatDate(post.created_at)}
-      </p>
+      <div className="d-flex justify-content-between align-items-start">
+        <div className="me-2">
+          <h5 className="fw-bold mb-1">{post.title}</h5>
+          <p className="text-muted mb-2">
+            {post.category} • by {post.username} • {formatDate(post.created_at)}
+          </p>
+        </div>
+
+        {canDeletePost ? (
+          <button
+            className="btn btn-sm btn-outline-danger"
+            type="button"
+            onClick={() => onDeletePost(post.id)}
+          >
+            Delete
+          </button>
+        ) : null}
+      </div>
+
       <p>{post.body}</p>
 
       <hr />
@@ -324,17 +397,34 @@ function PostDetail({ post, onAddReply }) {
         <p className="text-muted">No replies yet. Be the first to reply!</p>
       ) : (
         <div className="mb-3">
-          {replies.map((r) => (
-            <div key={r.id} className="border rounded p-2 mb-2">
-              <div className="fw-semibold">
-                {r.username}{" "}
-                <span className="text-muted fw-normal">
-                  • {formatDate(r.created_at)}
-                </span>
+          {replies.map((r) => {
+            const canDeleteReply = me && me.id === r.user_id;
+
+            return (
+              <div key={r.id} className="border rounded p-2 mb-2">
+                <div className="d-flex justify-content-between align-items-start">
+                  <div className="fw-semibold">
+                    {r.username}{" "}
+                    <span className="text-muted fw-normal">
+                      • {formatDate(r.created_at)}
+                    </span>
+                  </div>
+
+                  {canDeleteReply ? (
+                    <button
+                      className="btn btn-sm btn-outline-danger"
+                      type="button"
+                      onClick={() => onDeleteReply(r.id)}
+                    >
+                      Delete
+                    </button>
+                  ) : null}
+                </div>
+
+                <div>{r.body}</div>
               </div>
-              <div>{r.body}</div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       )}
 
@@ -344,7 +434,6 @@ function PostDetail({ post, onAddReply }) {
             className="form-control"
             value={replyBody}
             onChange={(e) => setReplyBody(e.target.value)}
-            placeholder="Write a reply..."
             required
           />
         </div>

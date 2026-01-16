@@ -56,3 +56,16 @@ export async function getForumPostById(post_id) {
 
   return rows[0];
 }
+
+export async function deleteForumPostById({ post_id, user_id }) {
+  const { rows } = await client.query(
+    `
+    DELETE FROM forum_posts
+    WHERE id = $1 AND user_id = $2
+    RETURNING *;
+    `,
+    [post_id, user_id]
+  );
+
+  return rows[0];
+}
