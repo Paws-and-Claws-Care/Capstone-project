@@ -68,6 +68,37 @@ export async function addForumReply(token, postId, { body }) {
     );
   }
 
-  // NOTE: backend returns the newly created reply
+  return data;
+}
+
+//delete post and replies functions
+
+export async function deleteForumPost(token, postId) {
+  const res = await fetch(`${API_URL}/forum/posts/${postId}`, {
+    method: "DELETE",
+    headers: headers(token),
+  });
+
+  const data = await parse(res);
+  if (!res.ok) {
+    throw new Error(
+      typeof data === "string" ? data : data?.error || "Failed to delete post"
+    );
+  }
+  return data;
+}
+
+export async function deleteForumReply(token, replyId) {
+  const res = await fetch(`${API_URL}/forum/replies/${replyId}`, {
+    method: "DELETE",
+    headers: headers(token),
+  });
+
+  const data = await parse(res);
+  if (!res.ok) {
+    throw new Error(
+      typeof data === "string" ? data : data?.error || "Failed to delete reply"
+    );
+  }
   return data;
 }
