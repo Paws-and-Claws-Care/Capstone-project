@@ -17,11 +17,11 @@ function Navbar() {
   const [petType, setPetType] = useState("");
   const [search, setSearch] = useState("");
 
-  // --- Offcanvas refs ---
+  // Offcanvas
   const offcanvasRef = useRef(null);
   const offcanvasInstanceRef = useRef(null);
 
-  // --- Profile dropdown (simple + DOES NOT shift layout) ---
+  // Profile dropdown
   const [profileOpen, setProfileOpen] = useState(false);
   const profileRef = useRef(null);
 
@@ -288,7 +288,7 @@ function Navbar() {
         </ul>
       </div>
 
-      {/* OFFCANVAS */}
+      {/* OFFCANVAS (RIGHT SIDE) */}
       <div
         className="offcanvas offcanvas-start"
         tabIndex="-1"
@@ -296,11 +296,9 @@ function Navbar() {
         aria-labelledby="mainMenuLabel"
         ref={offcanvasRef}
       >
+        {/* No "Menu" text/title, just a close button */}
         <div className="offcanvas-header">
-          <h5 className="offcanvas-title" id="mainMenuLabel">
-            Menu
-          </h5>
-
+          <div />
           <button
             type="button"
             className="btn-close"
@@ -364,6 +362,15 @@ function Navbar() {
                 </ul>
               </div>
             </li>
+
+            {/* UNBOLD "Discussion Forum": use Link (not NavLink) */}
+            <li className="nav-item">
+              <Link className="nav-link" to="/forum" onClick={closeOffcanvas}>
+                Discussion Forum
+              </Link>
+            </li>
+
+            {/* Removed About + Contact */}
 
             {user && (
               <li className="nav-item mt-2">

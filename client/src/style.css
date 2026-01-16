@@ -1,21 +1,4 @@
-/* App Layout */
-html,
-body,
-#root {
-  height: 100%;
-}
-
-.app-shell {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
-
-.app-main {
-  flex: 1;
-}
-
-/* Navbar */
+/* Navbar spacing */
 :root {
   --navbar-height: 140px;
 }
@@ -28,24 +11,39 @@ body,
   padding-top: var(--navbar-height);
 }
 
-.navbar .navbar-toggler {
-  display: inline-block !important;
+/* NAVBAR: match footer color (no fading overlay) */
+.pcs-navbar {
+  background: #f8f9fa !important;
+  border-bottom: 1px solid #e9ecef;
 }
 
+.pcs-navlink {
+  color: #1f2937;
+}
+
+.pcs-navlink:hover {
+  color: #0d6efd;
+}
+
+.pcs-toggler {
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 10px 12px;
+}
+
+/* Keep toggler icon visible */
 .navbar .navbar-toggler-icon {
   display: inline-block;
 }
 
-/* Simple profile dropdown (doesn't move the navbar) */
+/* Profile dropdown (your existing styles, kept) */
 .profileDropdown {
   position: relative;
   display: inline-block;
 }
-
 .profileBtn {
   white-space: nowrap;
 }
-
 .profileMenu {
   position: absolute;
   top: 100%;
@@ -60,7 +58,6 @@ body,
   z-index: 3000;
   overflow: hidden;
 }
-
 .profileMenu button {
   width: 100%;
   padding: 10px 12px;
@@ -69,27 +66,110 @@ body,
   background: #fff;
   cursor: pointer;
 }
-
 .profileMenu button:hover {
   background: #f5f5f5;
 }
-
 .profileDivider {
   height: 1px;
   background: #e9ecef;
 }
-
 .profileHint {
   padding: 6px 12px 10px;
   font-size: 12px;
   color: #6c757d;
 }
-
 .logoutBtn {
   color: #d11a2a;
 }
-
 .disabledItem {
   opacity: 0.55;
   cursor: not-allowed;
+}
+
+/* OFFCANVAS: match your “big menu” screenshot */
+.pcs-offcanvas {
+  width: min(92vw, 520px);
+  border-right: 1px solid #eef2f7;
+}
+
+@media (max-width: 575px) {
+  .pcs-offcanvas {
+    width: 100vw;
+  }
+}
+
+.pcs-offcanvas-header {
+  padding: 28px 26px;
+  border-bottom: 0;
+}
+
+.pcs-close {
+  transform: scale(1.25);
+  opacity: 0.8;
+}
+
+.pcs-offcanvas-body {
+  padding: 18px 26px 28px;
+}
+
+.pcs-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.pcs-menu-link {
+  font-size: 22px;
+  color: #6b7280;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.pcs-menu-link:hover {
+  color: #111827;
+}
+
+.pcs-menu-link.active {
+  color: #111827;
+  font-weight: 700;
+}
+
+.pcs-menu-toggle {
+  background: transparent;
+  border: 0;
+  padding: 0;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.pcs-caret {
+  font-size: 16px;
+  opacity: 0.7;
+}
+
+.pcs-submenu {
+  margin-top: 12px;
+  padding-left: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.pcs-submenu-link {
+  font-size: 24px;
+  color: #6b7280;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.pcs-submenu-link:hover {
+  color: #111827;
+}
+
+.pcs-menu-divider {
+  height: 1px;
+  background: #e9ecef;
+  margin: 10px 0;
 }
