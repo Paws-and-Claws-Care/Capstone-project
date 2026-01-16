@@ -1,19 +1,45 @@
-/* Navbar spacing */
+/* =========================
+   GLOBAL / APP LAYOUT
+========================= */
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  /* More noticeable (but still professional) page background */
+  background: linear-gradient(180deg, #eef3ff 0%, #ffffff 35%, #f8faff 100%);
+}
+
+.app-shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-main {
+  flex: 1;
+  padding-top: var(--navbar-height);
+}
+
+/* =========================
+   NAVBAR SPACING
+========================= */
 :root {
   --navbar-height: 140px;
 }
 
+/* =========================
+   NAVBAR (MATCH FOOTER COLOR)
+   - No blur/fade overlays
+========================= */
 .navbar {
   min-height: var(--navbar-height);
 }
 
-.app-main {
-  padding-top: var(--navbar-height);
-}
-
-/* NAVBAR: match footer color (no fading overlay) */
 .pcs-navbar {
-  background: #f8f9fa !important;
+  background: #f8f9fa !important; /* matches Bootstrap bg-light / footer */
   border-bottom: 1px solid #e9ecef;
 }
 
@@ -31,19 +57,22 @@
   padding: 10px 12px;
 }
 
-/* Keep toggler icon visible */
 .navbar .navbar-toggler-icon {
   display: inline-block;
 }
 
-/* Profile dropdown (your existing styles, kept) */
+/* =========================
+   PROFILE DROPDOWN
+========================= */
 .profileDropdown {
   position: relative;
   display: inline-block;
 }
+
 .profileBtn {
   white-space: nowrap;
 }
+
 .profileMenu {
   position: absolute;
   top: 100%;
@@ -58,6 +87,7 @@
   z-index: 3000;
   overflow: hidden;
 }
+
 .profileMenu button {
   width: 100%;
   padding: 10px 12px;
@@ -66,27 +96,34 @@
   background: #fff;
   cursor: pointer;
 }
+
 .profileMenu button:hover {
   background: #f5f5f5;
 }
+
 .profileDivider {
   height: 1px;
   background: #e9ecef;
 }
+
 .profileHint {
   padding: 6px 12px 10px;
   font-size: 12px;
   color: #6c757d;
 }
+
 .logoutBtn {
   color: #d11a2a;
 }
+
 .disabledItem {
   opacity: 0.55;
   cursor: not-allowed;
 }
 
-/* OFFCANVAS: match your “big menu” screenshot */
+/* =========================
+   OFFCANVAS MENU (BIG MENU LOOK)
+========================= */
 .pcs-offcanvas {
   width: min(92vw, 520px);
   border-right: 1px solid #eef2f7;
@@ -172,4 +209,107 @@
   height: 1px;
   background: #e9ecef;
   margin: 10px 0;
+}
+
+/* =========================
+   PAGE HERO (HOME/ABOUT/CONTACT TOP SECTION)
+   - More noticeable background
+========================= */
+.page-hero {
+  background: radial-gradient(
+      900px 350px at 10% 0%,
+      rgba(13, 110, 253, 0.14),
+      transparent 60%
+    ),
+    radial-gradient(
+      900px 350px at 90% 0%,
+      rgba(13, 110, 253, 0.1),
+      transparent 60%
+    ),
+    linear-gradient(180deg, #f3f7ff 0%, #ffffff 75%);
+}
+
+.page-hero.border-bottom {
+  border-bottom: 1px solid rgba(15, 23, 42, 0.08) !important;
+}
+
+/* =========================
+   CARDS (slightly more “pro”)
+========================= */
+.card {
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+}
+
+/* Keep your hover effect for category cards */
+.home-card {
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.home-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px rgba(15, 23, 42, 0.1);
+}
+
+/* Little icon pill used in Home categories */
+.home-pill {
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(13, 110, 253, 0.12);
+}
+
+/* =========================
+   HOME: DISCUSSION FORUM BOX
+========================= */
+.forum-box {
+  border-radius: 18px;
+}
+
+.forum-icon {
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(13, 110, 253, 0.12);
+  color: #0d6efd;
+  font-size: 1.2rem;
+}
+
+.forum-bullets {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+  display: grid;
+  gap: 10px;
+}
+
+.forum-bullets li {
+  position: relative;
+  padding-left: 18px;
+  color: #6c757d;
+}
+
+.forum-bullets li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.6rem;
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: rgba(13, 110, 253, 0.8);
+}
+
+/* =========================
+   FOOTER
+========================= */
+footer.bg-light {
+  background: #f8f9fa !important;
 }

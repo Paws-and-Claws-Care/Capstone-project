@@ -48,10 +48,6 @@ export default function Home() {
                 <Link to="/products" className="btn btn-primary btn-lg">
                   Shop all products <i className="bi bi-arrow-right ms-2" />
                 </Link>
-
-                <Link to="/about" className="btn btn-outline-primary btn-lg">
-                  About <i className="bi bi-info-circle ms-2" />
-                </Link>
               </div>
 
               <div className="d-flex gap-4 mt-4 text-secondary small flex-wrap">
