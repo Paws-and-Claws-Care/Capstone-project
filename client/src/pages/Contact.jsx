@@ -30,7 +30,7 @@ export default function Contact() {
   return (
     <div>
       {/* HEADER / HERO */}
-      <section className="bg-light border-bottom">
+      <section className="page-hero border-bottom">
         <div className="container py-5">
           {/* Large page title */}
           <h1 className="display-6 fw-bold mb-2">Contact Us</h1>

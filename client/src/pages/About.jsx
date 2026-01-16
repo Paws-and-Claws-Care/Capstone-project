@@ -4,7 +4,7 @@ export default function About() {
   return (
     <div>
       {/* HEADER / HERO SECTION */}
-      <section className="bg-light border-bottom">
+      <section className="page-hero border-bottom">
         <div className="container py-5">
           <h1 className="display-6 fw-bold mb-2">About Paws & Claws Care</h1>
 
