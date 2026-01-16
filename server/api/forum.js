@@ -1,6 +1,8 @@
 import express from "express";
 import getUserFromToken from "../middleware/getUserFromToken.js";
 import requireUser from "../middleware/requireUser.js";
+import { deleteForumPostById } from "../db/queries/forum_posts.js";
+import { deleteForumRepliesById } from "../db/queries/forum_replies.js";
 
 import {
   getAllForumPosts,
@@ -86,6 +88,44 @@ router.post(
 
       const replies = await getRepliesByPostId(post_id);
       res.status(201).json({ post_id, replies });
+    } catch (err) {
+      next(err);
+    }
+  }
+);
+
+router.delete(
+  "/posts/:postId",
+  getUserFromToken,
+  requireUser,
+  async (req, res, next) => {
+    try {
+      const post_id = Number(req.params.postId);
+      const user_id = req.user.id;
+
+      const deleted = await deleteForumPostById({ post_id, user_id });
+      if (!deleted) return res.status(403).json({ error: "Not allowed" });
+
+      res.json({ ok: true });
+    } catch (err) {
+      next(err);
+    }
+  }
+);
+
+router.delete(
+  "/replies/:replyId",
+  getUserFromToken,
+  requireUser,
+  async (req, res, next) => {
+    try {
+      const reply_id = Number(req.params.replyId);
+      const user_id = req.user.id;
+
+      const deleted = await deleteForumRepliesById({ reply_id, user_id });
+      if (!deleted) return res.status(403).json({ error: "Not allowed" });
+
+      res.json({ ok: true });
     } catch (err) {
       next(err);
     }

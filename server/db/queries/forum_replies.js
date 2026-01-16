@@ -48,3 +48,16 @@ export async function getRepliesByPostId(post_id) {
 
   return rows;
 }
+
+export async function deleteForumRepliesById({ reply_id, user_id }) {
+  const { rows } = await client.query(
+    `
+    DELETE FROM forum_replies
+    WHERE id = $1 AND user_id = $2
+    RETURNING *;
+    `,
+    [reply_id, user_id]
+  );
+
+  return rows[0];
+}
