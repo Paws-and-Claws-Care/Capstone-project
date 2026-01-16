@@ -1,4 +1,5 @@
-import { useEffect, useMemo, useState } from "react";
+// client/src/pages/Products.jsx
+import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import ReactPaginate from "react-paginate";
 import { fetchAllProducts, fetchProductsByPetType } from "../api/products";
@@ -9,19 +10,30 @@ import { useCart } from "../context/CartContext";
 
 const normalize = (s) => (s ?? "").toString().trim().toLowerCase();
 
+/**
+ * ✅ Health & Wellness bucket
+ * This includes supplements + flea/tick + calming + etc.
+ * Update these strings to match your seeded category names.
+ */
 const HEALTH_CATEGORY_SET = new Set(
   [
+    // supplements
     "skin and coat supplements",
     "skin and coat supplement",
     "hip and joint supplement",
     "digestive supplement",
+    // health items
     "flea and tick",
     "flea & tick",
+    // calming
     "anxiety & calming",
     "anixety & calming",
   ].map(normalize)
 );
 
+/**
+ * ✅ Allowed filter buttons (NO supplements)
+ */
 const ALLOWED_FILTERS = new Set([
   "all",
   "food",
@@ -29,6 +41,16 @@ const ALLOWED_FILTERS = new Set([
   "supplies",
   "health",
 ]);
+
+/**
+ * ✅ Page titles (NO supplements)
+ */
+const FILTER_TITLES = {
+  food: "All Food",
+  treats: "All Treats",
+  supplies: "All Supplies",
+  health: "All Health & Wellness",
+};
 
 export default function Products() {
   const navigate = useNavigate();
@@ -42,10 +64,8 @@ export default function Products() {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const petTypeQuery = normalize(searchParams.get("petType"));
-  const filterFromUrl = normalize(searchParams.get("filter"));
-
-  // ✅ NEW: search from URL (?search=...)
-  const searchFromUrl = normalize(searchParams.get("search"));
+  const filterFromUrlRaw = normalize(searchParams.get("filter"));
+  const searchFromUrl = normalize(searchParams.get("search")); // ?search=...
 
   const petType = petTypeQuery || normalize(petTypeParam) || "";
 
@@ -58,19 +78,26 @@ export default function Products() {
   const [msg, setMsg] = useState("");
   const [addingId, setAddingId] = useState(null);
 
-  // keep UI filter synced with URL
+  /**
+   * ✅ NEW: Convert old URLs like ?filter=supplements into health
+   * so nothing breaks if someone already has the old link saved.
+   */
+  const filterFromUrl =
+    filterFromUrlRaw === "supplements" ? "health" : filterFromUrlRaw;
+
+  // Keep UI filter synced with URL
   useEffect(() => {
     const next = ALLOWED_FILTERS.has(filterFromUrl) ? filterFromUrl : "all";
     setActiveFilter(next);
     setItemOffset(0);
   }, [filterFromUrl]);
 
-  // ✅ NEW: when search changes, reset pagination too
+  // When search changes, reset pagination too
   useEffect(() => {
     setItemOffset(0);
   }, [searchFromUrl]);
 
-  // fetch products when petType changes
+  // Fetch products when petType changes
   useEffect(() => {
     async function load() {
       try {
@@ -87,11 +114,11 @@ export default function Products() {
     load();
   }, [petType]);
 
-  // in-memory filtering (category + health + ✅ search)
+  // In-memory filtering (category + health set + search)
   const filteredProducts = useMemo(() => {
     let list = baseProducts;
 
-    // ✅ 1) category filter
+    // 1) category filter
     if (activeFilter !== "all") {
       if (activeFilter === "health") {
         list = list.filter((p) =>
@@ -104,7 +131,7 @@ export default function Products() {
       }
     }
 
-    // ✅ 2) search filter
+    // 2) search filter
     if (searchFromUrl) {
       list = list.filter((p) => {
         const name = normalize(p.name);
@@ -122,7 +149,7 @@ export default function Products() {
     return list;
   }, [baseProducts, activeFilter, searchFromUrl]);
 
-  // pagination
+  // Pagination
   const endOffset = itemOffset + itemsPerPage;
   const currentProducts = filteredProducts.slice(itemOffset, endOffset);
   const pageCount = Math.ceil(filteredProducts.length / itemsPerPage);
@@ -137,10 +164,11 @@ export default function Products() {
     if (!filterName || filterName === "all") next.delete("filter");
     else next.set("filter", filterName);
 
+    // Keep petType in URL (dog/cat page)
     if (petType) next.set("petType", petType);
     else next.delete("petType");
 
-    // ✅ keep search in URL when switching filters
+    // Keep search in URL when switching filters
     if (searchFromUrl) next.set("search", searchFromUrl);
     else next.delete("search");
 
@@ -182,15 +210,20 @@ export default function Products() {
     }
   }
 
-  const title = petType
-    ? `${petType[0].toUpperCase()}${petType.slice(1)} Products`
-    : "All Products";
+  // ✅ Title respects filter first (NO supplements title)
+  const title =
+    activeFilter !== "all"
+      ? FILTER_TITLES[activeFilter] || "All Products"
+      : petType
+      ? `${petType[0].toUpperCase()}${petType.slice(1)} Products`
+      : "All Products";
+
+  const allBtnLabel = petType ? `All ${petType} Products` : "All Products";
 
   return (
     <div className="container py-4">
       <h2 className="mb-2">{title}</h2>
 
-      {/* ✅ Optional: show search term to user */}
       {searchFromUrl && (
         <div className="text-muted mb-2">
           Showing results for: <strong>{searchFromUrl}</strong>
@@ -225,6 +258,7 @@ export default function Products() {
         )}
       </div>
 
+      {/* ✅ Filter buttons (NO supplements button) */}
       <div className="d-flex flex-wrap gap-2 mb-4">
         <button
           className={`btn ${
@@ -271,7 +305,7 @@ export default function Products() {
           onClick={() => setFilter("all")}
           type="button"
         >
-          All {petType ? petType : ""} Products
+          {allBtnLabel}
         </button>
       </div>
 
