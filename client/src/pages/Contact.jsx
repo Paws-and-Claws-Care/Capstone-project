@@ -223,9 +223,8 @@ export default function Contact() {
         </div>
       </section>
 
-      {/* Footer */}
-
-      <footer className="bg-light border-top">
+      {/* FOOTER */}
+      <footer className="bg-light border-top mt-5">
         <div className="container py-4">
           <div className="d-flex flex-column flex-md-row justify-content-between gap-2 text-secondary small">
             <div>© {new Date().getFullYear()} Paws & Claws Care</div>
@@ -236,6 +235,9 @@ export default function Contact() {
               </Link>
               <Link className="text-secondary text-decoration-none" to="/about">
                 About
+              </Link>
+              <Link className="text-secondary text-decoration-none" to="/forum">
+                Forum
               </Link>
             </div>
           </div>

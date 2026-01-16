@@ -1,6 +1,11 @@
 // client/src/pages/Products.jsx
 import React, { useEffect, useMemo, useState } from "react";
-import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import {
+  Link,
+  useNavigate,
+  useParams,
+  useSearchParams,
+} from "react-router-dom";
 import ReactPaginate from "react-paginate";
 import { fetchAllProducts, fetchProductsByPetType } from "../api/products";
 import ProductCard from "../components/ProductCard";
@@ -156,6 +161,12 @@ export default function Products() {
 
   function handlePageClick(event) {
     setItemOffset(event.selected * itemsPerPage);
+
+    // ⬆️ Scroll to top smoothly
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
   }
 
   function setFilter(filterName) {
@@ -221,150 +232,188 @@ export default function Products() {
   const allBtnLabel = petType ? `All ${petType} Products` : "All Products";
 
   return (
-    <div className="container py-4">
-      <h2 className="mb-2">{title}</h2>
+    <div className="d-flex flex-column min-vh-100">
+      {/* PAGE CONTENT */}
+      <div className="flex-grow-1">
+        <div className="container py-4">
+          <h2 className="mb-2">{title}</h2>
 
-      {searchFromUrl && (
-        <div className="text-muted mb-2">
-          Showing results for: <strong>{searchFromUrl}</strong>
-        </div>
-      )}
+          {searchFromUrl && (
+            <div className="text-muted mb-2">
+              Showing results for: <strong>{searchFromUrl}</strong>
+            </div>
+          )}
 
-      <div className="d-flex justify-content-between align-items-start flex-wrap gap-2 mb-3">
-        <div className="text-muted">
-          Adding to cart for:{" "}
-          <strong>
-            {activePet ? activePet.name : "No active pet selected"}
-          </strong>
-        </div>
+          <div className="d-flex justify-content-between align-items-start flex-wrap gap-2 mb-3">
+            <div className="text-muted">
+              Adding to cart for:{" "}
+              <strong>
+                {activePet ? activePet.name : "No active pet selected"}
+              </strong>
+            </div>
 
-        {!user && (
-          <div className="d-flex gap-2">
+            {!user && (
+              <div className="d-flex gap-2">
+                <button
+                  className="btn btn-outline-primary btn-sm"
+                  type="button"
+                  onClick={() => navigate("/login")}
+                >
+                  Login
+                </button>
+                <button
+                  className="btn btn-primary btn-sm"
+                  type="button"
+                  onClick={() => navigate("/register")}
+                >
+                  Register
+                </button>
+              </div>
+            )}
+          </div>
+
+          {/* ✅ Filter buttons (NO supplements button) */}
+          <div className="d-flex flex-wrap gap-2 mb-4">
             <button
-              className="btn btn-outline-primary btn-sm"
+              className={`btn ${
+                activeFilter === "food" ? "btn-primary" : "btn-outline-primary"
+              }`}
+              onClick={() => setFilter("food")}
               type="button"
-              onClick={() => navigate("/login")}
             >
-              Login
+              Food
             </button>
+
             <button
-              className="btn btn-primary btn-sm"
+              className={`btn ${
+                activeFilter === "treats"
+                  ? "btn-primary"
+                  : "btn-outline-primary"
+              }`}
+              onClick={() => setFilter("treats")}
               type="button"
-              onClick={() => navigate("/register")}
             >
-              Register
+              Treats
+            </button>
+
+            <button
+              className={`btn ${
+                activeFilter === "supplies"
+                  ? "btn-primary"
+                  : "btn-outline-primary"
+              }`}
+              onClick={() => setFilter("supplies")}
+              type="button"
+            >
+              Supplies
+            </button>
+
+            <button
+              className={`btn ${
+                activeFilter === "health"
+                  ? "btn-primary"
+                  : "btn-outline-primary"
+              }`}
+              onClick={() => setFilter("health")}
+              type="button"
+            >
+              Health & Wellness
+            </button>
+
+            <button
+              className="btn btn-dark"
+              onClick={() => setFilter("all")}
+              type="button"
+            >
+              {allBtnLabel}
             </button>
           </div>
-        )}
-      </div>
 
-      {/* ✅ Filter buttons (NO supplements button) */}
-      <div className="d-flex flex-wrap gap-2 mb-4">
-        <button
-          className={`btn ${
-            activeFilter === "food" ? "btn-primary" : "btn-outline-primary"
-          }`}
-          onClick={() => setFilter("food")}
-          type="button"
-        >
-          Food
-        </button>
+          {msg && (
+            <div
+              className={`alert ${
+                msg.toLowerCase().includes("added")
+                  ? "alert-success"
+                  : "alert-warning"
+              }`}
+            >
+              {msg}
+            </div>
+          )}
 
-        <button
-          className={`btn ${
-            activeFilter === "treats" ? "btn-primary" : "btn-outline-primary"
-          }`}
-          onClick={() => setFilter("treats")}
-          type="button"
-        >
-          Treats
-        </button>
+          {!activePet && (
+            <div className="alert alert-warning">
+              Select an active pet in the navbar to add items to a cart.
+            </div>
+          )}
 
-        <button
-          className={`btn ${
-            activeFilter === "supplies" ? "btn-primary" : "btn-outline-primary"
-          }`}
-          onClick={() => setFilter("supplies")}
-          type="button"
-        >
-          Supplies
-        </button>
-
-        <button
-          className={`btn ${
-            activeFilter === "health" ? "btn-primary" : "btn-outline-primary"
-          }`}
-          onClick={() => setFilter("health")}
-          type="button"
-        >
-          Health & Wellness
-        </button>
-
-        <button
-          className="btn btn-dark"
-          onClick={() => setFilter("all")}
-          type="button"
-        >
-          {allBtnLabel}
-        </button>
-      </div>
-
-      {msg && (
-        <div
-          className={`alert ${
-            msg.toLowerCase().includes("added")
-              ? "alert-success"
-              : "alert-warning"
-          }`}
-        >
-          {msg}
-        </div>
-      )}
-
-      {!activePet && (
-        <div className="alert alert-warning">
-          Select an active pet in the navbar to add items to a cart.
-        </div>
-      )}
-
-      <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-        {currentProducts.map((p) => (
-          <div className="col" key={p.id}>
-            <ProductCard
-              product={p}
-              onAdd={handleAdd}
-              disabled={!activePet?.id || addingId === p.id}
-              isAdded={isInCart(p.id)}
-              busy={addingId === p.id}
-            />
+          <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+            {currentProducts.map((p) => (
+              <div className="col" key={p.id}>
+                <ProductCard
+                  product={p}
+                  onAdd={handleAdd}
+                  disabled={!activePet?.id || addingId === p.id}
+                  isAdded={isInCart(p.id)}
+                  busy={addingId === p.id}
+                />
+              </div>
+            ))}
           </div>
-        ))}
+
+          {pageCount > 1 && (
+            <nav className="d-flex justify-content-center mt-4">
+              <ReactPaginate
+                breakLabel="..."
+                nextLabel="Next >"
+                previousLabel="< Prev"
+                onPageChange={handlePageClick}
+                pageRangeDisplayed={3}
+                marginPagesDisplayed={1}
+                pageCount={pageCount}
+                renderOnZeroPageCount={null}
+                containerClassName="pagination"
+                pageClassName="page-item"
+                pageLinkClassName="page-link"
+                previousClassName="page-item"
+                previousLinkClassName="page-link"
+                nextClassName="page-item"
+                nextLinkClassName="page-link"
+                breakClassName="page-item"
+                breakLinkClassName="page-link"
+                activeClassName="active"
+              />
+            </nav>
+          )}
+        </div>
       </div>
 
-      {pageCount > 1 && (
-        <nav className="d-flex justify-content-center mt-4">
-          <ReactPaginate
-            breakLabel="..."
-            nextLabel="Next >"
-            previousLabel="< Prev"
-            onPageChange={handlePageClick}
-            pageRangeDisplayed={3}
-            marginPagesDisplayed={1}
-            pageCount={pageCount}
-            renderOnZeroPageCount={null}
-            containerClassName="pagination"
-            pageClassName="page-item"
-            pageLinkClassName="page-link"
-            previousClassName="page-item"
-            previousLinkClassName="page-link"
-            nextClassName="page-item"
-            nextLinkClassName="page-link"
-            breakClassName="page-item"
-            breakLinkClassName="page-link"
-            activeClassName="active"
-          />
-        </nav>
-      )}
+      {/* FOOTER (Products: Home, About, Contact, Forum) */}
+      <footer className="bg-light border-top mt-5">
+        <div className="container py-4">
+          <div className="d-flex flex-column flex-md-row justify-content-between gap-2 text-secondary small">
+            <div>© {new Date().getFullYear()} Paws & Claws Care</div>
+
+            <div className="d-flex gap-3">
+              <Link className="text-secondary text-decoration-none" to="/">
+                Home
+              </Link>
+              <Link className="text-secondary text-decoration-none" to="/about">
+                About
+              </Link>
+              <Link
+                className="text-secondary text-decoration-none"
+                to="/contact"
+              >
+                Contact
+              </Link>
+              <Link className="text-secondary text-decoration-none" to="/forum">
+                Forum
+              </Link>
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }

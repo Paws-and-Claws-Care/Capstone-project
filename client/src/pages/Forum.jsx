@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import {
   getForumPosts,
   getForumPostById,
@@ -34,10 +35,11 @@ export default function Forum() {
         const data = await getForumPosts();
         if (ignore) return;
 
-        setPosts(Array.isArray(data) ? data : []);
+        const arr = Array.isArray(data) ? data : [];
+        setPosts(arr);
 
-        if (Array.isArray(data) && data.length && selectedId == null) {
-          setSelectedId(data[0].id);
+        if (arr.length && selectedId == null) {
+          setSelectedId(arr[0].id);
         }
       } catch (err) {
         if (!ignore) setError(err?.message || "Failed to load forum posts");
@@ -50,6 +52,7 @@ export default function Forum() {
     return () => {
       ignore = true;
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -138,96 +141,131 @@ export default function Forum() {
   }
 
   return (
-    <div className="container my-4">
-      <div className="mb-3">
-        <h1 className="fw-bold">🐾 Paws & Claws Discussion Forum</h1>
-        <p className="text-muted">
-          Ask questions, share experiences, and help fellow pet parents.
-        </p>
+    // Sticky footer without a shared layout:
+    <div className="d-flex flex-column min-vh-100">
+      {/* PAGE CONTENT */}
+      <div className="flex-grow-1">
+        <div className="container my-4">
+          <div className="mb-3">
+            <h1 className="fw-bold">🐾 Paws & Claws Discussion Forum</h1>
+            <p className="text-muted">
+              Ask questions, share experiences, and help fellow pet parents.
+            </p>
 
-        {error ? (
-          <div className="alert alert-danger py-2 mb-0">{error}</div>
-        ) : null}
-      </div>
+            {error ? (
+              <div className="alert alert-danger py-2 mb-0">{error}</div>
+            ) : null}
+          </div>
 
-      <CreatePostForm onCreate={handleCreatePost} />
+          <CreatePostForm onCreate={handleCreatePost} />
 
-      <div className="row g-3 mt-1">
-        {/* LEFT COLUMN */}
-        <div className="col-12 col-lg-6">
-          <div className="card shadow-sm">
-            <div className="card-header fw-bold">Discussions</div>
+          <div className="row g-3 mt-1">
+            {/* LEFT COLUMN */}
+            <div className="col-12 col-lg-6">
+              <div className="card shadow-sm">
+                <div className="card-header fw-bold">Discussions</div>
 
-            <div className="list-group list-group-flush">
-              {loadingPosts ? (
-                <div className="p-3 text-muted">Loading discussions…</div>
-              ) : posts.length === 0 ? (
-                <div className="p-3 text-muted">No discussions yet.</div>
-              ) : (
-                posts.map((post) => {
-                  const active = post.id === selectedId;
+                <div className="list-group list-group-flush">
+                  {loadingPosts ? (
+                    <div className="p-3 text-muted">Loading discussions…</div>
+                  ) : posts.length === 0 ? (
+                    <div className="p-3 text-muted">No discussions yet.</div>
+                  ) : (
+                    posts.map((post) => {
+                      const active = post.id === selectedId;
 
-                  return (
-                    <button
-                      key={post.id}
-                      className={`list-group-item list-group-item-action ${
-                        active ? "active" : ""
-                      }`}
-                      onClick={() => setSelectedId(post.id)}
-                      type="button"
-                    >
-                      <div className="d-flex justify-content-between align-items-start">
-                        <div className="me-2">
-                          <div className="fw-semibold">{post.title}</div>
-                          <small
-                            className={active ? "text-white-50" : "text-muted"}
-                          >
-                            {post.category} • by {post.username} •{" "}
-                            {formatDate(post.created_at)}
-                          </small>
-                        </div>
-
-                        <span
-                          className={`badge d-flex align-items-center ${
-                            active ? "bg-light text-dark" : "bg-primary"
+                      return (
+                        <button
+                          key={post.id}
+                          className={`list-group-item list-group-item-action ${
+                            active ? "active" : ""
                           }`}
-                          title="Replies"
+                          onClick={() => setSelectedId(post.id)}
+                          type="button"
                         >
-                          💬 Replies: {post.reply_count ?? 0}
-                        </span>
-                      </div>
-                    </button>
-                  );
-                })
-              )}
+                          <div className="d-flex justify-content-between align-items-start">
+                            <div className="me-2">
+                              <div className="fw-semibold">{post.title}</div>
+                              <small
+                                className={
+                                  active ? "text-white-50" : "text-muted"
+                                }
+                              >
+                                {post.category} • by {post.username} •{" "}
+                                {formatDate(post.created_at)}
+                              </small>
+                            </div>
+
+                            <span
+                              className={`badge d-flex align-items-center ${
+                                active ? "bg-light text-dark" : "bg-primary"
+                              }`}
+                              title="Replies"
+                            >
+                              💬 Replies: {post.reply_count ?? 0}
+                            </span>
+                          </div>
+                        </button>
+                      );
+                    })
+                  )}
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
 
-        {/* RIGHT COLUMN */}
-        <div className="col-12 col-lg-6">
-          <div className="card shadow-sm">
-            <div className="card-header fw-bold">Discussion Detail</div>
+            {/* RIGHT COLUMN */}
+            <div className="col-12 col-lg-6">
+              <div className="card shadow-sm">
+                <div className="card-header fw-bold">Discussion Detail</div>
 
-            <div className="card-body">
-              {loadingDetail ? (
-                <p className="text-muted mb-0">Loading discussion…</p>
-              ) : !selectedPost ? (
-                <p className="text-muted mb-0">
-                  Click a discussion from the left column.
-                </p>
-              ) : (
-                <PostDetail post={selectedPost} onAddReply={handleAddReply} />
-              )}
+                <div className="card-body">
+                  {loadingDetail ? (
+                    <p className="text-muted mb-0">Loading discussion…</p>
+                  ) : !selectedPost ? (
+                    <p className="text-muted mb-0">
+                      Click a discussion from the left column.
+                    </p>
+                  ) : (
+                    <PostDetail
+                      post={selectedPost}
+                      onAddReply={handleAddReply}
+                    />
+                  )}
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
+
+      {/* FOOTER (Forum: Home, About, Contact) */}
+      <footer className="bg-light border-top mt-5">
+        <div className="container py-4">
+          <div className="d-flex flex-column flex-md-row justify-content-between gap-2 text-secondary small">
+            <div>© {new Date().getFullYear()} Paws & Claws Care</div>
+
+            <div className="d-flex gap-3">
+              <Link className="text-secondary text-decoration-none" to="/">
+                Home
+              </Link>
+              <Link className="text-secondary text-decoration-none" to="/about">
+                About
+              </Link>
+              <Link
+                className="text-secondary text-decoration-none"
+                to="/contact"
+              >
+                Contact
+              </Link>
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }
 
-/*  Components  */
+/* Components */
 
 function CreatePostForm({ onCreate }) {
   const [title, setTitle] = useState("");
