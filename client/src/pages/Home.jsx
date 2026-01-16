@@ -20,7 +20,7 @@ const categories = [
     to: "/products?filter=treats",
   },
   {
-    title: "Supplements",
+    title: "Health & Wellness",
     subtitle: "Joint, skin, digestion, calm",
     icon: "bi-capsule",
     to: "/products?filter=health",
