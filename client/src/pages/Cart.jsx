@@ -59,11 +59,9 @@ export default function Cart() {
 
   return (
     <div className="container mt-5" style={{ maxWidth: "900px" }}>
-      <h2 className="mb-2">My Cart</h2>
-
-      <div className="text-muted mb-4">
-        Pet: <strong>{activePet ? activePet.name : "None selected"}</strong>
-      </div>
+      <h2 className="mb-2">
+        {activePet?.name ? `${activePet.name}'s Cart` : "Your Cart"}
+      </h2>
 
       {needsPet && (
         <div className="alert alert-warning">
