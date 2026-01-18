@@ -1,9 +1,16 @@
+// client/src/pages/Pets.jsx
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useActivePet } from "../context/ActivePetContext";
 import { useCart } from "../context/CartContext";
 import { deletePet } from "../api/pets";
 import { getToken } from "../api/auth";
+
+function getPetEmoji(petType) {
+  const t = (petType || "").toLowerCase();
+  if (t.includes("cat")) return "🐱";
+  return "🐶"; // default to dog
+}
 
 export default function Pets() {
   const { pets, activePetId, setActivePet, refreshPets } = useActivePet();
@@ -20,7 +27,6 @@ export default function Pets() {
     }
 
     const pet = pets.find((p) => Number(p.id) === Number(petId));
-
     const ok = window.confirm(
       `Delete ${pet?.name || "this pet"}?\nThis cannot be undone.`
     );
@@ -32,16 +38,13 @@ export default function Pets() {
 
       await deletePet(token, petId);
 
-      // refresh pets from server
       const updated = await refreshPets();
 
-      // if we deleted the active pet, pick a new one (or clear)
       if (Number(activePetId) === Number(petId)) {
         const next = updated?.[0]?.id ?? null;
         setActivePet(next);
       }
 
-      // keep backend cart cache + navbar badge in sync
       await refreshCart();
 
       setMsg("Pet deleted.");
@@ -55,10 +58,20 @@ export default function Pets() {
 
   return (
     <div className="d-flex flex-column min-vh-100">
-      {/* PAGE CONTENT */}
       <div className="flex-grow-1">
-        <div className="container py-4" style={{ maxWidth: 900 }}>
-          <h2 className="mb-3">My Pets</h2>
+        <div className="container py-4" style={{ maxWidth: 1000 }}>
+          <div className="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-3">
+            <div className="container py-4" style={{ maxWidth: 900 }}>
+              <div className="d-flex justify-content-between align-items-center mb-3">
+                <h2 className="mb-0">My Pets</h2>
+                <Link to="/profile" className="btn btn-outline-secondary">
+                  My Profile
+                </Link>
+              </div>
+
+              {/* rest of the page */}
+            </div>
+          </div>
 
           {msg && (
             <div
@@ -74,54 +87,78 @@ export default function Pets() {
 
           {pets.length === 0 ? (
             <div className="alert alert-info">
-              No pets yet. Add one first, then you can shop per pet.
+              No pets yet. Add one first in your Profile.
             </div>
           ) : (
-            <div className="list-group">
-              {pets.map((p) => (
-                <div
-                  key={p.id}
-                  className="list-group-item d-flex justify-content-between align-items-center"
-                >
-                  <div>
-                    <div className="fw-semibold">
-                      {p.name}{" "}
-                      {Number(activePetId) === Number(p.id) && (
-                        <span className="badge bg-primary ms-2">Active</span>
-                      )}
-                    </div>
-                    <div className="text-muted small">
-                      {p.pet_type} {p.breed ? `• ${p.breed}` : ""}
+            <div className="row row-cols-1 row-cols-lg-2 g-4">
+              {pets.map((p) => {
+                const isActive = Number(activePetId) === Number(p.id);
+                const emoji = getPetEmoji(p.pet_type);
+
+                return (
+                  <div className="col" key={p.id}>
+                    <div className="pet-card h-100">
+                      {/* top "image" area like product card */}
+                      <div className="pet-card-top">
+                        <div
+                          className={`pet-avatar ${
+                            (p.pet_type || "").toLowerCase().includes("cat")
+                              ? "pet-avatar-cat"
+                              : "pet-avatar-dog"
+                          }`}
+                          aria-hidden="true"
+                        >
+                          <span className="pet-emoji">{emoji}</span>
+                        </div>
+                      </div>
+
+                      <div className="pet-card-body">
+                        <div className="d-flex align-items-center justify-content-between gap-2">
+                          <div className="pet-name">
+                            {p.name}{" "}
+                            {isActive && (
+                              <span className="badge bg-primary ms-2">
+                                Active
+                              </span>
+                            )}
+                          </div>
+                        </div>
+
+                        <div className="pet-meta">
+                          {(p.pet_type || "").toLowerCase()}{" "}
+                          {p.breed ? `• ${p.breed}` : ""}
+                        </div>
+
+                        <div className="pet-actions mt-3">
+                          <button
+                            className="btn btn-outline-primary"
+                            type="button"
+                            onClick={() => setActivePet(p.id)}
+                            disabled={isActive}
+                          >
+                            Set Active
+                          </button>
+
+                          <button
+                            className="btn btn-outline-danger"
+                            type="button"
+                            onClick={() => handleDelete(p.id)}
+                            disabled={busyId === p.id}
+                          >
+                            {busyId === p.id ? "Deleting..." : "Delete"}
+                          </button>
+                        </div>
+                      </div>
                     </div>
                   </div>
-
-                  <div className="d-flex gap-2">
-                    <button
-                      className="btn btn-outline-primary btn-sm"
-                      type="button"
-                      onClick={() => setActivePet(p.id)}
-                      disabled={Number(activePetId) === Number(p.id)}
-                    >
-                      Set Active
-                    </button>
-
-                    <button
-                      className="btn btn-outline-danger btn-sm"
-                      type="button"
-                      onClick={() => handleDelete(p.id)}
-                      disabled={busyId === p.id}
-                    >
-                      {busyId === p.id ? "Deleting..." : "Delete"}
-                    </button>
-                  </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           )}
         </div>
       </div>
 
-      {/* FOOTER (FULL WIDTH) */}
+      {/* FOOTER */}
       <footer className="w-100 bg-light border-top mt-5">
         <div className="container-fluid px-4 py-4">
           <div className="d-flex flex-column flex-md-row justify-content-between gap-2 text-secondary small">
@@ -139,6 +176,7 @@ export default function Pets() {
               <Link className="text-secondary text-decoration-none" to="/about">
                 About
               </Link>
+
               <Link
                 className="text-secondary text-decoration-none"
                 to="/contact"

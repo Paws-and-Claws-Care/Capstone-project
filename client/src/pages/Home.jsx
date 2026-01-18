@@ -5,24 +5,28 @@ const categories = [
     title: "Shop Dog",
     subtitle: "Food, treats, toys & more",
     icon: "bi-heart-pulse",
+    color: "red",
     to: "/products?petType=dog",
   },
   {
     title: "Shop Cat",
     subtitle: "Food, litter, enrichment & more",
     icon: "bi-stars",
+    color: "purple",
     to: "/products?petType=cat",
   },
   {
     title: "Treats",
     subtitle: "Training + everyday rewards",
     icon: "bi-emoji-smile",
+    color: "green",
     to: "/products?filter=treats",
   },
   {
     title: "Health & Wellness",
     subtitle: "Joint, skin, digestion, calm",
     icon: "bi-capsule",
+    color: "orange",
     to: "/products?filter=health",
   },
 ];
@@ -45,7 +49,7 @@ export default function Home() {
               </p>
 
               <div className="d-flex gap-2 mt-4 flex-wrap">
-                <Link to="/products" className="btn btn-primary btn-lg">
+                <Link to="/products" className="btn btn-lg shop-btn">
                   Shop all products <i className="bi bi-arrow-right ms-2" />
                 </Link>
               </div>
@@ -125,8 +129,8 @@ export default function Home() {
                 <div className="card h-100 shadow-sm border-0 home-card">
                   <div className="card-body">
                     <div className="d-flex align-items-center justify-content-between">
-                      <div className="home-pill">
-                        <i className={`bi ${c.icon} text-primary`} />
+                      <div className={`home-pill pill-${c.color}`}>
+                        <i className={`bi ${c.icon}`} />
                       </div>
 
                       <i className="bi bi-arrow-right text-secondary" />
