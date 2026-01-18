@@ -88,3 +88,15 @@ export async function getCompletedOrdersByPet(userId, petId) {
   const response = await db.query(SQL, [userId, petId]);
   return response.rows;
 }
+
+export async function checkoutCartOrder(orderId) {
+  const SQL = `
+    UPDATE orders
+    SET is_cart = false
+    WHERE id = $1
+      AND is_cart = true
+    RETURNING *;
+  `;
+  const response = await db.query(SQL, [orderId]);
+  return response.rows[0];
+}

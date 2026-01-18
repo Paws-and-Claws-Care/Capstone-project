@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { getMyOrders, getOrderProducts } from "../api/orders";
+import { getToken } from "../api/auth";
+import { useActivePet } from "../context/ActivePetContext";
 
 function isCartOrder(order) {
   const status = (order?.status ?? order?.state ?? "").toString().toLowerCase();
@@ -14,12 +16,23 @@ function isCartOrder(order) {
 }
 
 export default function Orders() {
+  const { pets } = useActivePet();
+
   const [placedOrders, setPlacedOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
+  // ✅ petId -> "Name (type)" map
+  const petLabelById = useMemo(() => {
+    const map = {};
+    (pets || []).forEach((p) => {
+      map[p.id] = `${p.name}${p.pet_type ? ` (${p.pet_type})` : ""}`;
+    });
+    return map;
+  }, [pets]);
+
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const token = getToken();
 
     async function load() {
       setLoading(true);
@@ -42,7 +55,6 @@ export default function Orders() {
           placedOnly.map(async (o) => {
             try {
               const data = await getOrderProducts(token, o.id);
-
               return {
                 ...o,
                 products: Array.isArray(data?.items) ? data.items : [],
@@ -105,7 +117,13 @@ export default function Orders() {
           <div className="card mb-4" key={order.id}>
             <div className="card-body">
               <div className="d-flex justify-content-between align-items-center mb-2">
-                <h5 className="card-title mb-0">Order #{order.id}</h5>
+                <div>
+                  <h5 className="card-title mb-0">Order #{order.id}</h5>
+                  <div className="text-muted small">
+                    For {petLabelById[order.pet_id] ?? `Pet #${order.pet_id}`}
+                  </div>
+                </div>
+
                 <span className="text-muted">
                   {order.date
                     ? new Date(order.date).toLocaleDateString()
@@ -122,7 +140,7 @@ export default function Orders() {
                   <ul className="list-group list-group-flush">
                     {order.products.map((p) => (
                       <li
-                        key={`${order.id}-${p.product_id}`}
+                        key={`${order.id}-${p.product_id ?? p.id ?? p.name}`}
                         className="list-group-item d-flex justify-content-between"
                       >
                         <span>{p.name}</span>

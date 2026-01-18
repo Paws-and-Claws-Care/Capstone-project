@@ -3,6 +3,10 @@ import { useNavigate, Link, useLocation } from "react-router-dom";
 import { useActivePet } from "../context/ActivePetContext";
 import { useCart } from "../context/CartContext";
 
+// ✅ ADDED (for checkout)
+import { checkoutPetCart } from "../api/orders";
+import { getToken } from "../api/auth";
+
 export default function Cart() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -21,6 +25,9 @@ export default function Cart() {
 
   const [busyByProductId, setBusyByProductId] = useState({});
 
+  // ✅ ADDED (prevents double checkout later)
+  const [checkoutBusy, setCheckoutBusy] = useState(false);
+
   const displayTotal = useMemo(() => Number(orderTotal || 0), [orderTotal]);
 
   const needsPet = !activePet?.id;
@@ -31,6 +38,13 @@ export default function Cart() {
 
     refreshCart?.();
   }, [location.pathname, activePet?.id]);
+
+  function getBrowseProductsRoute() {
+    const petType = (activePet?.pet_type ?? "").toLowerCase();
+    if (petType === "dog") return "/products?petType=dog";
+    if (petType === "cat") return "/products?petType=cat";
+    return "/products";
+  }
 
   async function changeQty(productId, nextQty) {
     try {
@@ -53,6 +67,32 @@ export default function Cart() {
       alert(err?.message || "Failed to remove item");
     } finally {
       setBusyByProductId((m) => ({ ...m, [productId]: false }));
+    }
+  }
+
+  // ✅ ADDED (this will be called by the button we add next)
+  async function handleCheckout() {
+    if (!activePet?.id) return;
+
+    try {
+      setCheckoutBusy(true);
+
+      const token = getToken();
+      const result = await checkoutPetCart(token, activePet.id);
+
+      // refresh cart after checkout (backend should create a new cart)
+      await refreshCart();
+
+      // supports either backend response shape
+      const orderId = result?.completedOrder?.id ?? result?.id;
+
+      // optional: go to confirmation page (already routed in App.jsx)
+      if (orderId) navigate(`/orders/confirmation/${orderId}`);
+    } catch (err) {
+      console.error(err);
+      alert(err?.message || "Checkout failed");
+    } finally {
+      setCheckoutBusy(false);
     }
   }
 
@@ -93,7 +133,10 @@ export default function Cart() {
           {!needsPet && !loading && !error && items.length === 0 && (
             <div className="alert alert-info">
               Your cart is empty.{" "}
-              <Link className="btn btn-primary btn-sm ms-2" to="/products">
+              <Link
+                className="btn btn-primary btn-sm ms-2"
+                to={getBrowseProductsRoute()}
+              >
                 Browse Products
               </Link>
             </div>
@@ -168,10 +211,19 @@ export default function Cart() {
                   })}
                 </ul>
 
-                <div className="d-flex justify-content-end mt-3">
-                  <div className="fw-semibold fs-5">
+                <div className="d-flex justify-content-end align-items-center mt-3 gap-2">
+                  <div className="fw-semibold fs-5 me-auto">
                     Total: ${Number(displayTotal).toFixed(2)}
                   </div>
+
+                  <button
+                    className="btn btn-success"
+                    disabled={checkoutBusy}
+                    onClick={handleCheckout}
+                    type="button"
+                  >
+                    {checkoutBusy ? "Placing Order..." : "Place Order"}
+                  </button>
                 </div>
               </div>
             </div>
