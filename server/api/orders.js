@@ -249,24 +249,45 @@ router.post(
     try {
       const petId = Number(req.params.petId);
 
+      // 1) Verify pet belongs to user
       const petCheck = await db.query(
         `SELECT id FROM pets WHERE id = $1 AND user_id = $2`,
         [petId, req.user.id]
       );
       if (!petCheck.rows[0]) return res.status(404).send("Pet not found.");
 
+      // 2) Find active cart
       const cart = await getCartOrderByPet(req.user.id, petId);
       if (!cart) return res.status(400).send("No active cart for this pet.");
 
+      // 3) Prevent checkout if cart is empty ✅
+      const cartItems = await getProductsByOrderId(cart.id);
+      if (!cartItems || cartItems.length === 0) {
+        return res.status(400).send("Cart is empty.");
+      }
+
+      // 4) Mark cart as completed
       const update = await db.query(
         `UPDATE orders
          SET is_cart = false, date = CURRENT_DATE
-         WHERE id = $1 AND user_id = $2
+         WHERE id = $1 AND user_id = $2 AND is_cart = true
          RETURNING *;`,
         [cart.id, req.user.id]
       );
 
-      res.send(update.rows[0]);
+      const completedOrder = update.rows[0];
+      if (!completedOrder) {
+        return res.status(400).send("Unable to checkout cart.");
+      }
+
+      // 5) Create a NEW empty cart for this pet ✅
+      const newCart = await createCartOrderForPet(req.user.id, petId);
+
+      res.send({
+        success: true,
+        completedOrder,
+        newCart,
+      });
     } catch (err) {
       next(err);
     }

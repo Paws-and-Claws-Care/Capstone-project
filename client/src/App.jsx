@@ -20,6 +20,8 @@ import Forum from "./pages/Forum";
 import { ActivePetProvider } from "./context/ActivePetContext";
 import { CartProvider } from "./context/CartContext";
 
+import OrderConfirmation from "./pages/OrderConfirmation";
+
 function App() {
   return (
     <ActivePetProvider>
@@ -36,6 +38,10 @@ function App() {
           <Route path="/favorites" element={<Favorites />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/orders" element={<Orders />} />
+          <Route
+            path="/orders/confirmation/:orderId"
+            element={<OrderConfirmation />}
+          />
           <Route path="/pets" element={<Pets />} />
           <Route path="/profile" element={<Profile />} />
 
