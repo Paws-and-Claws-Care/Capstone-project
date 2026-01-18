@@ -20,8 +20,6 @@ export function ActivePetProvider({ children }) {
     return () => window.removeEventListener(AUTH_CHANGED_EVENT, onAuthChanged);
   }, []);
 
-  const loggedInUser = useMemo(() => getUser(), [authTick]);
-
   async function refreshPets() {
     const token = getToken();
 
@@ -48,7 +46,9 @@ export function ActivePetProvider({ children }) {
   }
 
   useEffect(() => {
-    if (!loggedInUser) {
+    const token = getToken();
+
+    if (!token) {
       setPets([]);
       setActivePetId(null);
       localStorage.removeItem("activePetId");
@@ -56,7 +56,7 @@ export function ActivePetProvider({ children }) {
     }
 
     refreshPets().catch(() => setPets([]));
-  }, [authTick, loggedInUser?.id]);
+  }, [authTick]);
 
   useEffect(() => {
     if (!pets.length) {
