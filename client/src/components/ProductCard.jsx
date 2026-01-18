@@ -7,7 +7,6 @@ export default function ProductCard({ product, disabled = false }) {
   const { addItem, getQty, setQty, loading } = useCart();
   const { activePet } = useActivePet();
 
-  // track which action is running: "add" | "inc" | "dec" | ""
   const [busy, setBusy] = useState("");
   const [msg, setMsg] = useState("");
 
