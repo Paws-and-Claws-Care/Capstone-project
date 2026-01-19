@@ -7,6 +7,17 @@ body,
   height: 100%;
 }
 
+:root {
+  --navbar-height: 140px;
+
+  /* Forum accent (shared + consistent) */
+  --forum-mint-bg: rgba(34, 197, 94, 0.08);
+  --forum-mint-border: rgba(34, 197, 94, 0.18);
+
+  /* Matches Bootstrap btn-success */
+  --forum-success: #198754;
+}
+
 body {
   background: #ffffff;
 }
@@ -23,29 +34,33 @@ body {
 }
 
 /* =========================
-   NAVBAR SPACING
+   BUTTON OVERRIDES
 ========================= */
-:root {
-  --navbar-height: 140px;
+.shop-btn {
+  background-color: #5fa8ff;
+  border-color: #5fa8ff;
+  color: #fff;
+}
+.shop-btn:hover {
+  background-color: #4a97f0;
+  border-color: #4a97f0;
 }
 
 /* =========================
    NAVBAR (MATCH FOOTER COLOR)
-   - No blur/fade overlays
 ========================= */
 .navbar {
   min-height: var(--navbar-height);
 }
 
 .pcs-navbar {
-  background: #f8f9fa !important; /* matches Bootstrap bg-light / footer */
+  background: #f8f9fa !important;
   border-bottom: 1px solid #e9ecef;
 }
 
 .pcs-navlink {
   color: #1f2937;
 }
-
 .pcs-navlink:hover {
   color: #0d6efd;
 }
@@ -119,6 +134,264 @@ body {
   opacity: 0.55;
   cursor: not-allowed;
 }
+/* =========================
+   PETS PAGE: CARD ROWS
+========================= */
+.pet-card {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 16px 18px;
+  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.06);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.pet-card:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 14px 30px rgba(15, 23, 42, 0.08);
+}
+
+/* =========================
+   PETS PAGE – Product-style cards
+========================= */
+
+.pet-card {
+  background: #fff;
+  border: 1px solid #e9ecef;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+  overflow: hidden;
+}
+
+/* “image area” feel like ProductCard */
+.pet-card-top {
+  padding: 18px 18px 0;
+  display: flex;
+  justify-content: center;
+}
+
+/* Circle icon holder */
+.pet-avatar {
+  width: 84px;
+  height: 84px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+}
+
+.pet-avatar-dog {
+  background: rgba(13, 110, 253, 0.12); /* soft blue */
+}
+
+.pet-avatar-cat {
+  background: rgba(111, 66, 193, 0.12); /* soft purple */
+}
+
+.pet-emoji {
+  font-size: 38px;
+  line-height: 1;
+}
+
+.pet-card-body {
+  padding: 16px 18px 18px;
+}
+
+.pet-name {
+  font-weight: 700;
+  font-size: 18px;
+  color: #111827;
+}
+
+.pet-meta {
+  margin-top: 4px;
+  color: #6c757d;
+  font-size: 14px;
+}
+
+/* Buttons like product card layout: stacked on small screens, row on wider */
+.pet-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+@media (max-width: 420px) {
+  .pet-actions {
+    grid-template-columns: 1fr;
+  }
+}
+/* =========================
+   PROFILE PAGE (more colorful, still professional)
+========================= */
+.profile-page {
+  /* subtle “premium” background */
+  background: radial-gradient(
+      900px 380px at 15% 0%,
+      rgba(13, 110, 253, 0.08),
+      transparent 60%
+    ),
+    radial-gradient(
+      900px 380px at 85% 0%,
+      rgba(111, 66, 193, 0.07),
+      transparent 60%
+    ),
+    linear-gradient(180deg, #f8fbff 0%, #ffffff 55%, #f7fff9 100%);
+}
+
+.profile-container {
+  padding-bottom: 10px;
+}
+
+.profile-title {
+  letter-spacing: -0.02em;
+}
+
+.profile-badge {
+  background: rgba(15, 23, 42, 0.06);
+  color: #0f172a;
+  border: 1px solid rgba(15, 23, 42, 0.1);
+  padding: 8px 12px;
+  border-radius: 999px;
+  font-weight: 500;
+}
+
+/* Slightly “premium” cards */
+.profile-card {
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  overflow: hidden;
+}
+
+/* Colored top accent line */
+.profile-card--info {
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+}
+.profile-card--info::before,
+.profile-card--orders::before,
+.profile-card--pets::before {
+  content: "";
+  display: block;
+  height: 4px;
+  width: 100%;
+}
+.profile-card--info::before {
+  background: linear-gradient(
+    90deg,
+    rgba(13, 110, 253, 0.9),
+    rgba(13, 110, 253, 0.2)
+  );
+}
+.profile-card--orders::before {
+  background: linear-gradient(
+    90deg,
+    rgba(111, 66, 193, 0.9),
+    rgba(111, 66, 193, 0.2)
+  );
+}
+.profile-card--pets::before {
+  background: linear-gradient(
+    90deg,
+    rgba(25, 135, 84, 0.9),
+    rgba(25, 135, 84, 0.2)
+  );
+}
+
+/* Icon “chips” */
+.profile-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+}
+
+.profile-icon--blue {
+  background: rgba(13, 110, 253, 0.1);
+  color: #0d6efd;
+}
+.profile-icon--purple {
+  background: rgba(111, 66, 193, 0.1);
+  color: #6f42c1;
+}
+.profile-icon--green {
+  background: rgba(25, 135, 84, 0.1);
+  color: #198754;
+}
+
+/* Key/value rows */
+.profile-kv {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 10px;
+  padding: 6px 0;
+}
+.profile-k {
+  color: #475569;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+.profile-v {
+  color: #0f172a;
+}
+
+/* Section label inside Pets card */
+.profile-section {
+  background: rgba(15, 23, 42, 0.03);
+  border: 1px solid rgba(15, 23, 42, 0.06);
+  border-radius: 14px;
+  padding: 14px;
+}
+.profile-section-title {
+  font-weight: 700;
+  color: #0f172a;
+}
+.profile-section-subtitle {
+  margin-left: 8px;
+  font-weight: 500;
+  color: #64748b;
+  font-size: 0.9rem;
+}
+
+/* Pet list: keep your active behavior but make it prettier */
+.profile-pet-list .profile-pet-row {
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  margin-bottom: 10px;
+  border-radius: 12px !important;
+  overflow: hidden;
+}
+
+/* Override bootstrap active blue (only inside Profile pets list) */
+.profile-pet-list .profile-pet-row.active {
+  background: rgba(25, 135, 84, 0.08) !important;
+  border-color: rgba(25, 135, 84, 0.22) !important;
+  color: #0f172a !important;
+}
+.profile-pet-list .profile-pet-row.active:hover {
+  background: rgba(25, 135, 84, 0.1) !important;
+}
+
+/* Keep the "(dog/cat)" text readable even when active */
+.profile-pet-list .profile-pet-row.active .text-white-50 {
+  color: #475569 !important;
+}
+
+/* Right-side badges */
+.profile-pill-active {
+  background: #198754 !important; /* matches btn-success */
+  color: #ffffff !important;
+  border-radius: 999px;
+  padding: 8px 10px;
+}
+
+.profile-pill-inactive {
+  background: rgba(15, 23, 42, 0.1) !important;
+  color: #0f172a !important;
+  border-radius: 999px;
+  padding: 8px 10px;
+}
 
 /* =========================
    OFFCANVAS MENU (BIG MENU LOOK)
@@ -160,11 +433,9 @@ body {
   text-decoration: none;
   font-weight: 500;
 }
-
 .pcs-menu-link:hover {
   color: #111827;
 }
-
 .pcs-menu-link.active {
   color: #111827;
   font-weight: 700;
@@ -199,7 +470,6 @@ body {
   text-decoration: none;
   font-weight: 500;
 }
-
 .pcs-submenu-link:hover {
   color: #111827;
 }
@@ -211,8 +481,7 @@ body {
 }
 
 /* =========================
-   PAGE HERO (HOME/ABOUT/CONTACT TOP SECTION)
-   - More noticeable background
+   PAGE HERO (HOME/ABOUT/CONTACT)
 ========================= */
 .page-hero {
   background: radial-gradient(
@@ -226,15 +495,13 @@ body {
       transparent 60%
     ),
     linear-gradient(180deg, #f3f7ff 0%, #ffffff 75%);
-
-  /* add these */
-  min-height: 420px; /* keeps hero background visible on large screens */
+  min-height: 420px;
   background-repeat: no-repeat;
-  background-size: cover; /* prevents “small” look */
+  background-size: cover;
 }
 
 /* =========================
-   CARDS (slightly more “pro”)
+   CARDS
 ========================= */
 .card {
   background-color: #ffffff;
@@ -242,17 +509,18 @@ body {
   box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
 }
 
-/* Keep your hover effect for category cards */
+/* Category cards hover */
 .home-card {
   transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
-
 .home-card:hover {
   transform: translateY(-2px);
   box-shadow: 0 14px 30px rgba(15, 23, 42, 0.1);
 }
 
-/* Little icon pill used in Home categories */
+/* =========================
+   HOME: CATEGORY ICON PILLS
+========================= */
 .home-pill {
   width: 44px;
   height: 44px;
@@ -260,16 +528,34 @@ body {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: rgba(13, 110, 253, 0.12);
+  font-size: 1.2rem;
+}
+
+.pill-red {
+  background: rgba(220, 53, 69, 0.14);
+  color: #dc3545;
+}
+.pill-purple {
+  background: rgba(111, 66, 193, 0.12);
+  color: #6f42c1;
+}
+.pill-green {
+  background: rgba(25, 135, 84, 0.12);
+  color: #198754;
+}
+.pill-orange {
+  background: rgba(253, 126, 20, 0.14);
+  color: #fd7e14;
 }
 
 /* =========================
-   HOME: DISCUSSION FORUM BOX
+   HOME: DISCUSSION FORUM BOX (GREEN THEME)
 ========================= */
 .forum-box {
   border-radius: 18px;
 }
 
+/* kept your current icon colors */
 .forum-icon {
   width: 46px;
   height: 46px;
@@ -277,8 +563,8 @@ body {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: rgba(13, 110, 253, 0.12);
-  color: #0d6efd;
+  background: rgba(52, 255, 7, 0.18);
+  color: #078a00;
   font-size: 1.2rem;
 }
 
@@ -304,7 +590,77 @@ body {
   width: 8px;
   height: 8px;
   border-radius: 999px;
-  background: rgba(13, 110, 253, 0.8);
+  background: rgba(61, 197, 19, 0.566);
+}
+
+.forum-box .btn-primary {
+  background-color: rgba(61, 197, 19, 0.414);
+  border-color: rgba(61, 197, 19, 0.47);
+  color: #212529;
+}
+.forum-box .btn-primary:hover {
+  background-color: #93d786;
+  border-color: #8ed87c;
+  color: #212529;
+}
+
+/* =========================
+   FORUM: MAKE BOTH HEADERS IDENTICAL
+   - Discussions header + Discussion Detail header
+========================= */
+.forum-header {
+  background-color: var(--forum-mint-bg);
+  border-bottom: 1px solid var(--forum-mint-border);
+  color: #111827;
+  font-weight: 600;
+}
+
+/* In case Bootstrap wins on some pages */
+.forum-list .card-header,
+.forum-detail .card-header {
+  background-color: var(--forum-mint-bg) !important;
+  border-bottom: 1px solid var(--forum-mint-border) !important;
+}
+
+/* Optional matching border for the cards themselves */
+.forum-list.card,
+.forum-detail.card {
+  border: 1px solid var(--forum-mint-border);
+}
+
+/* =========================
+   FORUM: SELECTED ROW MATCHES EXACT MINT
+========================= */
+.forum-list .list-group-item.active {
+  background-color: var(--forum-mint-bg) !important;
+  border-color: var(--forum-mint-border) !important;
+  color: #111827 !important;
+}
+
+.forum-list .list-group-item.active:hover {
+  background-color: var(--forum-mint-bg) !important;
+}
+
+/* Keep subtitle text soft (not white) */
+.forum-list .list-group-item.active small {
+  color: #475569 !important;
+}
+
+/* =========================
+   FORUM: REPLIES BADGE MATCHES SUBMIT REPLY (btn-success)
+========================= */
+.forum-list .badge {
+  background-color: var(--forum-success) !important;
+  color: #ffffff !important;
+  font-weight: 600;
+  border-radius: 999px;
+  border: none !important;
+}
+
+/* Keep identical when active */
+.forum-list .list-group-item.active .badge {
+  background-color: var(--forum-success) !important;
+  color: #ffffff !important;
 }
 
 /* =========================

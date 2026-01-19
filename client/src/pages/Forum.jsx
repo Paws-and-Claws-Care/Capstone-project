@@ -219,10 +219,10 @@ export default function Forum() {
           <div className="row g-3 mt-1">
             {/* LEFT COLUMN */}
             <div className="col-12 col-lg-6">
-              <div className="card shadow-sm">
-                <div className="card-header fw-bold">Discussions</div>
+              <div className="card shadow-sm forum-card">
+                <div className="card-header forum-header">Discussions</div>
 
-                <div className="list-group list-group-flush">
+                <div className="list-group list-group-flush forum-list">
                   {loadingPosts ? (
                     <div className="p-3 text-muted">Loading discussions…</div>
                   ) : posts.length === 0 ? (
@@ -272,8 +272,10 @@ export default function Forum() {
 
             {/* RIGHT COLUMN */}
             <div className="col-12 col-lg-6">
-              <div className="card shadow-sm">
-                <div className="card-header fw-bold">Discussion Detail</div>
+              <div className="card shadow-sm forum-detail">
+                <div className="card-header forum-header ">
+                  Discussion Detail
+                </div>
 
                 <div className="card-body">
                   {loadingDetail ? (
@@ -339,7 +341,7 @@ function CreatePostForm({ onCreate }) {
 
   return (
     <div className="card shadow-sm">
-      <div className="card-header fw-bold">Start a New Discussion</div>
+      <div className="card-header forum-header">Start a New Discussion</div>
       <div className="card-body">
         <form onSubmit={handleSubmit} className="row g-3">
           <div className="col-md-4">
@@ -380,7 +382,7 @@ function CreatePostForm({ onCreate }) {
           </div>
 
           <div className="col-12">
-            <button className="btn btn-primary" type="submit">
+            <button className="btn btn-success" type="submit">
               Post Discussion
             </button>
           </div>
