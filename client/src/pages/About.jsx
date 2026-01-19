@@ -155,7 +155,10 @@ export default function About() {
               <h2 className="h4 fw-bold mb-1">Meet the team</h2>
               <p className="text-secondary mb-0">
                 Built collaboratively by the Paws & Claws Care capstone team.
-                Team member names and roles can be added here.
+              </p>
+              <p className="text-secondary mb-0">
+                Alyssa Radlauer, Katelyn Conrad, Shikha Devi and Teranae
+                Coleman.
               </p>
             </div>
           </div>
