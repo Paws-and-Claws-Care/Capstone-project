@@ -134,36 +134,72 @@ body {
   opacity: 0.55;
   cursor: not-allowed;
 }
+
 /* =========================
-   PETS PAGE: CARD ROWS
+   PETS PAGE (MORE COLORFUL)
+   ✅ Put className="pets-page" on the top wrapper div of Pets.jsx
 ========================= */
+.pets-page {
+  background: radial-gradient(
+      900px 380px at 15% 0%,
+      rgba(13, 110, 253, 0.08),
+      transparent 60%
+    ),
+    radial-gradient(
+      900px 380px at 85% 0%,
+      rgba(111, 66, 193, 0.07),
+      transparent 60%
+    ),
+    linear-gradient(180deg, #f8fbff 0%, #ffffff 55%, #f7fff9 100%);
+}
+
+/* Pet cards like product cards (single source of truth) */
 .pet-card {
+  position: relative;
   background: #fff;
-  border: 1px solid #e5e7eb;
-  border-radius: 14px;
-  padding: 16px 18px;
-  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.06);
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+  overflow: hidden;
   transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
 .pet-card:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 14px 30px rgba(15, 23, 42, 0.08);
+  transform: translateY(-2px);
+  box-shadow: 0 14px 34px rgba(15, 23, 42, 0.1);
 }
 
-/* =========================
-   PETS PAGE – Product-style cards
-========================= */
-
-.pet-card {
-  background: #fff;
-  border: 1px solid #e9ecef;
-  border-radius: 16px;
-  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
-  overflow: hidden;
+/* Accent strip at top */
+.pet-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 5px;
+  background: linear-gradient(
+    90deg,
+    rgba(13, 110, 253, 0.9),
+    rgba(13, 110, 253, 0.18)
+  );
 }
 
-/* “image area” feel like ProductCard */
+/* Optional: you can add these classes in JSX if you want different accents */
+.pet-card--cat::before {
+  background: linear-gradient(
+    90deg,
+    rgba(111, 66, 193, 0.9),
+    rgba(111, 66, 193, 0.18)
+  );
+}
+
+.pet-card--dog::before {
+  background: linear-gradient(
+    90deg,
+    rgba(13, 110, 253, 0.9),
+    rgba(13, 110, 253, 0.18)
+  );
+}
+
+/* “image area” like ProductCard */
 .pet-card-top {
   padding: 18px 18px 0;
   display: flex;
@@ -178,14 +214,15 @@ body {
   display: grid;
   place-items: center;
   border: 1px solid rgba(15, 23, 42, 0.08);
+  box-shadow: 0 10px 22px rgba(15, 23, 42, 0.06);
 }
 
 .pet-avatar-dog {
-  background: rgba(13, 110, 253, 0.12); /* soft blue */
+  background: rgba(13, 110, 253, 0.12);
 }
 
 .pet-avatar-cat {
-  background: rgba(111, 66, 193, 0.12); /* soft purple */
+  background: rgba(111, 66, 193, 0.12);
 }
 
 .pet-emoji {
@@ -209,7 +246,6 @@ body {
   font-size: 14px;
 }
 
-/* Buttons like product card layout: stacked on small screens, row on wider */
 .pet-actions {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -221,11 +257,11 @@ body {
     grid-template-columns: 1fr;
   }
 }
+
 /* =========================
    PROFILE PAGE (more colorful, still professional)
 ========================= */
 .profile-page {
-  /* subtle “premium” background */
   background: radial-gradient(
       900px 380px at 15% 0%,
       rgba(13, 110, 253, 0.08),
@@ -256,16 +292,15 @@ body {
   font-weight: 500;
 }
 
-/* Slightly “premium” cards */
 .profile-card {
   border: 1px solid rgba(15, 23, 42, 0.08);
   overflow: hidden;
 }
 
-/* Colored top accent line */
 .profile-card--info {
   box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
 }
+
 .profile-card--info::before,
 .profile-card--orders::before,
 .profile-card--pets::before {
@@ -296,7 +331,6 @@ body {
   );
 }
 
-/* Icon “chips” */
 .profile-icon {
   width: 44px;
   height: 44px;
@@ -321,7 +355,6 @@ body {
   color: #198754;
 }
 
-/* Key/value rows */
 .profile-kv {
   display: grid;
   grid-template-columns: 120px 1fr;
@@ -337,7 +370,6 @@ body {
   color: #0f172a;
 }
 
-/* Section label inside Pets card */
 .profile-section {
   background: rgba(15, 23, 42, 0.03);
   border: 1px solid rgba(15, 23, 42, 0.06);
@@ -355,7 +387,6 @@ body {
   font-size: 0.9rem;
 }
 
-/* Pet list: keep your active behavior but make it prettier */
 .profile-pet-list .profile-pet-row {
   border: 1px solid rgba(15, 23, 42, 0.08);
   margin-bottom: 10px;
@@ -363,7 +394,6 @@ body {
   overflow: hidden;
 }
 
-/* Override bootstrap active blue (only inside Profile pets list) */
 .profile-pet-list .profile-pet-row.active {
   background: rgba(25, 135, 84, 0.08) !important;
   border-color: rgba(25, 135, 84, 0.22) !important;
@@ -373,14 +403,12 @@ body {
   background: rgba(25, 135, 84, 0.1) !important;
 }
 
-/* Keep the "(dog/cat)" text readable even when active */
 .profile-pet-list .profile-pet-row.active .text-white-50 {
   color: #475569 !important;
 }
 
-/* Right-side badges */
 .profile-pill-active {
-  background: #198754 !important; /* matches btn-success */
+  background: #198754 !important;
   color: #ffffff !important;
   border-radius: 999px;
   padding: 8px 10px;
@@ -606,7 +634,6 @@ body {
 
 /* =========================
    FORUM: MAKE BOTH HEADERS IDENTICAL
-   - Discussions header + Discussion Detail header
 ========================= */
 .forum-header {
   background-color: var(--forum-mint-bg);
@@ -615,22 +642,18 @@ body {
   font-weight: 600;
 }
 
-/* In case Bootstrap wins on some pages */
 .forum-list .card-header,
 .forum-detail .card-header {
   background-color: var(--forum-mint-bg) !important;
   border-bottom: 1px solid var(--forum-mint-border) !important;
 }
 
-/* Optional matching border for the cards themselves */
 .forum-list.card,
 .forum-detail.card {
   border: 1px solid var(--forum-mint-border);
 }
 
-/* =========================
-   FORUM: SELECTED ROW MATCHES EXACT MINT
-========================= */
+/* Selected row matches mint */
 .forum-list .list-group-item.active {
   background-color: var(--forum-mint-bg) !important;
   border-color: var(--forum-mint-border) !important;
@@ -641,14 +664,11 @@ body {
   background-color: var(--forum-mint-bg) !important;
 }
 
-/* Keep subtitle text soft (not white) */
 .forum-list .list-group-item.active small {
   color: #475569 !important;
 }
 
-/* =========================
-   FORUM: REPLIES BADGE MATCHES SUBMIT REPLY (btn-success)
-========================= */
+/* Replies badge matches Submit Reply button */
 .forum-list .badge {
   background-color: var(--forum-success) !important;
   color: #ffffff !important;
@@ -656,8 +676,6 @@ body {
   border-radius: 999px;
   border: none !important;
 }
-
-/* Keep identical when active */
 .forum-list .list-group-item.active .badge {
   background-color: var(--forum-success) !important;
   color: #ffffff !important;
