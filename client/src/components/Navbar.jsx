@@ -362,40 +362,6 @@ function Navbar() {
                 </ul>
               </div>
             </li>
-
-            {/* UNBOLD "Discussion Forum": use Link (not NavLink) */}
-            <li className="nav-item">
-              <Link className="nav-link" to="/forum" onClick={closeOffcanvas}>
-                Discussion Forum
-              </Link>
-            </li>
-
-            {/* Removed About + Contact */}
-
-            {user && (
-              <li className="nav-item mt-2">
-                <NavLink
-                  className={`nav-link d-flex justify-content-between align-items-center ${
-                    cartDisabled ? "disabled" : ""
-                  }`}
-                  to={cartDisabled ? "#" : "/cart"}
-                  onClick={(e) => {
-                    if (cartDisabled) {
-                      e.preventDefault();
-                      return;
-                    }
-                    closeOffcanvas();
-                  }}
-                >
-                  <span>Cart</span>
-                  {Number(itemCount) > 0 && (
-                    <span className="badge text-bg-primary ms-2">
-                      {itemCount}
-                    </span>
-                  )}
-                </NavLink>
-              </li>
-            )}
           </ul>
         </div>
       </div>

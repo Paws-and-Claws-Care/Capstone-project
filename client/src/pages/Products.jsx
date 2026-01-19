@@ -321,7 +321,9 @@ export default function Products() {
             </button>
 
             <button
-              className="btn btn-dark"
+              className={`btn ${
+                activeFilter === "all" ? "btn-dark" : "btn-secondary"
+              }`}
               onClick={() => setFilter("all")}
               type="button"
             >
