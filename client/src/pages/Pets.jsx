@@ -57,7 +57,7 @@ export default function Pets() {
   }
 
   return (
-    <div className="d-flex flex-column min-vh-100">
+    <div className="d-flex flex-column min-vh-100 pets-page">
       <div className="flex-grow-1">
         <div className="container py-4" style={{ maxWidth: 1000 }}>
           <div className="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-3">
@@ -97,7 +97,13 @@ export default function Pets() {
 
                 return (
                   <div className="col" key={p.id}>
-                    <div className="pet-card h-100">
+                    <div
+                      className={`pet-card h-100 ${
+                        (p.pet_type || "").toLowerCase().includes("cat")
+                          ? "pet-card--cat"
+                          : "pet-card--dog"
+                      }`}
+                    >
                       {/* top "image" area like product card */}
                       <div className="pet-card-top">
                         <div
