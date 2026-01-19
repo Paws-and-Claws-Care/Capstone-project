@@ -24,6 +24,7 @@ function Navbar() {
   // Profile dropdown
   const [profileOpen, setProfileOpen] = useState(false);
   const profileRef = useRef(null);
+  const profileBtnRef = useRef(null);
 
   function cleanupBackdropAndBody() {
     document.querySelectorAll(".offcanvas-backdrop").forEach((b) => b.remove());
@@ -94,19 +95,33 @@ function Navbar() {
     setPetType("");
   }
 
-  const showCart = Boolean(user);
+  function toggleProfileMenu() {
+    const rect = profileBtnRef.current?.getBoundingClientRect();
+    if (rect) {
+      document.documentElement.style.setProperty(
+        "--profile-menu-top",
+        `${rect.bottom + 8}px`
+      );
+      document.documentElement.style.setProperty(
+        "--profile-menu-right",
+        `${Math.max(8, window.innerWidth - rect.right)}px`
+      );
+    }
+    setProfileOpen((v) => !v);
+  }
+
   const cartDisabled = !user || !activePetId;
 
   return (
     <nav className="navbar bg-body-tertiary">
-      <div className="container-fluid d-flex align-items-center justify-content-between">
+      <div className="container-fluid d-flex align-items-center flex-wrap gap-2">
         {/* LEFT: Brand + Hamburger */}
         <div className="d-flex align-items-center gap-2">
           <Link
             className="navbar-brand m-0 p-0 d-flex align-items-center"
             to="/"
           >
-            <img src={logo} alt="Paws & Claws" style={{ height: "120px" }} />
+            <img src={logo} alt="Paws & Claws" className="nav-logo" />
           </Link>
 
           <button
@@ -119,15 +134,13 @@ function Navbar() {
           </button>
         </div>
 
-        {/* RIGHT: Active Pet + Search + Account */}
-        <ul className="navbar-nav flex-row gap-3 align-items-center ms-auto">
-          {/* Active Pet Selector (logged in) */}
+        {/* MIDDLE: Pet selector + Search (keeps original sizing) */}
+        <div className="d-flex align-items-center flex-wrap gap-3 pcs-middle">
           {user && (
-            <li className="nav-item">
+            <>
               {pets.length ? (
                 <select
-                  className="form-select form-select-sm"
-                  style={{ width: 220 }}
+                  className="form-select form-select-sm pcs-active-pet"
                   value={activePetId ?? ""}
                   onChange={(e) => setActivePet(e.target.value)}
                   aria-label="Select active pet"
@@ -141,65 +154,59 @@ function Navbar() {
               ) : (
                 <span className="text-muted small">No pets yet</span>
               )}
-            </li>
+            </>
           )}
 
-          {/* Search */}
-          <li className="nav-item">
-            <form
-              className="d-flex align-items-center"
-              onSubmit={handleSearchSubmit}
+          <form
+            className="d-flex align-items-center gap-2 pcs-search"
+            onSubmit={handleSearchSubmit}
+          >
+            <select
+              className="form-select form-select-sm"
+              value={petType}
+              onChange={(e) => setPetType(e.target.value)}
+              aria-label="Choose dog or cat"
+              required
             >
-              <select
-                className="form-select form-select-sm me-2"
-                style={{ width: 90 }}
-                value={petType}
-                onChange={(e) => setPetType(e.target.value)}
-                aria-label="Choose dog or cat"
-                required
-              >
-                <option value="" disabled>
-                  Pet
-                </option>
-                <option value="dog">Dog</option>
-                <option value="cat">Cat</option>
-              </select>
+              <option value="" disabled>
+                Pet
+              </option>
+              <option value="dog">Dog</option>
+              <option value="cat">Cat</option>
+            </select>
 
-              <input
-                className="form-control form-control-sm me-2"
-                style={{ width: 200 }}
-                type="search"
-                placeholder="Search products"
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-              />
+            <input
+              className="form-control form-control-sm"
+              type="search"
+              placeholder="Search products"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
 
-              <button className="btn btn-outline-primary btn-sm" type="submit">
-                Search
-              </button>
-            </form>
-          </li>
+            <button className="btn btn-outline-primary btn-sm" type="submit">
+              Search
+            </button>
+          </form>
+        </div>
 
-          {/* Auth links OR profile dropdown */}
+        {/* RIGHT: Auth/Profile pinned to the right */}
+        <div className="ms-auto" ref={profileRef}>
           {!user ? (
-            <>
-              <li className="nav-item">
-                <NavLink className="nav-link" to="/login">
-                  Login
-                </NavLink>
-              </li>
-              <li className="nav-item">
-                <NavLink className="nav-link" to="/register">
-                  Register
-                </NavLink>
-              </li>
-            </>
+            <div className="d-flex align-items-center gap-3">
+              <NavLink className="nav-link" to="/login">
+                Login
+              </NavLink>
+              <NavLink className="nav-link" to="/register">
+                Register
+              </NavLink>
+            </div>
           ) : (
-            <li className="nav-item profileDropdown" ref={profileRef}>
+            <div className="profileDropdown">
               <button
+                ref={profileBtnRef}
                 className="nav-link btn btn-link p-0 profileBtn"
                 type="button"
-                onClick={() => setProfileOpen((v) => !v)}
+                onClick={toggleProfileMenu}
                 aria-expanded={profileOpen}
                 style={{ textDecoration: "none" }}
               >
@@ -207,162 +214,165 @@ function Navbar() {
               </button>
 
               {profileOpen && (
-                <div className="profileMenu">
-                  <button
-                    type="button"
+                <div
+                  className="profileMenu"
+                  role="menu"
+                  aria-label="Profile menu"
+                >
+                  <div
+                    className="profileItem"
+                    role="menuitem"
                     onClick={() => {
                       setProfileOpen(false);
                       navigate("/profile");
                     }}
                   >
                     Profile
-                  </button>
+                  </div>
 
                   <div className="profileDivider" />
 
-                  {showCart && (
-                    <>
-                      <button
-                        type="button"
-                        disabled={cartDisabled}
-                        onClick={() => {
-                          if (cartDisabled) return;
-                          setProfileOpen(false);
-                          navigate("/cart");
-                        }}
-                        className={cartDisabled ? "disabledItem" : ""}
-                      >
-                        <span>Cart</span>
-                        {Number(itemCount) > 0 && (
-                          <span className="badge text-bg-primary ms-2">
-                            {itemCount}
-                          </span>
-                        )}
-                      </button>
+                  <div
+                    className={`profileItem ${
+                      cartDisabled ? "disabledItem" : ""
+                    }`}
+                    role="menuitem"
+                    onClick={() => {
+                      if (cartDisabled) return;
+                      setProfileOpen(false);
+                      navigate("/cart");
+                    }}
+                  >
+                    <span>Cart</span>
+                    {Number(itemCount) > 0 && (
+                      <span className="badge text-bg-primary ms-2">
+                        {itemCount}
+                      </span>
+                    )}
+                  </div>
 
-                      {cartDisabled && (
-                        <div className="profileHint">
-                          Select an active pet to view cart
-                        </div>
-                      )}
-
-                      <div className="profileDivider" />
-                    </>
+                  {cartDisabled && (
+                    <div className="profileHint">
+                      Select an active pet to view cart
+                    </div>
                   )}
 
-                  <button
-                    type="button"
+                  <div className="profileDivider" />
+
+                  <div
+                    className="profileItem"
+                    role="menuitem"
                     onClick={() => {
                       setProfileOpen(false);
                       navigate("/pets");
                     }}
                   >
                     My Pets
-                  </button>
+                  </div>
 
                   <div className="profileDivider" />
 
-                  <button
-                    type="button"
+                  <div
+                    className="profileItem"
+                    role="menuitem"
                     onClick={() => {
                       setProfileOpen(false);
                       navigate("/forum");
                     }}
                   >
                     Discussion Forum
-                  </button>
+                  </div>
 
                   <div className="profileDivider" />
 
-                  <button
-                    type="button"
-                    className="logoutBtn"
+                  <div
+                    className="profileItem logoutBtn"
+                    role="menuitem"
                     onClick={handleLogout}
                   >
                     Logout
-                  </button>
+                  </div>
                 </div>
               )}
-            </li>
+            </div>
           )}
-        </ul>
-      </div>
-
-      {/* OFFCANVAS (RIGHT SIDE) */}
-      <div
-        className="offcanvas offcanvas-start"
-        tabIndex="-1"
-        id="mainMenu"
-        aria-labelledby="mainMenuLabel"
-        ref={offcanvasRef}
-      >
-        {/* No "Menu" text/title, just a close button */}
-        <div className="offcanvas-header">
-          <div />
-          <button
-            type="button"
-            className="btn-close"
-            aria-label="Close"
-            onClick={closeOffcanvas}
-          />
         </div>
 
-        <div className="offcanvas-body">
-          <ul className="navbar-nav">
-            <li className="nav-item">
-              <NavLink className="nav-link" to="/" onClick={closeOffcanvas}>
-                Home
-              </NavLink>
-            </li>
+        {/* OFFCANVAS MENU */}
+        <div
+          className="offcanvas offcanvas-start"
+          tabIndex="-1"
+          id="mainMenu"
+          aria-labelledby="mainMenuLabel"
+          ref={offcanvasRef}
+        >
+          <div className="offcanvas-header">
+            <div />
+            <button
+              type="button"
+              className="btn-close"
+              aria-label="Close"
+              onClick={closeOffcanvas}
+            />
+          </div>
 
-            <li className="nav-item">
-              <button
-                className="nav-link btn btn-link w-100 text-start d-flex justify-content-between align-items-center"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#productsMenu"
-                aria-expanded="false"
-                aria-controls="productsMenu"
-                style={{ textDecoration: "none" }}
-              >
-                Products <span className="ms-2">▾</span>
-              </button>
+          <div className="offcanvas-body">
+            <ul className="navbar-nav">
+              <li className="nav-item">
+                <NavLink className="nav-link" to="/" onClick={closeOffcanvas}>
+                  Home
+                </NavLink>
+              </li>
 
-              <div className="collapse" id="productsMenu">
-                <ul className="navbar-nav ms-3">
-                  <li className="nav-item">
-                    <NavLink
-                      className="nav-link"
-                      to="/products/pet/dog"
-                      onClick={closeOffcanvas}
-                    >
-                      Dog
-                    </NavLink>
-                  </li>
+              <li className="nav-item">
+                <button
+                  className="nav-link btn btn-link w-100 text-start d-flex justify-content-between align-items-center"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#productsMenu"
+                  aria-expanded="false"
+                  aria-controls="productsMenu"
+                  style={{ textDecoration: "none" }}
+                >
+                  Products <span className="ms-2">▾</span>
+                </button>
 
-                  <li className="nav-item">
-                    <NavLink
-                      className="nav-link"
-                      to="/products/pet/cat"
-                      onClick={closeOffcanvas}
-                    >
-                      Cat
-                    </NavLink>
-                  </li>
+                <div className="collapse" id="productsMenu">
+                  <ul className="navbar-nav ms-3">
+                    <li className="nav-item">
+                      <NavLink
+                        className="nav-link"
+                        to="/products/pet/dog"
+                        onClick={closeOffcanvas}
+                      >
+                        Dog
+                      </NavLink>
+                    </li>
 
-                  <li className="nav-item">
-                    <NavLink
-                      className="nav-link"
-                      to="/products"
-                      onClick={closeOffcanvas}
-                    >
-                      All Products
-                    </NavLink>
-                  </li>
-                </ul>
-              </div>
-            </li>
-          </ul>
+                    <li className="nav-item">
+                      <NavLink
+                        className="nav-link"
+                        to="/products/pet/cat"
+                        onClick={closeOffcanvas}
+                      >
+                        Cat
+                      </NavLink>
+                    </li>
+
+                    <li className="nav-item">
+                      <NavLink
+                        className="nav-link"
+                        to="/products"
+                        onClick={closeOffcanvas}
+                      >
+                        All Products
+                      </NavLink>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </nav>
