@@ -156,7 +156,16 @@ export default function Cart() {
                   {items.map((p) => {
                     const productId = p.product_id ?? p.id;
                     const busy = Boolean(busyByProductId[productId]);
-                    const unit = Number(p.item_price ?? p.price ?? 0);
+
+                    // ✅ FIX: choose best available unit price field
+                    const unit =
+                      p.price_at_purchase ??
+                      p.item_price ??
+                      p.price ??
+                      p.product_price ??
+                      0;
+
+                    const unitNumber = Number(unit || 0);
 
                     return (
                       <li
@@ -165,8 +174,10 @@ export default function Cart() {
                       >
                         <div className="me-3">
                           <div className="fw-semibold">{p.name}</div>
+
+                          {/* ✅ FIXED: show correct item price */}
                           <div className="text-muted small">
-                            ${Number(unit).toFixed(2)}
+                            ${unitNumber.toFixed(2)}
                           </div>
                         </div>
 
