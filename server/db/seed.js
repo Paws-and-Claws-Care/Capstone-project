@@ -974,7 +974,7 @@ export default async function seed() {
 
     //Dog Beds
     createProduct({
-      name: "Orthopedic Dog Beds",
+      name: "Orthopedic Dog Bed",
       description:
         "Supportive beds designed to relieve joint pressure and provide extra comfort for senior and large dogs.",
       price: 65,
@@ -985,7 +985,7 @@ export default async function seed() {
       quantity: 1,
     }),
     createProduct({
-      name: "Bolster Beds",
+      name: "Bolster Bed",
       description:
         "Cozy beds with raised edges that provide comfort, support, and a secure place to rest.",
       price: 42,
@@ -996,7 +996,7 @@ export default async function seed() {
       quantity: 1,
     }),
     createProduct({
-      name: "Elevated Beds",
+      name: "Elevated Bed",
       description:
         "Raised, breathable beds that keep dogs cool, supported, and off the ground.",
       price: 38,
@@ -1018,7 +1018,7 @@ export default async function seed() {
       quantity: 1,
     }),
     createProduct({
-      name: "Covered Beds",
+      name: "Covered Bed",
       description:
         "Cozy, enclosed beds that provide warmth and a secure space dogs love.",
       price: 52,
@@ -1040,7 +1040,7 @@ export default async function seed() {
       quantity: 1,
     }),
     createProduct({
-      name: "Sofa Beds",
+      name: "Sofa Bed",
       description:
         "Sofa-style beds that offer plush comfort and a cozy place to lounge.",
       price: 34,
@@ -1053,7 +1053,7 @@ export default async function seed() {
 
     //Dog Bowls & Feeders
     createProduct({
-      name: "Bowls",
+      name: "Bowl",
       description:
         "Practical, sturdy bowls designed for easy, mess-free mealtime.",
       price: 25,
@@ -1064,7 +1064,7 @@ export default async function seed() {
       quantity: 1,
     }),
     createProduct({
-      name: "Slow & Puzzle Feeders",
+      name: "Slow & Puzzle Feeder",
       description:
         "Interactive feeders that slow eating, improve digestion, and turn mealtime into a fun challenge.",
       price: 18,
@@ -1075,7 +1075,7 @@ export default async function seed() {
       quantity: 1,
     }),
     createProduct({
-      name: "Fountains & Waterers",
+      name: "Fountain & Waterer",
       description:
         "Keep dogs hydrated with fresh, flowing water in easy-to-use, hygienic designs.",
       price: 42,
@@ -1086,7 +1086,7 @@ export default async function seed() {
       quantity: 1,
     }),
     createProduct({
-      name: "Elevated Bowls",
+      name: "Elevated Bowl",
       description:
         "Raised, stable bowls that support healthy posture and easier mealtime for dogs.",
       price: 36,
@@ -1097,7 +1097,7 @@ export default async function seed() {
       quantity: 1,
     }),
     createProduct({
-      name: "Feeders",
+      name: "Feeder",
       description:
         "Convenient, sturdy feeders designed for easy, healthy mealtime.",
       price: 52,
@@ -1108,7 +1108,7 @@ export default async function seed() {
       quantity: 1,
     }),
     createProduct({
-      name: "Travel Bowls",
+      name: "Travel Bowl",
       description:
         "Portable, collapsible bowls for on-the-go hydration and feeding.",
       price: 40,
@@ -1121,7 +1121,7 @@ export default async function seed() {
 
     //Dog Collars, Leashes & Harnesses
     createProduct({
-      name: "Collars",
+      name: "Collar",
       description:
         "Comfortable, durable collars that keep dogs safe and stylish for everyday wear.",
       price: 24,
@@ -1132,7 +1132,7 @@ export default async function seed() {
       quantity: 1,
     }),
     createProduct({
-      name: "Harnesses",
+      name: "Harnesse",
       description:
         "Supportive, secure harnesses for comfortable walks and better control.",
       price: 15,
@@ -1143,7 +1143,7 @@ export default async function seed() {
       quantity: 1,
     }),
     createProduct({
-      name: "Leashes",
+      name: "Leashe",
       description:
         "Strong, reliable leashes for safe and enjoyable walks every day.",
       price: 18,
@@ -1154,7 +1154,7 @@ export default async function seed() {
       quantity: 1,
     }),
     createProduct({
-      name: "ID tags & Accessories",
+      name: "ID tag & Accessorie",
       description:
         "Personalized ID tags and handy accessories to keep dogs safe and organized.",
       price: 32,
@@ -1187,7 +1187,7 @@ export default async function seed() {
       quantity: 1,
     }),
     createProduct({
-      name: "Smart Collars & Training",
+      name: "Smart Collar & Training",
       description:
         "Smart collars and training tools designed to support safety, tracking, and positive behavior.",
       price: 54,
@@ -1198,7 +1198,7 @@ export default async function seed() {
       quantity: 1,
     }),
     createProduct({
-      name: "Tie Outs",
+      name: "Tie Out",
       description:
         "Secure tie-outs that give dogs freedom while keeping them safely contained.",
       price: 9,
@@ -1209,7 +1209,7 @@ export default async function seed() {
       quantity: 1,
     }),
     createProduct({
-      name: "Muzzles",
+      name: "Muzzle",
       description:
         "Comfortable, secure muzzles for safe handling and controlled outings.",
       price: 15,
@@ -1223,7 +1223,7 @@ export default async function seed() {
     //Dog Crates, Kennels & Gates
 
     createProduct({
-      name: "Crates & Kennels",
+      name: "Crate & Kennel",
       description:
         "Secure and comfortable spaces for safe travel, training, or home rest.",
       price: 43,
@@ -1234,7 +1234,7 @@ export default async function seed() {
       quantity: 1,
     }),
     createProduct({
-      name: "Pens & Accessories",
+      name: "Pen & Accessory",
       description:
         "Flexible, secure solutions for safe play, training, and everyday containment.",
       price: 67,
@@ -1245,7 +1245,7 @@ export default async function seed() {
       quantity: 1,
     }),
     createProduct({
-      name: "Dog Houses",
+      name: "Dog House",
       description:
         "Durable, weather-resistant shelters that provide cozy outdoor protection.",
       price: 80,
@@ -1268,7 +1268,7 @@ export default async function seed() {
     }),
 
     createProduct({
-      name: "Ramp & Gates",
+      name: "Ramp & Gate",
       description:
         "Practical ramps and gates for safety, accessibility, and home boundaries.",
       price: 38,
@@ -1279,7 +1279,7 @@ export default async function seed() {
       quantity: 1,
     }),
     createProduct({
-      name: "Crate Mats & Pads",
+      name: "Crate Mat & Pad",
       description:
         "Soft, supportive bedding that adds comfort to crates and kennels.",
       price: 45,
@@ -1290,7 +1290,7 @@ export default async function seed() {
       quantity: 1,
     }),
     createProduct({
-      name: "Fence Systems",
+      name: "Fence System",
       description:
         "Reliable fencing solutions to keep dogs safe and contained, indoors or outdoors.",
       price: 68,
@@ -1301,7 +1301,7 @@ export default async function seed() {
       quantity: 1,
     }),
     createProduct({
-      name: "Doors & Accessories",
+      name: "Door & Accessory",
       description:
         "Reliable solutions for secure access and containment, indoors or outdoors.",
       price: 56,
@@ -1315,7 +1315,7 @@ export default async function seed() {
     //Dog Toys
 
     createProduct({
-      name: "Plush Toys",
+      name: "Plush Toy",
       description: "Soft, cuddly toys perfect for snuggling and gentle play.",
       price: 14,
       category: "Supplies",
@@ -1325,7 +1325,7 @@ export default async function seed() {
       quantity: 1,
     }),
     createProduct({
-      name: "Chew Toys",
+      name: "Chew Toy",
       description:
         "Durable toys designed to satisfy chewing instincts and keep teeth healthy.",
       price: 8,
@@ -1336,7 +1336,7 @@ export default async function seed() {
       quantity: 1,
     }),
     createProduct({
-      name: "Fetch Toys",
+      name: "Fetch Toy",
       description:
         "Fun, interactive toys built for chasing, retrieving, and active play.",
       price: 12,
@@ -1347,7 +1347,7 @@ export default async function seed() {
       quantity: 1,
     }),
     createProduct({
-      name: "Puzzle Toys",
+      name: "Puzzle Toy",
       description:
         "Mental stimulation and problem-solving fun to challenge curious dogs.",
       price: 22,
@@ -1358,7 +1358,7 @@ export default async function seed() {
       quantity: 1,
     }),
     createProduct({
-      name: "Rope & Tug Toys",
+      name: "Rope & Tug Toy",
       description:
         "Durable toys designed for interactive play and tugging fun.",
       price: 32,
@@ -1369,7 +1369,7 @@ export default async function seed() {
       quantity: 1,
     }),
     createProduct({
-      name: "Treat Dispensing Toys",
+      name: "Treat Dispensing Toy",
       description:
         "Interactive toys that reward play while keeping dogs engaged.",
       price: 24,
@@ -1380,7 +1380,7 @@ export default async function seed() {
       quantity: 1,
     }),
     createProduct({
-      name: "Puppy Toys",
+      name: "Puppy Toy",
       description: "Gentle, durable toys designed for teething and early play.",
       price: 28,
       category: "Supplies",
@@ -1390,7 +1390,7 @@ export default async function seed() {
       quantity: 1,
     }),
     createProduct({
-      name: "Variety Packs",
+      name: "Variety Pack",
       description: "A mix of toys for chewing, fetching, and endless fun.",
       price: 42,
       category: "Supplies",
@@ -1402,7 +1402,7 @@ export default async function seed() {
 
     // Cat Beds
     createProduct({
-      name: "Covered Beds",
+      name: "Covered Bed",
       description:
         "Cozy, enclosed beds that give cats a warm and secure place to rest.",
       price: 29,
@@ -1413,7 +1413,7 @@ export default async function seed() {
       quantity: 1,
     }),
     createProduct({
-      name: "Bolster Beds",
+      name: "Bolster Bed",
       description: "Cozy beds with raised edges for head and neck support.",
       price: 32,
       category: "Supplies",
@@ -1423,7 +1423,7 @@ export default async function seed() {
       quantity: 1,
     }),
     createProduct({
-      name: "Orthopedic Beds",
+      name: "Orthopedic Bed",
       description:
         "Supportive beds designed to relieve joints and provide comfort for senior cats.",
       price: 45,
@@ -1434,7 +1434,7 @@ export default async function seed() {
       quantity: 1,
     }),
     createProduct({
-      name: "Pillow Beds & Mats",
+      name: "Pillow Beds & Mat",
       description:
         "Soft, cushioned beds and mats perfect for lounging and naps.",
       price: 28,
@@ -1445,7 +1445,7 @@ export default async function seed() {
       quantity: 1,
     }),
     createProduct({
-      name: "Heated Beds",
+      name: "Heated Bed",
       description: "Warm, comforting beds that keep cats cozy and relaxed.",
       price: 65,
       category: "Supplies",
@@ -1455,7 +1455,7 @@ export default async function seed() {
       quantity: 1,
     }),
     createProduct({
-      name: "Fun & Trendy Beds",
+      name: "Fun & Trendy Bed",
       description:
         "Stylish and playful beds that double as a cozy retreat and décor piece.",
       price: 52,
@@ -1469,7 +1469,7 @@ export default async function seed() {
     // Cat Bowls & Feeders
 
     createProduct({
-      name: "Bowls",
+      name: "Bowl",
       description: "Durable, easy-to-clean bowls for everyday meals.",
       price: 16,
       category: "Supplies",
@@ -1479,7 +1479,7 @@ export default async function seed() {
       quantity: 1,
     }),
     createProduct({
-      name: "Fountains & Waterers",
+      name: "Fountain & Waterer",
       description: "Fresh, flowing water to keep cats hydrated and healthy.",
       price: 34,
       category: "Supplies",
@@ -1489,7 +1489,7 @@ export default async function seed() {
       quantity: 1,
     }),
     createProduct({
-      name: "Elevated Bowls & Diners",
+      name: "Elevated Bowl & Diner",
       description:
         "Raised bowls that promote better posture and easier eating.",
       price: 29,
@@ -1500,8 +1500,8 @@ export default async function seed() {
       quantity: 1,
     }),
     createProduct({
-      name: "Feeders",
-      description: "Convenient feeders for controlled, mess-free mealtime.",
+      name: "Feeder",
+      description: "Convenient feeder for controlled, mess-free mealtime.",
       price: 49,
       category: "Supplies",
       pet_type: "cat",
@@ -1510,7 +1510,7 @@ export default async function seed() {
       quantity: 1,
     }),
     createProduct({
-      name: "Double Diners",
+      name: "Double Diner",
       description:
         "Dual bowls for food and water, perfect for multi-cat households.",
       price: 34,
@@ -1523,7 +1523,7 @@ export default async function seed() {
 
     //Cat Carrier & Travel
     createProduct({
-      name: "Backpacks & Carrier",
+      name: "Backpack & Carrier",
       description: "Comfortable, secure carriers for safe travel and outings.",
       price: 45,
       category: "Supplies",
@@ -1533,7 +1533,7 @@ export default async function seed() {
       quantity: 1,
     }),
     createProduct({
-      name: "Kennels",
+      name: "Kennel",
       description: "Durable, cozy spaces for cats at home or on the go.",
       price: 53,
       category: "Supplies",
@@ -1554,9 +1554,9 @@ export default async function seed() {
       quantity: 1,
     }),
     createProduct({
-      name: "Strollers",
+      name: "Stroller",
       description:
-        "Convenient strollers for safe, stress-free outdoor adventures.",
+        "Convenient stroller for safe, stress-free outdoor adventures.",
       price: 75,
       category: "Supplies",
       pet_type: "cat",
@@ -1565,7 +1565,7 @@ export default async function seed() {
       quantity: 1,
     }),
     createProduct({
-      name: "Travel Bowls & Water Bottles",
+      name: "Travel Bowl & Water Bottle",
       description:
         "Portable bowls and bottles to keep cats hydrated on the move.",
       price: 27,
@@ -1578,7 +1578,7 @@ export default async function seed() {
 
     // Cat Collars, Leashes and Harnesses
     createProduct({
-      name: "Collars",
+      name: "Collar",
       description:
         "Comfortable, adjustable collars for everyday wear and style.",
       price: 10,
@@ -1589,7 +1589,7 @@ export default async function seed() {
       quantity: 1,
     }),
     createProduct({
-      name: "Leashes",
+      name: "Leashe",
       description:
         "Lightweight, secure leashes for safe walks and outdoor adventures.",
       price: 12,
@@ -1600,7 +1600,7 @@ export default async function seed() {
       quantity: 1,
     }),
     createProduct({
-      name: "Harnesses",
+      name: "Harnesse",
       description:
         "Supportive harnesses that keep cats secure while exploring.",
       price: 29,
@@ -1623,7 +1623,7 @@ export default async function seed() {
 
     //Cat Toys
     createProduct({
-      name: "Interactive Toys",
+      name: "Interactive Toy",
       description: "Engaging toys that stimulate play and curiosity.",
       price: 35,
       category: "Supplies",
@@ -1633,7 +1633,7 @@ export default async function seed() {
       quantity: 1,
     }),
     createProduct({
-      name: "Teasers Wands",
+      name: "Teasers Wand",
       description: "Fun, dangling wands to encourage chasing and pouncing.",
       price: 18,
       category: "Supplies",
@@ -1643,7 +1643,7 @@ export default async function seed() {
       quantity: 1,
     }),
     createProduct({
-      name: "Balls & Chasers",
+      name: "Ball & Chaser",
       description: "Rollable toys that keep cats active and entertained.",
       price: 10,
       category: "Supplies",
@@ -1653,7 +1653,7 @@ export default async function seed() {
       quantity: 1,
     }),
     createProduct({
-      name: "Catnip Toys",
+      name: "Catnip Toy",
       description: "Catnip-infused toys that excite and delight playful cats.",
       price: 34,
       category: "Supplies",
@@ -1663,7 +1663,7 @@ export default async function seed() {
       quantity: 1,
     }),
     createProduct({
-      name: "Plush & Mice Toys",
+      name: "Plush & Mice Toy",
       description: "Soft, small toys perfect for cuddling and solo play.",
       price: 23,
       category: "Supplies",
@@ -1673,7 +1673,7 @@ export default async function seed() {
       quantity: 1,
     }),
     createProduct({
-      name: "Scratchers Toys",
+      name: "Scratcher Toy",
       description:
         "Durable scratchers that satisfy your cat's natural urge to scratch.",
       price: 12,
