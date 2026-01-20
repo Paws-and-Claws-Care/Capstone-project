@@ -665,13 +665,13 @@ export default async function seed() {
       quantity: 1,
     }),
     createProduct({
-      name: "Pro Plan Cat Food - Allergen Reducing",
-      description:
-        "Chicken and rice innovative formula with a key protein sourced from eggs to help limit cat major allergen",
-      price: 30,
+      name: "Pro Plan Cat Food - LiveClear Probiotic",
+      description: "Chicken & Rice Formula Dry Cat Food, 7-lb bag",
+      price: 35,
       category: "food",
       pet_type: "cat",
-      image_url: "image",
+      image_url:
+        "https://image.chewy.com/catalog/general/images/moe/068f767c-4e8f-7542-8000-06c179db1a61._AC_SL248_V1_.jpg",
       quantity: 1,
     }),
     createProduct({
