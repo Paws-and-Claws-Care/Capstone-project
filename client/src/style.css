@@ -140,35 +140,48 @@ body {
 
 /* ✅ Mobile / tablet: allow wrapping + smaller inputs */
 @media (max-width: 991.98px) {
-  /* shrink the logo more on small screens */
   .nav-logo {
     height: 56px;
   }
 
-  /* allow wrap so it doesn't overflow */
   .navbar .container-fluid {
     flex-wrap: wrap;
+    align-items: center;
   }
 
-  .pcs-nav-right {
-    flex-wrap: wrap;
-    row-gap: 0.5rem;
+  /* Keep profile on the first row (top right) */
+  .navbar .container-fluid > .ms-auto {
+    flex: 0 0 auto;
+    width: auto;
+    margin-left: auto;
+    white-space: nowrap;
   }
 
+  /* Force the middle controls to become the second row */
+  .pcs-middle {
+    flex: 1 1 100%;
+    width: 100%;
+    order: 3;
+  }
+
+  /* Make search row behave nicely on phones */
   .pcs-search {
-    flex-wrap: wrap;
+    flex-wrap: nowrap !important;
+    width: 100%;
   }
 
-  /* smaller than desktop */
   .pcs-search select.form-select {
-    width: 80px;
+    width: 88px;
   }
 
   .pcs-search input.form-control {
-    width: 160px;
+    width: auto;
+    flex: 1 1 auto;
+    min-width: 0;
   }
 
   .pcs-search button {
+    white-space: nowrap;
     padding-left: 10px;
     padding-right: 10px;
   }
@@ -223,19 +236,15 @@ body {
    NAVBAR – ACTIVE PET DROPDOWN
 ========================= */
 
-/* Desktop: keep it compact like original */
+/* Desktop */
 .pcs-active-pet {
   width: 180px;
-  max-width: 115px;
-}
-
-/* Prevent flexbox from stretching it */
-.pcs-active-pet {
+  max-width: 180px;
   flex: 0 0 auto;
 }
 
-/* Mobile: full width is OK */
-@media (max-width: 200px) {
+/* Mobile: full width so text doesn’t clip */
+@media (max-width: 991.98px) {
   .pcs-active-pet {
     width: 100%;
     max-width: 100%;

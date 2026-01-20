@@ -131,7 +131,10 @@ export default function Orders() {
   const hasPlacedOrders = placedOrders.length > 0;
 
   return (
-    <>
+    <div
+      className="d-flex flex-column"
+      style={{ minHeight: "calc(100vh - var(--navbar-height))" }}
+    >
       <main className="container mt-5" style={{ maxWidth: "900px" }}>
         <div className="d-flex justify-content-between align-items-center mb-3">
           <h2 className="mb-0">My Orders</h2>
@@ -146,7 +149,7 @@ export default function Orders() {
         )}
         {error && <div className="alert alert-danger">{error}</div>}
 
-        {!loading && !error && !hasPlacedOrders && (
+        {!loading && !error && !placedOrders.length && (
           <div className="alert alert-info">
             You haven’t placed any orders yet.
           </div>
@@ -235,7 +238,7 @@ export default function Orders() {
       </main>
 
       {/* FOOTER */}
-      <footer className="w-100 bg-light border-top mt-5">
+      <footer className="w-100 bg-light border-top mt-auto">
         <div className="container-fluid px-4 py-4">
           <div className="d-flex flex-column flex-md-row justify-content-between gap-2 text-secondary small">
             <div>© {new Date().getFullYear()} Paws & Claws Care</div>
@@ -244,15 +247,12 @@ export default function Orders() {
               <Link className="text-secondary text-decoration-none" to="/">
                 Home
               </Link>
-
               <Link className="text-secondary text-decoration-none" to="/forum">
                 Forum
               </Link>
-
               <Link className="text-secondary text-decoration-none" to="/about">
                 About
               </Link>
-
               <Link
                 className="text-secondary text-decoration-none"
                 to="/contact"
@@ -263,6 +263,6 @@ export default function Orders() {
           </div>
         </div>
       </footer>
-    </>
+    </div>
   );
 }

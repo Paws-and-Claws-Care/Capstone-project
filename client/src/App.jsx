@@ -16,6 +16,7 @@ import About from "./pages/About";
 import Contact from "./pages/Contact";
 import ErrorPage from "./pages/ErrorPage";
 import Forum from "./pages/Forum";
+import ScrollToTop from "./components/ScrollToTop";
 
 import { ActivePetProvider } from "./context/ActivePetContext";
 import { CartProvider } from "./context/CartContext";
@@ -26,36 +27,41 @@ function App() {
   return (
     <ActivePetProvider>
       <CartProvider>
-        <Navbar />
+        <div className="app-shell">
+          <Navbar />
 
-        <Routes>
-          <Route path="/" element={<Home />} />
+          <main className="app-main">
+            <ScrollToTop />
+            <Routes>
+              <Route path="/" element={<Home />} />
 
-          <Route path="/products" element={<Products />} />
-          <Route path="/products/pet/:petType" element={<Products />} />
-          <Route path="/products/:id" element={<ProductDetails />} />
+              <Route path="/products" element={<Products />} />
+              <Route path="/products/pet/:petType" element={<Products />} />
+              <Route path="/products/:id" element={<ProductDetails />} />
 
-          <Route path="/favorites" element={<Favorites />} />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/orders" element={<Orders />} />
-          <Route
-            path="/orders/confirmation/:orderId"
-            element={<OrderConfirmation />}
-          />
-          <Route path="/pets" element={<Pets />} />
-          <Route path="/profile" element={<Profile />} />
+              <Route path="/favorites" element={<Favorites />} />
+              <Route path="/cart" element={<Cart />} />
+              <Route path="/orders" element={<Orders />} />
+              <Route
+                path="/orders/confirmation/:orderId"
+                element={<OrderConfirmation />}
+              />
+              <Route path="/pets" element={<Pets />} />
+              <Route path="/profile" element={<Profile />} />
 
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
 
-          <Route path="/forum" element={<Forum />} />
+              <Route path="/forum" element={<Forum />} />
 
-          <Route path="/about" element={<About />} />
-          <Route path="/contact" element={<Contact />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/contact" element={<Contact />} />
 
-          {/* 👇 Catch-all route (404) */}
-          <Route path="*" element={<ErrorPage />} />
-        </Routes>
+              {/* 👇 Catch-all route (404) */}
+              <Route path="*" element={<ErrorPage />} />
+            </Routes>
+          </main>
+        </div>
       </CartProvider>
     </ActivePetProvider>
   );
