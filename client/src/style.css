@@ -30,7 +30,7 @@ body {
 
 .app-main {
   flex: 1;
-  padding-top: var(--navbar-height);
+  padding-top: 0;
 }
 
 /* =========================
@@ -639,7 +639,7 @@ body {
       transparent 60%
     ),
     linear-gradient(180deg, #f3f7ff 0%, #ffffff 75%);
-  min-height: 420px;
+  padding: 3rem 0;
   background-repeat: no-repeat;
   background-size: cover;
 }
@@ -802,4 +802,14 @@ body {
 ========================= */
 footer.bg-light {
   background: #f8f9fa !important;
+}
+
+.pd-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.pd-content {
+  flex: 1;
 }

@@ -148,24 +148,30 @@ export default function Home() {
         </div>
       </section>
 
-      {/* FOOTER */}
-      <footer className="bg-light border-top mt-5">
-        <div className="container py-4">
+      {/* FOOTER (FULL WIDTH) */}
+      <footer className="w-100 bg-light border-top mt-5">
+        <div className="container-fluid px-4 py-4">
           <div className="d-flex flex-column flex-md-row justify-content-between gap-2 text-secondary small">
             <div>© {new Date().getFullYear()} Paws & Claws Care</div>
 
             <div className="d-flex gap-3">
+              <Link className="text-secondary text-decoration-none" to="/">
+                Home
+              </Link>
+
+              <Link className="text-secondary text-decoration-none" to="/forum">
+                Forum
+              </Link>
+
               <Link className="text-secondary text-decoration-none" to="/about">
                 About
               </Link>
+
               <Link
                 className="text-secondary text-decoration-none"
                 to="/contact"
               >
                 Contact
-              </Link>
-              <Link className="text-secondary text-decoration-none" to="/forum">
-                Forum
               </Link>
             </div>
           </div>

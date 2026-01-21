@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useCart } from "../context/CartContext";
 import { useActivePet } from "../context/ActivePetContext";
 
-export default function ProductCard({ product, disabled = false }) {
+export default function ProductCard({ product, disabled = false, onOpen }) {
   const { addItem, getQty, setQty, loading } = useCart();
   const { activePet } = useActivePet();
 
@@ -55,7 +55,11 @@ export default function ProductCard({ product, disabled = false }) {
 
   return (
     <div className="card h-100 shadow-sm">
-      <Link to={`/products/${product.id}`} className="text-decoration-none">
+      <Link
+        to={`/products/${product.id}`}
+        className="text-decoration-none"
+        onClick={onOpen}
+      >
         <img
           src={product.image_url}
           alt={product.name}
@@ -68,6 +72,7 @@ export default function ProductCard({ product, disabled = false }) {
         <Link
           to={`/products/${product.id}`}
           className="text-decoration-none text-dark"
+          onClick={onOpen}
         >
           <h5 className="card-title mb-2">{product.name}</h5>
         </Link>
