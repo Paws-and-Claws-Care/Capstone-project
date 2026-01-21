@@ -5,7 +5,7 @@ import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import Products from "./pages/Products";
 import ProductDetails from "./pages/ProductDetails";
-import Favorites from "./pages/Favorites";
+
 import Cart from "./pages/Cart";
 import Orders from "./pages/Orders";
 import Profile from "./pages/Profile";
@@ -39,7 +39,6 @@ function App() {
               <Route path="/products/pet/:petType" element={<Products />} />
               <Route path="/products/:id" element={<ProductDetails />} />
 
-              <Route path="/favorites" element={<Favorites />} />
               <Route path="/cart" element={<Cart />} />
               <Route path="/orders" element={<Orders />} />
               <Route

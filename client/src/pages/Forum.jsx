@@ -299,9 +299,9 @@ export default function Forum() {
         </div>
       </div>
 
-      {/* FOOTER (Forum: Home, About, Contact) */}
-      <footer className="bg-light border-top mt-5">
-        <div className="container py-4">
+      {/* FOOTER (FULL WIDTH) */}
+      <footer className="w-100 bg-light border-top mt-5">
+        <div className="container-fluid px-4 py-4">
           <div className="d-flex flex-column flex-md-row justify-content-between gap-2 text-secondary small">
             <div>© {new Date().getFullYear()} Paws & Claws Care</div>
 
@@ -309,9 +309,11 @@ export default function Forum() {
               <Link className="text-secondary text-decoration-none" to="/">
                 Home
               </Link>
+
               <Link className="text-secondary text-decoration-none" to="/about">
                 About
               </Link>
+
               <Link
                 className="text-secondary text-decoration-none"
                 to="/contact"

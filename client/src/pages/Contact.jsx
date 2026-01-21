@@ -31,7 +31,7 @@ export default function Contact() {
     <div>
       {/* HEADER / HERO */}
       <section className="page-hero border-bottom">
-        <div className="container py-5">
+        <div className="container pt-5 pb-3">
           {/* Large page title */}
           <h1 className="display-6 fw-bold mb-2">Contact Us</h1>
 
@@ -223,9 +223,9 @@ export default function Contact() {
         </div>
       </section>
 
-      {/* FOOTER */}
-      <footer className="bg-light border-top mt-5">
-        <div className="container py-4">
+      {/* FOOTER (FULL WIDTH) */}
+      <footer className="w-100 bg-light border-top mt-5">
+        <div className="container-fluid px-4 py-4">
           <div className="d-flex flex-column flex-md-row justify-content-between gap-2 text-secondary small">
             <div>© {new Date().getFullYear()} Paws & Claws Care</div>
 
@@ -233,11 +233,13 @@ export default function Contact() {
               <Link className="text-secondary text-decoration-none" to="/">
                 Home
               </Link>
-              <Link className="text-secondary text-decoration-none" to="/about">
-                About
-              </Link>
+
               <Link className="text-secondary text-decoration-none" to="/forum">
                 Forum
+              </Link>
+
+              <Link className="text-secondary text-decoration-none" to="/about">
+                About
               </Link>
             </div>
           </div>
