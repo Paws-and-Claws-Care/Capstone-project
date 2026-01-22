@@ -3,6 +3,7 @@ import { useParams, Link, useNavigate } from "react-router-dom";
 import { fetchProductById } from "../api/products";
 import { useCart } from "../context/CartContext";
 import { useActivePet } from "../context/ActivePetContext";
+import { getUser, getToken } from "../api/auth";
 
 export default function ProductDetails() {
   const { id } = useParams();
@@ -18,11 +19,25 @@ export default function ProductDetails() {
 
   const navigate = useNavigate();
 
+  const user = getUser();
+  const token = getToken?.() || localStorage.getItem("token");
+  const isLoggedIn = Boolean(user && token);
+
   const qty = product ? getQty(product.id) : 0;
   const inCart = qty > 0;
 
   const noPet = !activePet?.id;
   const blocked = cartLoading || noPet || Boolean(busy);
+
+  useEffect(() => {
+    if (msg) return;
+    if (!isLoggedIn) setMsg("Login or register to add items to cart");
+    else if (noPet) setMsg("Select an active pet to add items to cart");
+  }, [isLoggedIn, noPet, msg]);
+
+  useEffect(() => {
+    if (isLoggedIn && !noPet && msg) setMsg("");
+  }, [isLoggedIn, noPet, msg]);
 
   useEffect(() => {
     async function load() {
@@ -56,8 +71,14 @@ export default function ProductDetails() {
   function handleAdd() {
     if (!product) return;
 
+    if (!isLoggedIn) {
+      setMsg("Login or register to add items to cart");
+      setTimeout(() => navigate("/login"), 800);
+      return;
+    }
+
     if (noPet) {
-      setMsg("Select an active pet to add items to the cart.");
+      setMsg("Select an active pet to add items to cart.");
       return;
     }
 
@@ -78,7 +99,6 @@ export default function ProductDetails() {
     run("inc", () => setQty(product.id, qty + 1));
   }
 
-  // ✅ ONE footer used in all states
   const Footer = () => (
     <footer className="w-100 bg-light border-top mt-5">
       <div className="container-fluid px-4 py-4">
@@ -104,7 +124,6 @@ export default function ProductDetails() {
     </footer>
   );
 
-  // ✅ PAGE WRAPPER forces footer to bottom on short pages
   if (loading) {
     return (
       <div className="pd-page">
@@ -144,7 +163,6 @@ export default function ProductDetails() {
   return (
     <div className="pd-page">
       <div className="pd-content">
-        {/* MAIN CONTENT */}
         <div className="container py-4" style={{ maxWidth: 1000 }}>
           <div className="mb-3 d-flex justify-content-between align-items-center">
             <button
@@ -160,9 +178,15 @@ export default function ProductDetails() {
             </Link>
           </div>
 
-          {noPet && (
+          {!isLoggedIn && (
             <div className="alert alert-warning">
-              Select an active pet in the navbar to add items to a cart.
+              Login or register to add items to cart
+            </div>
+          )}
+
+          {isLoggedIn && noPet && (
+            <div className="alert alert-warning">
+              Select an active pet to add items to cart.
             </div>
           )}
 
@@ -174,7 +198,7 @@ export default function ProductDetails() {
                   alt={product.name}
                   className="card-img-top"
                   style={{
-                    maxHeight: 350, // 👈 smaller than 520
+                    maxHeight: 350,
                     objectFit: "contain",
                     padding: "1rem",
                   }}
@@ -202,16 +226,8 @@ export default function ProductDetails() {
                 ${Number(product.price).toFixed(2)}
               </p>
 
-              {msg && (
-                <div
-                  className={`alert ${
-                    msg.toLowerCase().includes("added")
-                      ? "alert-success"
-                      : "alert-warning"
-                  }`}
-                >
-                  {msg}
-                </div>
+              {msg && msg.toLowerCase().includes("added") && (
+                <div className="alert alert-success">{msg}</div>
               )}
 
               {!inCart ? (
