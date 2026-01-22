@@ -35,7 +35,6 @@ const ALLOWED_FILTERS = new Set([
   "health",
 ]);
 
-// ✅ scroll state keys
 const SCROLL_KEY = "productsScrollY";
 const OFFSET_KEY = "productsItemOffset";
 
@@ -65,25 +64,32 @@ export default function Products() {
   const [msg, setMsg] = useState("");
   const [addingId, setAddingId] = useState(null);
 
-  // ✅ track when initial fetch finished so we can restore scroll AFTER render
   const [loadedOnce, setLoadedOnce] = useState(false);
-
-  // ✅ used to scroll only after we restored the correct page
   const [restorePending, setRestorePending] = useState(false);
 
-  // ✅ apply filter from URL
+  const isLoggedIn = Boolean(user && token);
+  const hasActivePet = Boolean(activePet?.id);
+
+  useEffect(() => {
+    if (msg) return;
+    if (!isLoggedIn) setMsg("Login or register to add items to cart");
+    else if (!hasActivePet) setMsg("Select an active pet to add items to cart");
+  }, [isLoggedIn, hasActivePet, msg]);
+
+  useEffect(() => {
+    if (isLoggedIn && hasActivePet && msg) setMsg("");
+  }, [isLoggedIn, hasActivePet, msg]);
+
   useEffect(() => {
     const next = ALLOWED_FILTERS.has(filterFromUrl) ? filterFromUrl : "all";
     setActiveFilter(next);
     setItemOffset(0);
   }, [filterFromUrl]);
 
-  // ✅ reset offset if search changes
   useEffect(() => {
     setItemOffset(0);
   }, [searchFromUrl]);
 
-  // ✅ load products
   useEffect(() => {
     async function load() {
       try {
@@ -101,7 +107,6 @@ export default function Products() {
     load();
   }, [petType]);
 
-  // ✅ restore page offset after products load (scroll happens in the next effect)
   useEffect(() => {
     if (!loadedOnce) return;
 
@@ -113,11 +118,10 @@ export default function Products() {
     if (savedOffset) {
       setItemOffset(Number(savedOffset) || 0);
       sessionStorage.removeItem(OFFSET_KEY);
-      setRestorePending(true); // wait to scroll until after page render
+      setRestorePending(true);
       return;
     }
 
-    // if we only have scroll (no offset), we can scroll immediately
     if (savedY) {
       setTimeout(() => {
         window.scrollTo(0, Number(savedY) || 0);
@@ -126,7 +130,6 @@ export default function Products() {
     }
   }, [loadedOnce]);
 
-  // ✅ after itemOffset renders the right page, restore scroll
   useEffect(() => {
     if (!restorePending) return;
 
@@ -183,7 +186,6 @@ export default function Products() {
     const newOffset = event.selected * itemsPerPage;
     setItemOffset(newOffset);
 
-    // clear any saved "return position" so pagination always wins
     sessionStorage.removeItem(SCROLL_KEY);
     sessionStorage.removeItem(OFFSET_KEY);
 
@@ -209,13 +211,13 @@ export default function Products() {
   async function handleAdd(product) {
     setMsg("");
 
-    if (!activePet?.id) {
-      setMsg("Select an active pet in the navbar to add items to a cart.");
+    if (!hasActivePet) {
+      setMsg("Select an active pet to add items to cart");
       return;
     }
 
-    if (!token || !user) {
-      setMsg("Login to add items to your cart");
+    if (!isLoggedIn) {
+      setMsg("Login or register to add items to cart");
       setTimeout(() => navigate("/login"), 800);
       return;
     }
@@ -240,8 +242,6 @@ export default function Products() {
     }
   }
 
-  // ✅ NEW: save page + scroll when opening a product
-  // IMPORTANT: do NOT navigate here — ProductCard's <Link> handles navigation
   function handleOpenProduct() {
     sessionStorage.setItem(SCROLL_KEY, String(window.scrollY));
     sessionStorage.setItem(OFFSET_KEY, String(itemOffset));
@@ -253,7 +253,6 @@ export default function Products() {
 
   return (
     <>
-      {/* MAIN CONTENT */}
       <div className="container py-4">
         <h2 className="mb-2">{title}</h2>
 
@@ -355,12 +354,6 @@ export default function Products() {
           </div>
         )}
 
-        {!activePet && (
-          <div className="alert alert-warning">
-            Select an active pet in the navbar to add items to a cart.
-          </div>
-        )}
-
         <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
           {currentProducts.map((p) => (
             <div className="col" key={p.id}>
@@ -402,7 +395,6 @@ export default function Products() {
         )}
       </div>
 
-      {/* FOOTER (FULL WIDTH – MATCHES HOME) */}
       <footer className="w-100 bg-light border-top mt-5">
         <div className="container-fluid px-4 py-4">
           <div className="d-flex flex-column flex-md-row justify-content-between gap-2 text-secondary small">
